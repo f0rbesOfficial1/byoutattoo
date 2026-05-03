@@ -279,10 +279,10 @@ function Footer() {
               rel="noreferrer noopener"
               className="group inline-flex items-baseline gap-4 border-b border-foreground/20 pb-3 transition-colors hover:border-foreground"
             >
-              <span className="font-heading text-3xl leading-tight font-light md:text-5xl">
+              <span className="font-heading text-3xl leading-tight font-light md:text-2xl">
                 <span className="italic">Stuur</span> een DM
               </span>
-              <ArrowUpRightIcon className="size-8 shrink-0 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 md:size-10" />
+              <ArrowUpRightIcon className="size-8 shrink-0 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 md:size-6" />
             </a>
           </div>
         </div>
