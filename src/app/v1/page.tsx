@@ -323,9 +323,6 @@ function Footer() {
               </span>
               <ArrowUpRightIcon className="mt-1 size-6 shrink-0 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
             </a>
-            <p className="mt-3 text-[11px] uppercase tracking-[0.25em] opacity-50">
-              Open in Google Maps
-            </p>
           </div>
         </div>
 
