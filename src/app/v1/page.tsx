@@ -286,7 +286,7 @@ function Footer() {
         Contact
       </motion.h2>
 
-      <div className="mt-16 grid grid-cols-1 gap-10 border-t border-foreground/10 pt-12 md:mt-24 md:grid-cols-3 md:gap-0 md:pt-16">
+      <div className="mt-16 grid grid-cols-1 gap-10 md:mt-24 md:grid-cols-3 md:gap-0">
         <div className="md:border-r md:border-foreground/10 md:pr-10">
           <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
             // Instagram
