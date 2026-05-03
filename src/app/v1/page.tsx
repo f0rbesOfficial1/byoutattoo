@@ -101,7 +101,7 @@ function Hero() {
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, delay: 0.35, ease: easeOut }}
-        className="relative mt-12 grid grid-cols-12 md:-mt-20"
+        className="relative mt-16 grid grid-cols-12 md:mt-32"
       >
         <div className="col-span-12 md:col-span-5 md:col-start-8">
           <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
@@ -126,7 +126,7 @@ function Hero() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.9, ease: easeOut }}
-        className="relative mt-12 grid grid-cols-12 md:-mt-32"
+        className="relative mt-16 grid grid-cols-12 md:mt-40"
       >
         <blockquote className="col-span-12 md:col-span-6">
           <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
