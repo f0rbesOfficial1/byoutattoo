@@ -7,6 +7,7 @@ import {
 } from "next/font/google";
 import "./globals.css";
 
+import { Cursor } from "@/components/cursor";
 import { IconProvider } from "@/components/icon-provider";
 
 const inter = Inter({
@@ -50,6 +51,7 @@ export default function RootLayout({
         <IconProvider>
           <main className="flex-1">{children}</main>
         </IconProvider>
+        <Cursor />
       </body>
     </html>
   );
