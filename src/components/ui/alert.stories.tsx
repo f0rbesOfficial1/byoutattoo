@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { CoffeeIcon, AlertTriangleIcon } from "lucide-react";
+import { Coffee, Warning } from "@phosphor-icons/react";
 
 import { Alert, AlertDescription, AlertTitle } from "./alert";
 
@@ -14,7 +14,7 @@ type Story = StoryObj<typeof Alert>;
 export const Default: Story = {
   render: () => (
     <Alert className="max-w-md">
-      <CoffeeIcon />
+      <Coffee />
       <AlertTitle>New seasonal blend in the grinder</AlertTitle>
       <AlertDescription>
         Try the Costa Rica Tarrazú, available all this week.
@@ -26,7 +26,7 @@ export const Default: Story = {
 export const Destructive: Story = {
   render: () => (
     <Alert variant="destructive" className="max-w-md">
-      <AlertTriangleIcon />
+      <Warning />
       <AlertTitle>Reservation could not be saved</AlertTitle>
       <AlertDescription>
         Please check your details and try again.

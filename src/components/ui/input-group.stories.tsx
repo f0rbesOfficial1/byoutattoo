@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { MailIcon, SearchIcon } from "lucide-react";
+import { Envelope, MagnifyingGlass } from "@phosphor-icons/react";
 
 import {
   InputGroup,
@@ -22,7 +22,7 @@ export const WithIcon: Story = {
   render: () => (
     <InputGroup className="w-72">
       <InputGroupAddon>
-        <SearchIcon />
+        <MagnifyingGlass />
       </InputGroupAddon>
       <InputGroupInput placeholder="Search the menu" />
     </InputGroup>
@@ -33,7 +33,7 @@ export const WithButton: Story = {
   render: () => (
     <InputGroup className="w-80">
       <InputGroupAddon>
-        <MailIcon />
+        <Envelope />
       </InputGroupAddon>
       <InputGroupInput type="email" placeholder="hello@perron.coffee" />
       <InputGroupAddon align="inline-end">
@@ -79,7 +79,7 @@ export const Disabled: Story = {
   render: () => (
     <InputGroup className="w-72">
       <InputGroupAddon>
-        <SearchIcon />
+        <MagnifyingGlass />
       </InputGroupAddon>
       <InputGroupInput placeholder="Search disabled" disabled />
     </InputGroup>

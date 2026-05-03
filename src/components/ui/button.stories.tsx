@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { CoffeeIcon } from "lucide-react";
+import { Coffee } from "@phosphor-icons/react";
 
 import { Button } from "./button";
 
@@ -67,7 +67,7 @@ export const Sizes: Story = {
 export const WithIcon: Story = {
   render: () => (
     <Button>
-      <CoffeeIcon />
+      <Coffee />
       Order coffee
     </Button>
   ),

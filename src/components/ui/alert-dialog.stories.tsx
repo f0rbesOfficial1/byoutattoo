@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { TrashIcon, TriangleAlertIcon } from "lucide-react";
+import { Trash, Warning } from "@phosphor-icons/react";
 
 import {
   AlertDialog,
@@ -57,7 +57,7 @@ export const WithMedia: Story = {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogMedia>
-            <TriangleAlertIcon />
+            <Warning />
           </AlertDialogMedia>
           <AlertDialogTitle>Permanently delete account?</AlertDialogTitle>
           <AlertDialogDescription>
@@ -83,7 +83,7 @@ export const Small: Story = {
       <AlertDialogContent size="sm">
         <AlertDialogHeader>
           <AlertDialogMedia>
-            <TrashIcon />
+            <Trash />
           </AlertDialogMedia>
           <AlertDialogTitle>Sign out?</AlertDialogTitle>
           <AlertDialogDescription>

@@ -2,6 +2,7 @@ import type { Preview } from "@storybook/nextjs-vite";
 import { Cormorant_Garamond, Geist, Geist_Mono } from "next/font/google";
 import React from "react";
 
+import { IconProvider } from "../src/components/icon-provider";
 import { TooltipProvider } from "../src/components/ui/tooltip";
 import "../src/app/globals.css";
 
@@ -42,9 +43,11 @@ const preview: Preview = {
       <div
         className={`${geistSans.variable} ${geistMono.variable} ${cormorant.variable} font-sans bg-background text-foreground min-h-screen p-10`}
       >
-        <TooltipProvider>
-          <Story />
-        </TooltipProvider>
+        <IconProvider>
+          <TooltipProvider>
+            <Story />
+          </TooltipProvider>
+        </IconProvider>
       </div>
     ),
   ],

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { useState } from "react";
-import { MinusIcon, PlusIcon } from "lucide-react";
+import { Minus, Plus } from "@phosphor-icons/react";
 
 import { Button } from "./button";
 import {
@@ -75,7 +75,7 @@ export const WithNestedActions: Story = {
                   onClick={() => setCount((c) => Math.max(1, c - 1))}
                   disabled={count <= 1}
                 >
-                  <MinusIcon />
+                  <Minus />
                 </Button>
                 <div className="font-heading text-3xl font-medium tabular-nums">
                   {count}
@@ -85,7 +85,7 @@ export const WithNestedActions: Story = {
                   size="icon"
                   onClick={() => setCount((c) => c + 1)}
                 >
-                  <PlusIcon />
+                  <Plus />
                 </Button>
               </div>
               <DrawerFooter>

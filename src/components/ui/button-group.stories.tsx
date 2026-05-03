@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import {
-  AlignCenterIcon,
-  AlignLeftIcon,
-  AlignRightIcon,
-  BoldIcon,
-  ItalicIcon,
-  UnderlineIcon,
-} from "lucide-react";
+  TextAlignCenter,
+  TextAlignLeft,
+  TextAlignRight,
+  TextB,
+  TextItalic,
+  TextUnderline,
+} from "@phosphor-icons/react";
 
 import { Button } from "./button";
 import {
@@ -38,13 +38,13 @@ export const Icons: Story = {
   render: () => (
     <ButtonGroup>
       <Button variant="outline" size="icon" aria-label="Bold">
-        <BoldIcon />
+        <TextB />
       </Button>
       <Button variant="outline" size="icon" aria-label="Italic">
-        <ItalicIcon />
+        <TextItalic />
       </Button>
       <Button variant="outline" size="icon" aria-label="Underline">
-        <UnderlineIcon />
+        <TextUnderline />
       </Button>
     </ButtonGroup>
   ),
@@ -54,20 +54,20 @@ export const WithSeparator: Story = {
   render: () => (
     <ButtonGroup>
       <Button variant="outline" size="icon" aria-label="Align left">
-        <AlignLeftIcon />
+        <TextAlignLeft />
       </Button>
       <Button variant="outline" size="icon" aria-label="Align center">
-        <AlignCenterIcon />
+        <TextAlignCenter />
       </Button>
       <Button variant="outline" size="icon" aria-label="Align right">
-        <AlignRightIcon />
+        <TextAlignRight />
       </Button>
       <ButtonGroupSeparator />
       <Button variant="outline" size="icon" aria-label="Bold">
-        <BoldIcon />
+        <TextB />
       </Button>
       <Button variant="outline" size="icon" aria-label="Italic">
-        <ItalicIcon />
+        <TextItalic />
       </Button>
     </ButtonGroup>
   ),

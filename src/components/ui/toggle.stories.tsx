@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { BoldIcon, ItalicIcon, StarIcon, UnderlineIcon } from "lucide-react";
+import { TextB, TextItalic, Star, TextUnderline } from "@phosphor-icons/react";
 
 import { Toggle } from "./toggle";
 
@@ -34,13 +34,13 @@ export const WithIcon: Story = {
   render: () => (
     <div className="flex items-center gap-2">
       <Toggle aria-label="Toggle bold">
-        <BoldIcon />
+        <TextB />
       </Toggle>
       <Toggle aria-label="Toggle italic" defaultPressed>
-        <ItalicIcon />
+        <TextItalic />
       </Toggle>
       <Toggle aria-label="Toggle underline">
-        <UnderlineIcon />
+        <TextUnderline />
       </Toggle>
     </div>
   ),
@@ -49,7 +49,7 @@ export const WithIcon: Story = {
 export const WithIconAndText: Story = {
   render: () => (
     <Toggle variant="outline">
-      <StarIcon />
+      <Star />
       Favorite
     </Toggle>
   ),

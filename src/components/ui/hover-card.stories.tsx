@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { CalendarIcon } from "lucide-react";
+import { Calendar } from "@phosphor-icons/react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import { Button } from "./button";
@@ -32,7 +32,7 @@ export const Default: Story = {
               A neighborhood roastery serving slow-brewed coffee since 2019.
             </p>
             <div className="flex items-center pt-1 text-xs text-muted-foreground">
-              <CalendarIcon className="mr-1 size-3" />
+              <Calendar className="mr-1 size-3" />
               <span>Open since June 2019</span>
             </div>
           </div>

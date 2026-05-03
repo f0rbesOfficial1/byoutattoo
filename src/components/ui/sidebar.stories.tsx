@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import {
-  CalendarIcon,
-  CoffeeIcon,
-  HomeIcon,
-  InboxIcon,
-  LifeBuoyIcon,
-  SearchIcon,
-  SendIcon,
-  SettingsIcon,
-  UsersIcon,
-} from "lucide-react";
+  Calendar,
+  Coffee,
+  House,
+  Tray,
+  Lifebuoy,
+  MagnifyingGlass,
+  PaperPlaneTilt,
+  Gear,
+  Users,
+} from "@phosphor-icons/react";
 
 import {
   Sidebar,
@@ -36,21 +36,21 @@ export default meta;
 type Story = StoryObj<typeof Sidebar>;
 
 const mainNav = [
-  { title: "Home", url: "#", icon: HomeIcon },
-  { title: "Inbox", url: "#", icon: InboxIcon },
-  { title: "Calendar", url: "#", icon: CalendarIcon },
-  { title: "Search", url: "#", icon: SearchIcon },
-  { title: "Settings", url: "#", icon: SettingsIcon },
+  { title: "Home", url: "#", icon: House },
+  { title: "Inbox", url: "#", icon: Tray },
+  { title: "Calendar", url: "#", icon: Calendar },
+  { title: "Search", url: "#", icon: MagnifyingGlass },
+  { title: "Settings", url: "#", icon: Gear },
 ];
 
 const teamNav = [
-  { title: "Baristas", url: "#", icon: UsersIcon },
-  { title: "Menu", url: "#", icon: CoffeeIcon },
+  { title: "Baristas", url: "#", icon: Users },
+  { title: "Menu", url: "#", icon: Coffee },
 ];
 
 const supportNav = [
-  { title: "Support", url: "#", icon: LifeBuoyIcon },
-  { title: "Feedback", url: "#", icon: SendIcon },
+  { title: "Support", url: "#", icon: Lifebuoy },
+  { title: "Feedback", url: "#", icon: PaperPlaneTilt },
 ];
 
 export const Default: Story = {
@@ -61,7 +61,7 @@ export const Default: Story = {
           <SidebarHeader>
             <div className="flex items-center gap-2 px-2 py-1.5">
               <div className="flex size-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
-                <CoffeeIcon className="size-4" />
+                <Coffee className="size-4" />
               </div>
               <div className="flex flex-col">
                 <span className="font-heading text-sm font-medium">
@@ -154,7 +154,7 @@ export const Floating: Story = {
           <SidebarHeader>
             <div className="flex items-center gap-2 px-2 py-1.5">
               <div className="flex size-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
-                <CoffeeIcon className="size-4" />
+                <Coffee className="size-4" />
               </div>
               <span className="font-heading text-sm font-medium group-data-[collapsible=icon]:hidden">
                 Perron

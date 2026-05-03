@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { CoffeeIcon, LeafIcon, SparklesIcon } from "lucide-react";
+import { Coffee, Leaf, Sparkle } from "@phosphor-icons/react";
 
 import {
   NavigationMenu,
@@ -29,7 +29,7 @@ export const Default: Story = {
             <ul className="grid w-[420px] gap-2 p-3 md:grid-cols-2">
               <li>
                 <NavigationMenuLink href="#">
-                  <CoffeeIcon />
+                  <Coffee />
                   <div>
                     <div className="font-medium">Espresso bar</div>
                     <p className="text-xs text-muted-foreground">
@@ -40,7 +40,7 @@ export const Default: Story = {
               </li>
               <li>
                 <NavigationMenuLink href="#">
-                  <LeafIcon />
+                  <Leaf />
                   <div>
                     <div className="font-medium">Slow brews</div>
                     <p className="text-xs text-muted-foreground">
@@ -51,7 +51,7 @@ export const Default: Story = {
               </li>
               <li>
                 <NavigationMenuLink href="#">
-                  <SparklesIcon />
+                  <Sparkle />
                   <div>
                     <div className="font-medium">Seasonal</div>
                     <p className="text-xs text-muted-foreground">
@@ -62,7 +62,7 @@ export const Default: Story = {
               </li>
               <li>
                 <NavigationMenuLink href="#">
-                  <CoffeeIcon />
+                  <Coffee />
                   <div>
                     <div className="font-medium">Non-coffee</div>
                     <p className="text-xs text-muted-foreground">

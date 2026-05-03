@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import {
-  AlignCenterIcon,
-  AlignJustifyIcon,
-  AlignLeftIcon,
-  AlignRightIcon,
-  BoldIcon,
-  ItalicIcon,
-  UnderlineIcon,
-} from "lucide-react";
+  TextAlignCenter,
+  TextAlignJustify,
+  TextAlignLeft,
+  TextAlignRight,
+  TextB,
+  TextItalic,
+  TextUnderline,
+} from "@phosphor-icons/react";
 
 import { ToggleGroup, ToggleGroupItem } from "./toggle-group";
 
@@ -23,16 +23,16 @@ export const Single: Story = {
   render: () => (
     <ToggleGroup defaultValue={["left"]} aria-label="Text alignment">
       <ToggleGroupItem value="left" aria-label="Align left">
-        <AlignLeftIcon />
+        <TextAlignLeft />
       </ToggleGroupItem>
       <ToggleGroupItem value="center" aria-label="Align center">
-        <AlignCenterIcon />
+        <TextAlignCenter />
       </ToggleGroupItem>
       <ToggleGroupItem value="right" aria-label="Align right">
-        <AlignRightIcon />
+        <TextAlignRight />
       </ToggleGroupItem>
       <ToggleGroupItem value="justify" aria-label="Justify">
-        <AlignJustifyIcon />
+        <TextAlignJustify />
       </ToggleGroupItem>
     </ToggleGroup>
   ),
@@ -46,13 +46,13 @@ export const Multiple: Story = {
       aria-label="Text formatting"
     >
       <ToggleGroupItem value="bold" aria-label="Bold">
-        <BoldIcon />
+        <TextB />
       </ToggleGroupItem>
       <ToggleGroupItem value="italic" aria-label="Italic">
-        <ItalicIcon />
+        <TextItalic />
       </ToggleGroupItem>
       <ToggleGroupItem value="underline" aria-label="Underline">
-        <UnderlineIcon />
+        <TextUnderline />
       </ToggleGroupItem>
     </ToggleGroup>
   ),
@@ -62,13 +62,13 @@ export const Outline: Story = {
   render: () => (
     <ToggleGroup variant="outline" defaultValue={["center"]}>
       <ToggleGroupItem value="left" aria-label="Align left">
-        <AlignLeftIcon />
+        <TextAlignLeft />
       </ToggleGroupItem>
       <ToggleGroupItem value="center" aria-label="Align center">
-        <AlignCenterIcon />
+        <TextAlignCenter />
       </ToggleGroupItem>
       <ToggleGroupItem value="right" aria-label="Align right">
-        <AlignRightIcon />
+        <TextAlignRight />
       </ToggleGroupItem>
     </ToggleGroup>
   ),
@@ -79,35 +79,35 @@ export const Sizes: Story = {
     <div className="flex flex-col items-start gap-3">
       <ToggleGroup size="sm" defaultValue={["left"]}>
         <ToggleGroupItem value="left" aria-label="Align left">
-          <AlignLeftIcon />
+          <TextAlignLeft />
         </ToggleGroupItem>
         <ToggleGroupItem value="center" aria-label="Align center">
-          <AlignCenterIcon />
+          <TextAlignCenter />
         </ToggleGroupItem>
         <ToggleGroupItem value="right" aria-label="Align right">
-          <AlignRightIcon />
+          <TextAlignRight />
         </ToggleGroupItem>
       </ToggleGroup>
       <ToggleGroup defaultValue={["left"]}>
         <ToggleGroupItem value="left" aria-label="Align left">
-          <AlignLeftIcon />
+          <TextAlignLeft />
         </ToggleGroupItem>
         <ToggleGroupItem value="center" aria-label="Align center">
-          <AlignCenterIcon />
+          <TextAlignCenter />
         </ToggleGroupItem>
         <ToggleGroupItem value="right" aria-label="Align right">
-          <AlignRightIcon />
+          <TextAlignRight />
         </ToggleGroupItem>
       </ToggleGroup>
       <ToggleGroup size="lg" defaultValue={["left"]}>
         <ToggleGroupItem value="left" aria-label="Align left">
-          <AlignLeftIcon />
+          <TextAlignLeft />
         </ToggleGroupItem>
         <ToggleGroupItem value="center" aria-label="Align center">
-          <AlignCenterIcon />
+          <TextAlignCenter />
         </ToggleGroupItem>
         <ToggleGroupItem value="right" aria-label="Align right">
-          <AlignRightIcon />
+          <TextAlignRight />
         </ToggleGroupItem>
       </ToggleGroup>
     </div>

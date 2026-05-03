@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import * as React from "react";
-import { CalendarIcon } from "lucide-react";
+import { Calendar as CalendarIcon } from "@phosphor-icons/react";
 
 import { Button } from "./button";
 import { Calendar } from "./calendar";

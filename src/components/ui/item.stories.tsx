@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import {
-  ChevronRightIcon,
-  CoffeeIcon,
-  CroissantIcon,
-  LeafIcon,
-} from "lucide-react";
+  CaretRight,
+  Coffee,
+  Bread,
+  Leaf,
+} from "@phosphor-icons/react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import { Badge } from "./badge";
@@ -48,7 +48,7 @@ export const WithMedia: Story = {
   render: () => (
     <Item variant="outline" className="max-w-md">
       <ItemMedia variant="icon">
-        <CoffeeIcon />
+        <Coffee />
       </ItemMedia>
       <ItemContent>
         <ItemTitle>Espresso tonic</ItemTitle>
@@ -58,7 +58,7 @@ export const WithMedia: Story = {
       </ItemContent>
       <ItemActions>
         <Button variant="ghost" size="icon-sm">
-          <ChevronRightIcon />
+          <CaretRight />
         </Button>
       </ItemActions>
     </Item>
@@ -90,7 +90,7 @@ export const Group: Story = {
     <ItemGroup className="max-w-md">
       <Item variant="outline">
         <ItemMedia variant="icon">
-          <CoffeeIcon />
+          <Coffee />
         </ItemMedia>
         <ItemContent>
           <ItemTitle>Single origin filter</ItemTitle>
@@ -100,7 +100,7 @@ export const Group: Story = {
       <ItemSeparator />
       <Item variant="outline">
         <ItemMedia variant="icon">
-          <CroissantIcon />
+          <Bread />
         </ItemMedia>
         <ItemContent>
           <ItemTitle>Almond croissant</ItemTitle>
@@ -110,7 +110,7 @@ export const Group: Story = {
       <ItemSeparator />
       <Item variant="outline">
         <ItemMedia variant="icon">
-          <LeafIcon />
+          <Leaf />
         </ItemMedia>
         <ItemContent>
           <ItemTitle>Matcha latte</ItemTitle>

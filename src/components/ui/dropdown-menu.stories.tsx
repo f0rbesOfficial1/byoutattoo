@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { useState } from "react";
 import {
-  CreditCardIcon,
-  LogOutIcon,
-  PlusIcon,
-  SettingsIcon,
-  UserIcon,
-} from "lucide-react";
+  CreditCard,
+  SignOut,
+  Plus,
+  Gear,
+  User,
+} from "@phosphor-icons/react";
 
 import { Button } from "./button";
 import {
@@ -45,24 +45,24 @@ export const Default: Story = {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
-            <UserIcon />
+            <User />
             Profile
             <DropdownMenuShortcut>P</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <CreditCardIcon />
+            <CreditCard />
             Billing
             <DropdownMenuShortcut>B</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <SettingsIcon />
+            <Gear />
             Settings
             <DropdownMenuShortcut>,</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem variant="destructive">
-          <LogOutIcon />
+          <SignOut />
           Log out
         </DropdownMenuItem>
       </DropdownMenuContent>
@@ -147,7 +147,7 @@ export const WithSubmenu: Story = {
         <DropdownMenuLabel>Order actions</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <PlusIcon />
+          <Plus />
           New order
         </DropdownMenuItem>
         <DropdownMenuSub>
