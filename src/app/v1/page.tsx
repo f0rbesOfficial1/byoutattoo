@@ -2,7 +2,6 @@
 
 import {
   ArrowDownIcon,
-  ArrowRightIcon,
   ArrowUpRightIcon,
   IconContext,
 } from "@phosphor-icons/react";
@@ -191,15 +190,11 @@ function Portfolio() {
                 alt={item.caption}
                 fill
                 sizes="(min-width: 1024px) 32vw, (min-width: 768px) 42vw, 78vw"
-                className="object-cover grayscale transition-all duration-500 ease-out group-hover:grayscale-0"
+                className="scale-100 object-cover grayscale transition-transform duration-700 ease-out group-hover:scale-105"
               />
-              <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-4 text-[11px] uppercase tracking-[0.25em] text-foreground mix-blend-difference md:p-5">
+              <div className="absolute inset-x-0 bottom-0 p-4 text-[11px] uppercase tracking-[0.25em] text-foreground mix-blend-difference md:p-5">
                 <span className="tabular-nums">
                   {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="flex items-center gap-2">
-                  <ArrowRightIcon className="size-3.5" />
-                  {item.caption}
                 </span>
               </div>
             </motion.li>
