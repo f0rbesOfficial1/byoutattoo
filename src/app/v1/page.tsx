@@ -255,7 +255,7 @@ function Footer() {
   return (
     <footer
       id="contact"
-      className="px-6 pt-16 pb-16 md:px-10 md:pt-28 md:pb-20"
+      className="px-6 py-16 md:px-10 md:py-28"
     >
       <motion.h2
         initial={{ opacity: 0, y: 24 }}
