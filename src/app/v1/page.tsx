@@ -64,15 +64,26 @@ function Header() {
     <header className="sticky top-0 z-30 border-b border-foreground/10 bg-background/80 backdrop-blur">
       <div className="flex items-center justify-between px-6 py-5 text-[11px] uppercase tracking-[0.25em] md:px-10">
         <div className="font-medium">B. YOU TATTOO</div>
-        <Button
-          variant="secondary"
-          size="sm"
-          render={<a href="#contact" />}
-          className="rounded-full text-[11px] uppercase tracking-[0.25em]"
-        >
-          Contact
-          <ArrowDownIcon className="size-3.5" />
-        </Button>
+        <nav className="flex items-center gap-2">
+          <Button
+            variant="secondary"
+            size="sm"
+            render={<a href="#portfolio" />}
+            className="rounded-full text-[11px] uppercase tracking-[0.25em]"
+          >
+            Portfolio
+            <ArrowDownIcon className="size-3.5" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            render={<a href="#contact" />}
+            className="rounded-full text-[11px] uppercase tracking-[0.25em]"
+          >
+            Contact
+            <ArrowDownIcon className="size-3.5" />
+          </Button>
+        </nav>
       </div>
     </header>
   );
