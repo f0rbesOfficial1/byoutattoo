@@ -284,7 +284,6 @@ function Footer() {
         className="font-display font-black uppercase leading-[0.82] tracking-[-0.04em] text-[clamp(2.75rem,9.5vw,10rem)]"
       >
         Contact
-        <ArrowDownIcon className="ml-3 inline-block size-[0.7em] align-baseline stroke-[0.5]" />
       </motion.h2>
 
       <div className="mt-16 grid grid-cols-1 gap-10 border-t border-foreground/10 pt-12 md:mt-24 md:grid-cols-3 md:gap-0 md:pt-16">
