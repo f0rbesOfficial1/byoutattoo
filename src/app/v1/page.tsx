@@ -292,7 +292,7 @@ function Footer() {
             href={INSTAGRAM_DM_URL}
             target="_blank"
             rel="noreferrer noopener"
-            className="group mt-5 flex items-baseline justify-between gap-4 border-b border-foreground/20 pb-3 transition-colors hover:border-foreground"
+            className="group mt-5 inline-flex items-baseline gap-4 border-b border-foreground/20 pb-3 transition-colors hover:border-foreground"
           >
             <span className="font-heading text-2xl leading-tight font-light md:text-3xl">
               <span className="italic">Stuur</span> een DM
