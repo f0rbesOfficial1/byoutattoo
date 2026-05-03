@@ -284,53 +284,57 @@ function Footer() {
       </motion.h2>
 
       <div className="mt-16 grid grid-cols-1 gap-10 md:mt-24 md:grid-cols-3 md:gap-0">
-        <div className="md:border-r md:border-foreground/10 md:pr-10">
+        <div className="flex flex-col md:border-r md:border-foreground/10 md:pr-10">
           <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
             // Instagram
           </p>
-          <a
-            href={INSTAGRAM_DM_URL}
-            target="_blank"
-            rel="noreferrer noopener"
-            className="group mt-5 inline-flex items-baseline gap-4 border-b border-foreground/20 pb-3 transition-colors hover:border-foreground"
-          >
-            <span className="font-heading text-2xl leading-tight font-light md:text-3xl">
-              <span className="italic">Stuur</span> een DM
-            </span>
-            <ArrowUpRightIcon className="size-6 shrink-0 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
-          </a>
-          <p className="mt-3 text-[11px] uppercase tracking-[0.25em] opacity-50">
-            @b._you_tattoo
-          </p>
+          <div className="mt-5 md:mt-auto">
+            <a
+              href={INSTAGRAM_DM_URL}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="group inline-flex items-baseline gap-4 border-b border-foreground/20 pb-3 transition-colors hover:border-foreground"
+            >
+              <span className="font-heading text-2xl leading-tight font-light md:text-3xl">
+                <span className="italic">Stuur</span> een DM
+              </span>
+              <ArrowUpRightIcon className="size-6 shrink-0 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
+            </a>
+            <p className="mt-3 text-[11px] uppercase tracking-[0.25em] opacity-50">
+              @b._you_tattoo
+            </p>
+          </div>
         </div>
 
-        <div className="md:border-r md:border-foreground/10 md:px-10">
+        <div className="flex flex-col md:border-r md:border-foreground/10 md:px-10">
           <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
             // Studio
           </p>
-          <a
-            href="https://maps.app.goo.gl/zUR6iJKpnHLFi1uZ9"
-            target="_blank"
-            rel="noreferrer noopener"
-            className="group mt-5 inline-flex items-start gap-4 border-b border-foreground/20 pb-3 transition-colors hover:border-foreground"
-          >
-            <span className="font-heading text-2xl leading-tight font-light md:text-3xl">
-              Steenstraat 3A
-              <br />
-              <span className="italic">9340 Lede, België</span>
-            </span>
-            <ArrowUpRightIcon className="mt-1 size-6 shrink-0 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
-          </a>
-          <p className="mt-3 text-[11px] uppercase tracking-[0.25em] opacity-50">
-            Open in Google Maps
-          </p>
+          <div className="mt-5 md:mt-auto">
+            <a
+              href="https://maps.app.goo.gl/zUR6iJKpnHLFi1uZ9"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="group inline-flex items-start gap-4 border-b border-foreground/20 pb-3 transition-colors hover:border-foreground"
+            >
+              <span className="font-heading text-2xl leading-tight font-light md:text-3xl">
+                Steenstraat 3A
+                <br />
+                <span className="italic">9340 Lede, België</span>
+              </span>
+              <ArrowUpRightIcon className="mt-1 size-6 shrink-0 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
+            </a>
+            <p className="mt-3 text-[11px] uppercase tracking-[0.25em] opacity-50">
+              Open in Google Maps
+            </p>
+          </div>
         </div>
 
-        <div className="md:pl-10">
+        <div className="flex flex-col md:pl-10">
           <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
             // Status
           </p>
-          <p className="mt-5 font-heading text-2xl leading-snug font-light md:text-3xl">
+          <p className="mt-5 font-heading text-2xl leading-snug font-light md:mt-auto md:text-3xl">
             Uitsluitend op afspraak.
           </p>
         </div>
