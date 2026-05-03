@@ -236,7 +236,7 @@ function HouseRules() {
                     <ArrowDownIcon className="ml-auto size-4 shrink-0 opacity-50 transition-transform duration-300 group-data-[panel-open]/trigger:rotate-180" />
                   </span>
                 </AccordionTrigger>
-                <AccordionContent className="px-0! pb-6">
+                <AccordionContent className="px-0 pb-6">
                   <p className="max-w-md text-base leading-relaxed opacity-75">
                     {rule.body}
                   </p>
