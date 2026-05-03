@@ -149,7 +149,7 @@ function Portfolio() {
   return (
     <section
       id="portfolio"
-      className="border-b border-foreground/10 py-16 md:py-24"
+      className="scroll-mt-20 border-b border-foreground/10 py-16 md:py-24"
     >
       <div className="mb-10 flex flex-wrap items-end justify-between gap-6 px-6 md:mb-16 md:px-10">
         <h2 className="font-heading text-4xl leading-tight font-light md:text-6xl">
@@ -255,7 +255,7 @@ function Footer() {
   return (
     <footer
       id="contact"
-      className="px-6 py-16 md:px-10 md:py-28"
+      className="scroll-mt-20 px-6 py-16 md:px-10 md:py-28"
     >
       <motion.h2
         initial={{ opacity: 0, y: 24 }}

@@ -44,7 +44,7 @@ export default function RootLayout({
   return (
     <html
       lang="nl"
-      className={`${inter.variable} ${geistMono.variable} ${cormorant.variable} ${playfair.variable} h-full antialiased`}
+      className={`${inter.variable} ${geistMono.variable} ${cormorant.variable} ${playfair.variable} h-full scroll-smooth antialiased`}
     >
       <body className="flex min-h-full flex-col">
         <IconProvider>
