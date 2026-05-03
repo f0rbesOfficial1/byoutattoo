@@ -19,7 +19,12 @@ This project uses **shadcn/ui** as its component library. All UI primitives (but
 
 - Tailwind CSS v4 with CSS variables defined in `src/app/globals.css`.
 - Brand palette: Titanium & Charcoal — deep charcoal background (`#171717`), titanium white foreground (`#E5E4E2`).
-- Headings use Cormorant Garamond (serif), body uses Geist Sans. Wired through `--font-heading` (alias of `--font-cormorant`) and `--font-sans`.
+- Typography:
+  - `h1` → **Playfair Display** (`--font-playfair`, also exposed as `--font-display` / `font-display` utility).
+  - `h2`–`h4` → **Cormorant Garamond** (`--font-cormorant`, also exposed as `--font-heading` / `font-heading` utility).
+  - Body → **Inter** (`--font-inter`, mapped to `--font-sans` / `font-sans`).
+  - Mono → Geist Mono (`--font-geist-mono` / `font-mono`).
+  - All four are loaded via `next/font/google` in [src/app/layout.tsx](src/app/layout.tsx) and [.storybook/preview.tsx](.storybook/preview.tsx).
 - Always reference colors via semantic tokens (`bg-background`, `text-primary`, `border-border`), never raw hex.
 
 ## Icons

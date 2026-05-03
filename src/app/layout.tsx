@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Geist, Geist_Mono } from "next/font/google";
+import {
+  Cormorant_Garamond,
+  Geist_Mono,
+  Inter,
+  Playfair_Display,
+} from "next/font/google";
 import "./globals.css";
 
 import { IconProvider } from "@/components/icon-provider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
@@ -17,6 +22,12 @@ const geistMono = Geist_Mono({
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
   weight: ["300", "400", "500", "600", "700"],
+  subsets: ["latin"],
+});
+
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
+  weight: ["400", "500", "600", "700", "800", "900"],
   subsets: ["latin"],
 });
 
@@ -33,7 +44,7 @@ export default function RootLayout({
   return (
     <html
       lang="nl"
-      className={`${geistSans.variable} ${geistMono.variable} ${cormorant.variable} h-full antialiased`}
+      className={`${inter.variable} ${geistMono.variable} ${cormorant.variable} ${playfair.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
         <IconProvider>
