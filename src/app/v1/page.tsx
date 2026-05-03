@@ -51,6 +51,14 @@ const houseRules = [
     title: "Te laat afgezegd",
     body: "Bel je later af, dan wordt het voorschot niet terugbetaald.",
   },
+  {
+    title: "Ontwerp op maat",
+    body: "Elke tattoo is uniek. Brenda ontwerpt uitsluitend op aanvraag, waarbij jouw ideeën worden vertaald naar een persoonlijk ontwerp dat perfect bij je past. Er worden geen kopieën van andermans werk gezet.",
+  },
+  {
+    title: "Stijl & kleur",
+    body: "Om de fijnheid en kwaliteit van de lijnen te garanderen, werkt Brenda uitsluitend met zwarte en grijze pigmenten. Er worden geen kleur-tattoos geplaatst.",
+  },
 ];
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
@@ -135,8 +143,9 @@ function Hero() {
       >
         <blockquote className="col-span-12 md:col-span-6">
           <p className="font-heading text-3xl leading-snug font-light md:text-4xl">
-            Gespecialiseerd in ultra fine-line en botanische kunst. Tijdloze
-            verhalen vertaald naar de huid.
+            Gespecialiseerd in ultra fine-line en botanische kunst, uitsluitend
+            uitgevoerd in black &amp; grey. Tijdloze verhalen vertaald naar de
+            huid.
           </p>
         </blockquote>
       </motion.div>
