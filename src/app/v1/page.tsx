@@ -66,13 +66,12 @@ function Header() {
         <div className="font-medium">B. YOU TATTOO</div>
         <nav className="flex items-center gap-2">
           <Button
-            variant="secondary"
+            variant="ghost"
             size="sm"
             render={<a href="#portfolio" />}
             className="rounded-full text-[11px] uppercase tracking-[0.25em]"
           >
             Portfolio
-            <ArrowDownIcon className="size-3.5" />
           </Button>
           <Button
             variant="ghost"
@@ -81,7 +80,6 @@ function Header() {
             className="rounded-full text-[11px] uppercase tracking-[0.25em]"
           >
             Contact
-            <ArrowDownIcon className="size-3.5" />
           </Button>
         </nav>
       </div>
@@ -203,11 +201,6 @@ function Portfolio() {
                 sizes="(min-width: 1024px) 32vw, (min-width: 768px) 42vw, 78vw"
                 className="scale-100 object-cover grayscale transition-transform duration-700 ease-out group-hover:scale-105"
               />
-              <div className="absolute inset-x-0 bottom-0 p-4 text-[11px] uppercase tracking-[0.25em] text-foreground mix-blend-difference md:p-5">
-                <span className="tabular-nums">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-              </div>
             </motion.li>
           ))}
         </ul>
@@ -311,11 +304,11 @@ function Footer() {
               rel="noreferrer noopener"
               className="group inline-flex items-start gap-4 border-b border-foreground/20 pb-3 transition-colors hover:border-foreground"
             >
-              <span className="font-heading text-lg leading-tight font-light md:text-xl">
+              <span className="font-heading text-2xl leading-tight font-light md:text-4xl">
                 Steenstraat 3A,{" "}
                 <span className="italic">9340 Lede</span>
               </span>
-              <ArrowUpRightIcon className="mt-1 size-4 shrink-0 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
+              <ArrowUpRightIcon className="mt-1 size-6 shrink-0 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 md:size-8" />
             </a>
           </div>
         </div>
