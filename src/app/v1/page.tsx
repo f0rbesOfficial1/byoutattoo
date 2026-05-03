@@ -297,10 +297,10 @@ function Footer() {
               rel="noreferrer noopener"
               className="group inline-flex items-baseline gap-4 border-b border-foreground/20 pb-3 transition-colors hover:border-foreground"
             >
-              <span className="font-heading text-2xl leading-tight font-light md:text-3xl">
+              <span className="font-heading text-3xl leading-tight font-light md:text-5xl">
                 <span className="italic">Stuur</span> een DM
               </span>
-              <ArrowUpRightIcon className="size-6 shrink-0 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
+              <ArrowUpRightIcon className="size-8 shrink-0 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 md:size-10" />
             </a>
           </div>
         </div>
@@ -316,11 +316,11 @@ function Footer() {
               rel="noreferrer noopener"
               className="group inline-flex items-start gap-4 border-b border-foreground/20 pb-3 transition-colors hover:border-foreground"
             >
-              <span className="font-heading text-2xl leading-tight font-light md:text-3xl">
+              <span className="font-heading text-lg leading-tight font-light md:text-xl">
                 Steenstraat 3A,{" "}
                 <span className="italic">9340 Lede</span>
               </span>
-              <ArrowUpRightIcon className="mt-1 size-6 shrink-0 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
+              <ArrowUpRightIcon className="mt-1 size-4 shrink-0 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
             </a>
           </div>
         </div>
@@ -329,7 +329,7 @@ function Footer() {
           <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
             // Status
           </p>
-          <p className="mt-5 font-heading text-2xl leading-snug font-light md:mt-auto md:text-3xl">
+          <p className="mt-5 font-heading text-lg leading-snug font-light md:mt-auto md:text-xl">
             Uitsluitend op afspraak.
           </p>
         </div>
