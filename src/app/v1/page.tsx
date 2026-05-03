@@ -4,6 +4,8 @@ import {
   ArrowDownIcon,
   ArrowUpRightIcon,
   IconContext,
+  PaletteIcon,
+  PencilLineIcon,
 } from "@phosphor-icons/react";
 import { motion } from "motion/react";
 import Image from "next/image";
@@ -53,14 +55,6 @@ const houseRules = [
     title: "Te laat afgezegd",
     body: "Bel je later af, dan wordt het voorschot niet terugbetaald.",
   },
-  {
-    title: "Ontwerp op maat",
-    body: "Elke tattoo is uniek. Brenda ontwerpt uitsluitend op aanvraag, waarbij jouw ideeën worden vertaald naar een persoonlijk ontwerp dat perfect bij je past. Er worden geen kopieën van andermans werk gezet.",
-  },
-  {
-    title: "Stijl & kleur",
-    body: "Om de fijnheid en kwaliteit van de lijnen te garanderen, werkt Brenda uitsluitend met zwarte en grijze pigmenten. Er worden geen kleur-tattoos geplaatst.",
-  },
 ];
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
@@ -102,7 +96,7 @@ function Header() {
             render={<a href="#contact" />}
             className="rounded-full text-[11px] uppercase tracking-[0.25em]"
           >
-            Contacteer me
+            Maak een afspraak
           </Button>
         </nav>
       </div>
@@ -221,6 +215,45 @@ function Portfolio() {
           ))}
         </ul>
       </div>
+    </section>
+  );
+}
+
+function Craft() {
+  return (
+    <section className="border-b border-foreground/10 px-6 py-24 md:px-10 md:py-40">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.9, ease: easeOut }}
+        className="grid grid-cols-1 gap-16 md:grid-cols-2 md:gap-0"
+      >
+        <div className="md:border-r md:border-foreground/10 md:pr-12 lg:pr-20">
+          <PencilLineIcon className="size-10 opacity-70" />
+          <h3 className="mt-8 font-heading text-3xl leading-tight font-light md:text-4xl lg:text-5xl">
+            Jouw verhaal op maat.
+          </h3>
+          <p className="mt-6 max-w-md text-base leading-relaxed opacity-75 md:text-lg">
+            Elke tattoo bij B. You is een uniek kunstwerk. Brenda gelooft niet
+            in catalogus-werk; ze vertaalt jouw visie naar een exclusief
+            ontwerp dat de anatomie van het lichaam volgt. Geen kopieën, enkel
+            origineel werk.
+          </p>
+        </div>
+        <div className="md:pl-12 lg:pl-20">
+          <PaletteIcon className="size-10 opacity-70" />
+          <h3 className="mt-8 font-heading text-3xl leading-tight font-light md:text-4xl lg:text-5xl">
+            De kracht van zwart en grijs.
+          </h3>
+          <p className="mt-6 max-w-md text-base leading-relaxed opacity-75 md:text-lg">
+            Door uitsluitend te werken met zwarte en grijze pigmenten, blijft
+            de focus op wat echt telt: de fijnheid van de lijn en de tijdloze
+            diepte van het contrast. Deze specialisatie garandeert de hoogste
+            kwaliteit in fine-line artistry.
+          </p>
+        </div>
+      </motion.div>
     </section>
   );
 }
@@ -346,6 +379,7 @@ export default function V1Page() {
         <Header />
         <Hero />
         <Portfolio />
+        <Craft />
         <HouseRules />
         <Footer />
       </div>
