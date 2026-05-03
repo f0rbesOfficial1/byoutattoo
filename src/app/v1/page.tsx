@@ -133,9 +133,9 @@ function Hero() {
             // Het verhaal
           </p>
           <p className="mt-5 font-heading text-3xl leading-snug font-light md:text-4xl">
-            <span className="italic">By Brenda</span> — Gespecialiseerd in
-            ultra fine-line en botanische kunst. Tijdloze verhalen vertaald
-            naar de huid.
+            Gespecialiseerd in ultra fine-line en botanische kunst.
+            <span className="italic"> Tijdloze verhalen</span> vertaald naar
+            de huid.
           </p>
         </blockquote>
       </motion.div>
