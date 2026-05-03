@@ -44,8 +44,12 @@ const portfolio = [
 
 const houseRules = [
   {
+    title: "Werken op afspraak",
+    body: "Ik werk uitsluitend op afspraak om de kwaliteit en de persoonlijke focus van elke sessie te waarborgen.",
+  },
+  {
     title: "Geen voorschot, geen afspraak",
-    body: "Je afspraak ligt pas vast zodra het voorschot is voldaan.",
+    body: "Je afspraak ligt pas vast zodra ik het voorschot heb ontvangen.",
   },
   {
     title: "Annuleren? Minstens 24 uur op voorhand",
@@ -53,7 +57,11 @@ const houseRules = [
   },
   {
     title: "Te laat afgezegd",
-    body: "Bel je later af, dan wordt het voorschot niet terugbetaald.",
+    body: "Bel je later af, dan kan ik het voorschot helaas niet terugbetalen.",
+  },
+  {
+    title: "Studio ethos",
+    body: "Hygiëne, privacy en een veilige omgeving staan voor mij centraal. Ik zorg voor een rustige, professionele setting voor jouw nieuwe tattoo.",
   },
 ];
 
@@ -152,8 +160,10 @@ function Hero() {
       >
         <blockquote className="col-span-12 md:col-span-6">
           <p className="font-heading text-3xl leading-snug font-light md:text-4xl">
-            Gespecialiseerd in ultra fine-line, botanische kunst, uitsluitend
-            blackwork. Tijdloze verhalen vertaald naar de huid.
+            Gespecialiseerd in ultra fine-line en botanische kunst in black
+            &amp; grey. Of je nu komt met een eigen idee of we samen een uniek
+            concept uitwerken: ik verfijn elk ontwerp met uiterste precisie
+            zodat het perfect bij jou past.
           </p>
         </blockquote>
       </motion.div>
@@ -222,35 +232,47 @@ function Portfolio() {
 function Craft() {
   return (
     <section className="border-b border-foreground/10 px-6 py-24 md:px-10 md:py-40">
+      <motion.h2
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.8, ease: easeOut }}
+        className="font-heading text-4xl leading-tight font-light md:text-6xl"
+      >
+        Inspiratie &amp; ontwerp.
+      </motion.h2>
+
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.9, ease: easeOut }}
-        className="grid grid-cols-1 gap-16 md:grid-cols-2 md:gap-0"
+        transition={{ duration: 0.9, delay: 0.1, ease: easeOut }}
+        className="mt-16 grid grid-cols-1 gap-16 md:mt-24 md:grid-cols-2 md:gap-0"
       >
         <div className="md:border-r md:border-foreground/10 md:pr-12 lg:pr-20">
           <PencilLineIcon className="size-10 opacity-70" />
           <h3 className="mt-8 font-heading text-3xl leading-tight font-light md:text-4xl lg:text-5xl">
-            Jouw verhaal op maat.
+            Van inspiratie naar huid.
           </h3>
           <p className="mt-6 max-w-md text-base leading-relaxed opacity-75 md:text-lg">
-            Elke tattoo bij B. You is een uniek kunstwerk. Brenda gelooft niet
-            in catalogus-werk; ze vertaalt jouw visie naar een exclusief
-            ontwerp dat de anatomie van het lichaam volgt. Geen kopieën, enkel
-            origineel werk.
+            Heb je al een duidelijk beeld van wat je wilt, of breng je
+            voorbeelden mee als inspiratie? Dat is voor mij het perfecte
+            startpunt. Ik kijk samen met jou hoe we deze ideeën kunnen
+            vertalen naar mijn kenmerkende fine-line stijl, zodat het
+            resultaat altijd natuurlijk en verfijnd aanvoelt.
           </p>
         </div>
         <div className="md:pl-12 lg:pl-20">
           <PaletteIcon className="size-10 opacity-70" />
           <h3 className="mt-8 font-heading text-3xl leading-tight font-light md:text-4xl lg:text-5xl">
-            De kracht van zwart en grijs.
+            Een uniek concept.
           </h3>
           <p className="mt-6 max-w-md text-base leading-relaxed opacity-75 md:text-lg">
-            Door uitsluitend te werken met zwarte en grijze pigmenten, blijft
-            de focus op wat echt telt: de fijnheid van de lijn en de tijdloze
-            diepte van het contrast. Deze specialisatie garandeert de hoogste
-            kwaliteit in fine-line artistry.
+            Hier ligt mijn echte passie: het van nul af aan uitwerken van een
+            persoonlijk concept. Heb je een globaal idee of een gevoel dat je
+            wilt vastleggen? Ik neem de tijd om een ontwerp te tekenen dat
+            exclusief voor jou is — een artistieke samenwerking waarbij jouw
+            verhaal centraal staat.
           </p>
         </div>
       </motion.div>
@@ -320,7 +342,7 @@ function Footer() {
         transition={{ duration: 0.9, ease: easeOut }}
         className="font-display font-black uppercase leading-[1.05] tracking-[0.05em] text-[clamp(2.75rem,9.5vw,10rem)]"
       >
-        Contacteer me
+        Klaar voor je volgende tattoo?
       </motion.h2>
 
       <div className="mt-8 grid grid-cols-1 gap-10 md:mt-[92px] md:grid-cols-3 md:gap-0">
@@ -364,7 +386,7 @@ function Footer() {
 
         <div className="flex flex-col md:min-h-[92px] md:pl-10">
           <p className="mt-5 font-heading text-2xl leading-tight font-light md:mt-auto">
-            Uitsluitend op afspraak.
+            Ik werk uitsluitend op afspraak.
           </p>
         </div>
       </div>
