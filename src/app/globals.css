@@ -52,7 +52,7 @@
 :root {
   /* Titanium & Charcoal Palette */
   /* Background: Deep Charcoal (#171717) */
-  --background: hsl(0 0% 9%);
+  --background: hsl(0 0% 6%);
   /* Foreground: Titanium White (#E5E4E2) */
   --foreground: hsl(20 5% 90%);
 
@@ -104,7 +104,7 @@
 
 .dark {
   /* Already a dark theme — keep .dark in sync with :root */
-  --background: hsl(0 0% 9%);
+  --background: hsl(0 0% 6%);
   --foreground: hsl(20 5% 90%);
   --card: hsl(0 0% 11%);
   --card-foreground: hsl(20 5% 90%);
