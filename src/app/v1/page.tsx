@@ -285,7 +285,7 @@ function Footer() {
         Contact
       </motion.h2>
 
-      <div className="mt-16 grid grid-cols-1 gap-10 md:mt-24 md:grid-cols-3 md:gap-0">
+      <div className="mt-16 grid grid-cols-1 gap-10 md:mt-24 md:grid-cols-2 md:gap-0">
         <div className="flex flex-col md:border-r md:border-foreground/10 md:pr-10">
           <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
             // @b._you_tattoo
@@ -305,7 +305,7 @@ function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col md:border-r md:border-foreground/10 md:px-10">
+        <div className="flex flex-col md:pl-10">
           <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
             // Studio
           </p>
@@ -323,15 +323,6 @@ function Footer() {
               <ArrowUpRightIcon className="mt-1 size-4 shrink-0 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
             </a>
           </div>
-        </div>
-
-        <div className="flex flex-col md:pl-10">
-          <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
-            // Status
-          </p>
-          <p className="mt-5 font-heading text-lg leading-snug font-light md:mt-auto md:text-xl">
-            Uitsluitend op afspraak.
-          </p>
         </div>
       </div>
     </footer>
