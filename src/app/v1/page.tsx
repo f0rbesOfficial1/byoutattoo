@@ -42,16 +42,16 @@ const portfolio = [
 
 const houseRules = [
   {
-    title: "Werken op afspraak",
-    body: "Uitsluitend op afspraak voor volledige focus.",
+    title: "Geen voorschot, geen afspraak",
+    body: "Je afspraak ligt pas vast zodra het voorschot is voldaan.",
   },
   {
-    title: "Voorschot & Boeking",
-    body: "Niet-restitueerbaar voorschot vereist bij elke boeking.",
+    title: "Annuleren? Minstens 24 uur op voorhand",
+    body: "Lukt het toch niet? Laat het me ten laatste 24 uur vóór de afspraak weten.",
   },
   {
-    title: "Studio Ethos",
-    body: "Een rustige, hygiënische omgeving in het hart van de regio.",
+    title: "Te laat afgezegd",
+    body: "Bel je later af, dan wordt het voorschot niet terugbetaald.",
   },
 ];
 
@@ -229,9 +229,9 @@ function HouseRules() {
             // Huisregels
           </p>
           <h2 className="mt-6 font-heading text-4xl leading-tight font-light md:text-5xl">
-            Rust, focus en
+            Duidelijke
             <br />
-            <span className="italic">eerlijkheid.</span>
+            <span className="italic">afspraken.</span>
           </h2>
         </div>
         <div className="md:col-span-8 md:pl-2">
