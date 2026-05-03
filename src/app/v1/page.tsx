@@ -132,7 +132,7 @@ function Hero() {
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, delay: 0.35, ease: easeOut }}
-        className="relative mt-12 grid grid-cols-12 md:-mt-12"
+        className="relative mt-6 grid grid-cols-12 md:-mt-12"
       >
         <div className="col-span-12 md:col-span-5 md:col-start-8">
           <div className="group relative aspect-[4/5] w-full overflow-hidden">
@@ -154,7 +154,7 @@ function Hero() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.9, ease: easeOut }}
-        className="relative mt-12 grid grid-cols-12 md:-mt-20"
+        className="relative mt-6 grid grid-cols-12 md:-mt-20"
       >
         <blockquote className="col-span-12 md:col-span-6">
           <p className="font-heading text-3xl leading-snug font-light md:text-4xl">
