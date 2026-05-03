@@ -277,7 +277,7 @@ function Footer() {
               href={INSTAGRAM_DM_URL}
               target="_blank"
               rel="noreferrer noopener"
-              className="group inline-flex items-baseline gap-4 border-b border-foreground/20 pb-3 transition-colors hover:border-foreground"
+              className="group inline-flex items-baseline gap-4"
             >
               <span className="font-heading text-3xl leading-tight font-light md:text-2xl">
                 <span className="italic">Stuur</span> een DM
@@ -296,13 +296,13 @@ function Footer() {
               href="https://maps.app.goo.gl/zUR6iJKpnHLFi1uZ9"
               target="_blank"
               rel="noreferrer noopener"
-              className="group inline-flex items-start gap-4 border-b border-foreground/20 pb-3 transition-colors hover:border-foreground"
+              className="group inline-flex items-baseline gap-4"
             >
-              <span className="font-heading text-2xl leading-tight font-light md:text-4xl">
+              <span className="font-heading text-2xl leading-tight font-light md:text-2xl">
                 Steenstraat 3A,{" "}
                 <span className="italic">9340 Lede</span>
               </span>
-              <ArrowUpRightIcon className="mt-1 size-6 shrink-0 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 md:size-8" />
+              <ArrowUpRightIcon className="size-6 shrink-0 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
             </a>
           </div>
         </div>
