@@ -7,6 +7,7 @@ import {
 } from "@phosphor-icons/react";
 import { motion } from "motion/react";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 import {
   Accordion,
@@ -60,9 +61,23 @@ const INSTAGRAM_URL = "https://www.instagram.com/b._you_tattoo/";
 const INSTAGRAM_DM_URL = "https://ig.me/m/b._you_tattoo";
 
 function Header() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 0);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-30 border-b border-foreground/10 bg-background/80 backdrop-blur">
+    <header
+      className={`sticky top-0 z-30 border-b bg-background/80 backdrop-blur transition-colors duration-300 ${
+        scrolled ? "border-foreground/10" : "border-transparent"
+      }`}
+    >
       <div className="flex items-center justify-between px-6 py-5 text-[11px] uppercase tracking-[0.25em] md:px-10">
+
         <div className="font-medium">B. YOU TATTOO</div>
         <nav className="flex items-center gap-2">
           <Button
