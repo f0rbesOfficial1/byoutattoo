@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { Envelope, MagnifyingGlass } from "@phosphor-icons/react";
+import { EnvelopeIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
 
 import {
   InputGroup,
@@ -22,7 +22,7 @@ export const WithIcon: Story = {
   render: () => (
     <InputGroup className="w-72">
       <InputGroupAddon>
-        <MagnifyingGlass />
+        <MagnifyingGlassIcon />
       </InputGroupAddon>
       <InputGroupInput placeholder="Search the menu" />
     </InputGroup>
@@ -33,7 +33,7 @@ export const WithButton: Story = {
   render: () => (
     <InputGroup className="w-80">
       <InputGroupAddon>
-        <Envelope />
+        <EnvelopeIcon />
       </InputGroupAddon>
       <InputGroupInput type="email" placeholder="hello@perron.coffee" />
       <InputGroupAddon align="inline-end">
@@ -79,7 +79,7 @@ export const Disabled: Story = {
   render: () => (
     <InputGroup className="w-72">
       <InputGroupAddon>
-        <MagnifyingGlass />
+        <MagnifyingGlassIcon />
       </InputGroupAddon>
       <InputGroupInput placeholder="Search disabled" disabled />
     </InputGroup>

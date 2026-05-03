@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { Gear } from "@phosphor-icons/react";
+import { GearIcon } from "@phosphor-icons/react";
 
 import { Button } from "./button";
 import { Input } from "./input";
@@ -43,7 +43,7 @@ export const WithForm: Story = {
       <PopoverTrigger
         render={
           <Button variant="outline" size="icon">
-            <Gear />
+            <GearIcon />
           </Button>
         }
       />

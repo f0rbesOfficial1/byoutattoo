@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { useState } from "react";
 import {
-  CreditCard,
-  SignOut,
-  Plus,
-  Gear,
-  User,
+  CreditCardIcon,
+  SignOutIcon,
+  PlusIcon,
+  GearIcon,
+  UserIcon,
 } from "@phosphor-icons/react";
 
 import { Button } from "./button";
@@ -45,24 +45,24 @@ export const Default: Story = {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
-            <User />
+            <UserIcon />
             Profile
             <DropdownMenuShortcut>P</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <CreditCard />
+            <CreditCardIcon />
             Billing
             <DropdownMenuShortcut>B</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Gear />
+            <GearIcon />
             Settings
             <DropdownMenuShortcut>,</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem variant="destructive">
-          <SignOut />
+          <SignOutIcon />
           Log out
         </DropdownMenuItem>
       </DropdownMenuContent>
@@ -147,7 +147,7 @@ export const WithSubmenu: Story = {
         <DropdownMenuLabel>Order actions</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Plus />
+          <PlusIcon />
           New order
         </DropdownMenuItem>
         <DropdownMenuSub>

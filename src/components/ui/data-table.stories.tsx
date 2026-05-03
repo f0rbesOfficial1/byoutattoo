@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import * as React from "react";
-import { ArrowDown, ArrowUp, Tray } from "@phosphor-icons/react";
+import { ArrowDownIcon, ArrowUpIcon, TrayIcon } from "@phosphor-icons/react";
 
 import { Badge } from "./badge";
 import { Button } from "./button";
@@ -125,9 +125,9 @@ export const WithSorting: Story = {
                 >
                   Total
                   {direction === "asc" ? (
-                    <ArrowUp />
+                    <ArrowUpIcon />
                   ) : (
-                    <ArrowDown />
+                    <ArrowDownIcon />
                   )}
                 </Button>
               </TableHead>
@@ -253,7 +253,7 @@ export const EmptyState: Story = {
               <Empty className="border-0">
                 <EmptyHeader>
                   <EmptyMedia variant="icon">
-                    <Tray />
+                    <TrayIcon />
                   </EmptyMedia>
                   <EmptyTitle>No orders today</EmptyTitle>
                   <EmptyDescription>

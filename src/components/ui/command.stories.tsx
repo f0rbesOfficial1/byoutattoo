@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { useEffect, useState } from "react";
 import {
-  Calendar,
-  Coffee,
-  CreditCard,
-  Gear,
-  Smiley,
-  User,
+  CalendarIcon,
+  CoffeeIcon,
+  CreditCardIcon,
+  GearIcon,
+  SmileyIcon,
+  UserIcon,
 } from "@phosphor-icons/react";
 
 import { Button } from "./button";
@@ -38,32 +38,32 @@ export const Default: Story = {
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Suggestions">
           <CommandItem>
-            <Calendar />
+            <CalendarIcon />
             Calendar
           </CommandItem>
           <CommandItem>
-            <Smiley />
+            <SmileyIcon />
             Search emoji
           </CommandItem>
           <CommandItem>
-            <Coffee />
+            <CoffeeIcon />
             Order coffee
           </CommandItem>
         </CommandGroup>
         <CommandSeparator />
         <CommandGroup heading="Settings">
           <CommandItem>
-            <User />
+            <UserIcon />
             Profile
             <CommandShortcut>{"⌘P"}</CommandShortcut>
           </CommandItem>
           <CommandItem>
-            <CreditCard />
+            <CreditCardIcon />
             Billing
             <CommandShortcut>{"⌘B"}</CommandShortcut>
           </CommandItem>
           <CommandItem>
-            <Gear />
+            <GearIcon />
             Settings
             <CommandShortcut>{"⌘S"}</CommandShortcut>
           </CommandItem>
@@ -113,23 +113,23 @@ export const AsDialog: Story = {
               <CommandEmpty>No results found.</CommandEmpty>
               <CommandGroup heading="Quick actions">
                 <CommandItem onSelect={() => setOpen(false)}>
-                  <Coffee />
+                  <CoffeeIcon />
                   Start a new order
                 </CommandItem>
                 <CommandItem onSelect={() => setOpen(false)}>
-                  <Calendar />
+                  <CalendarIcon />
                   View today&apos;s reservations
                 </CommandItem>
               </CommandGroup>
               <CommandSeparator />
               <CommandGroup heading="Account">
                 <CommandItem onSelect={() => setOpen(false)}>
-                  <User />
+                  <UserIcon />
                   Profile
                   <CommandShortcut>{"⌘P"}</CommandShortcut>
                 </CommandItem>
                 <CommandItem onSelect={() => setOpen(false)}>
-                  <Gear />
+                  <GearIcon />
                   Settings
                   <CommandShortcut>{"⌘,"}</CommandShortcut>
                 </CommandItem>

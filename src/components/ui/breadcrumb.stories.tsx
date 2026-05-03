@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { CaretRight } from "@phosphor-icons/react";
+import { CaretRightIcon } from "@phosphor-icons/react";
 
 import {
   Breadcrumb,
@@ -53,13 +53,13 @@ export const CustomSeparator: Story = {
           <BreadcrumbLink href="/">Home</BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator>
-          <CaretRight />
+          <CaretRightIcon />
         </BreadcrumbSeparator>
         <BreadcrumbItem>
           <BreadcrumbLink href="/beans">Beans</BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator>
-          <CaretRight />
+          <CaretRightIcon />
         </BreadcrumbSeparator>
         <BreadcrumbItem>
           <BreadcrumbPage>Single origin</BreadcrumbPage>

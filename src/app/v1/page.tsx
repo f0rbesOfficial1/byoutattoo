@@ -1,14 +1,13 @@
 "use client";
 
 import {
-  ArrowDown,
-  ArrowRight,
-  ArrowUpRight,
+  ArrowDownIcon,
+  ArrowRightIcon,
+  ArrowUpRightIcon,
   IconContext,
 } from "@phosphor-icons/react";
 import { motion } from "motion/react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 
 import {
   Accordion,
@@ -17,12 +16,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 
 const portfolio = [
   { src: "/Tattoo1.png", caption: "Fine-line" },
@@ -64,43 +57,21 @@ const houseRules = [
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
 
-function useBelgianTime() {
-  const [time, setTime] = useState<string | null>(null);
-  useEffect(() => {
-    const update = () => {
-      setTime(
-        new Intl.DateTimeFormat("nl-BE", {
-          timeZone: "Europe/Brussels",
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: false,
-        }).format(new Date()),
-      );
-    };
-    update();
-    const id = setInterval(update, 30_000);
-    return () => clearInterval(id);
-  }, []);
-  return time;
-}
+const INSTAGRAM_URL = "https://www.instagram.com/b._you_tattoo/";
+const INSTAGRAM_DM_URL = "https://ig.me/m/b._you_tattoo";
 
 function Header() {
-  const time = useBelgianTime();
   return (
     <header className="sticky top-0 z-30 border-b border-foreground/10 bg-background/80 backdrop-blur">
-      <div className="grid grid-cols-3 items-center px-6 py-5 text-[11px] uppercase tracking-[0.25em] md:px-10">
+      <div className="flex items-center justify-between px-6 py-5 text-[11px] uppercase tracking-[0.25em] md:px-10">
         <div className="font-medium">B. You Tattoo</div>
         <a
           href="#contact"
-          className="group inline-flex items-center justify-self-center gap-2 transition-opacity hover:opacity-60"
+          className="group inline-flex items-center gap-2 transition-opacity hover:opacity-60"
         >
           Contact
-          <ArrowDown className="size-3.5 transition-transform group-hover:translate-y-0.5" />
+          <ArrowDownIcon className="size-3.5 transition-transform group-hover:translate-y-0.5" />
         </a>
-        <div className="justify-self-end tabular-nums opacity-70">
-          <span className="hidden md:inline">Lokale tijd → </span>
-          <span>{time ?? "--:--"}</span>
-        </div>
       </div>
     </header>
   );
@@ -108,7 +79,7 @@ function Header() {
 
 function Hero() {
   return (
-    <section className="border-b border-foreground/10 px-6 pt-16 pb-12 md:px-10 md:pt-24 md:pb-20">
+    <section className="border-b border-foreground/10 px-6 pt-16 pb-16 md:px-10 md:pt-24 md:pb-28">
       <motion.h1
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
@@ -124,14 +95,24 @@ function Hero() {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.4, ease: easeOut }}
-        className="mt-14 grid grid-cols-1 gap-8 md:mt-24 md:grid-cols-12"
+        className="mt-14 grid grid-cols-1 items-stretch gap-8 md:mt-24 md:grid-cols-12 md:gap-12"
       >
-        <div className="md:col-span-3">
+        <figure className="md:col-span-5">
           <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
             // De Artieste
           </p>
-        </div>
-        <div className="md:col-span-7 md:col-start-6">
+          <div className="group relative mt-5 aspect-[4/5] w-full overflow-hidden">
+            <Image
+              src="/Brenda.png"
+              alt="Brenda — B. You Tattoo"
+              fill
+              priority
+              sizes="(min-width: 768px) 42vw, 100vw"
+              className="object-cover grayscale transition-all duration-500 ease-out group-hover:grayscale-0"
+            />
+          </div>
+        </figure>
+        <div className="flex flex-col justify-end md:col-span-6 md:col-start-7">
           <p className="font-heading text-2xl leading-snug font-light md:text-4xl">
             <span className="italic">By Brenda</span> — Gespecialiseerd in
             ultra fine-line en botanische kunst. Tijdloze verhalen vertaald
@@ -139,24 +120,6 @@ function Hero() {
           </p>
         </div>
       </motion.div>
-
-      <div className="mt-24 flex flex-col items-center gap-4 md:mt-32">
-        <span className="text-[10px] uppercase tracking-[0.35em] opacity-50">
-          Scroll om te ontdekken
-        </span>
-        <span className="relative h-16 w-px overflow-hidden bg-foreground/15">
-          <motion.span
-            initial={{ y: "-100%" }}
-            animate={{ y: "100%" }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-            className="absolute inset-x-0 top-0 h-1/2 bg-foreground"
-          />
-        </span>
-      </div>
     </section>
   );
 }
@@ -167,7 +130,7 @@ function Portfolio() {
       id="portfolio"
       className="border-b border-foreground/10 py-16 md:py-24"
     >
-      <div className="mb-10 flex items-end justify-between gap-6 px-6 md:mb-16 md:px-10">
+      <div className="mb-10 flex flex-wrap items-end justify-between gap-6 px-6 md:mb-16 md:px-10">
         <div>
           <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
             // Portfolio
@@ -177,7 +140,20 @@ function Portfolio() {
             <span className="italic"> 2024 — 2026</span>
           </h2>
         </div>
-        <ExploreAllDialog />
+        <Button
+          variant="outline"
+          render={
+            <a
+              href={INSTAGRAM_URL}
+              target="_blank"
+              rel="noreferrer noopener"
+            />
+          }
+          className="rounded-full border-foreground/30 bg-transparent text-[11px] uppercase tracking-[0.25em] hover:bg-foreground hover:text-background"
+        >
+          Bekijk alles op Instagram
+          <ArrowUpRightIcon className="size-3.5" />
+        </Button>
       </div>
 
       <div className="relative">
@@ -209,7 +185,7 @@ function Portfolio() {
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <span className="flex items-center gap-2">
-                  <ArrowRight className="size-3.5" />
+                  <ArrowRightIcon className="size-3.5" />
                   {item.caption}
                 </span>
               </div>
@@ -218,56 +194,6 @@ function Portfolio() {
         </ul>
       </div>
     </section>
-  );
-}
-
-function ExploreAllDialog() {
-  return (
-    <Dialog>
-      <DialogTrigger
-        render={
-          <Button
-            variant="outline"
-            className="rounded-full border-foreground/30 bg-transparent text-[11px] uppercase tracking-[0.25em] hover:bg-foreground hover:text-background"
-          >
-            Bekijk alles
-            <ArrowUpRight className="size-3.5" />
-          </Button>
-        }
-      />
-      <DialogContent className="max-h-[92vh] max-w-6xl overflow-y-auto border-foreground/15 bg-background p-0">
-        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-foreground/10 bg-background/90 px-6 py-4 backdrop-blur md:px-8">
-          <DialogTitle className="font-heading text-2xl font-light tracking-tight md:text-3xl">
-            Al het werk <span className="italic">— 20 stuks</span>
-          </DialogTitle>
-          <span className="text-[11px] uppercase tracking-[0.3em] opacity-60">
-            // Archief
-          </span>
-        </div>
-        <div className="grid grid-cols-2 gap-px bg-foreground/10 md:grid-cols-3 lg:grid-cols-4">
-          {portfolio.map((item, i) => (
-            <figure
-              key={item.src}
-              className="group relative aspect-[3/4] overflow-hidden bg-background"
-            >
-              <Image
-                src={item.src}
-                alt={item.caption}
-                fill
-                sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
-                className="object-cover grayscale transition-all duration-500 ease-out group-hover:grayscale-0"
-              />
-              <figcaption className="absolute inset-x-0 bottom-0 flex items-center justify-between px-3 py-2 text-[10px] uppercase tracking-[0.25em] text-foreground mix-blend-difference">
-                <span className="tabular-nums">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span>{item.caption}</span>
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-      </DialogContent>
-    </Dialog>
   );
 }
 
@@ -310,7 +236,7 @@ function HouseRules() {
                     <span className="font-heading text-2xl font-light tracking-tight md:text-3xl">
                       {rule.title}
                     </span>
-                    <ArrowDown className="ml-auto size-4 shrink-0 opacity-50 transition-transform duration-300 group-data-[panel-open]:rotate-180" />
+                    <ArrowDownIcon className="ml-auto size-4 shrink-0 opacity-50 transition-transform duration-300 group-data-[panel-open]:rotate-180" />
                   </span>
                 </AccordionTrigger>
                 <AccordionContent className="pb-6 pl-[calc(2rem+1.5rem)] md:pl-[calc(2.5rem+2.5rem)]">
@@ -331,7 +257,7 @@ function Footer() {
   return (
     <footer
       id="contact"
-      className="px-6 pt-16 pb-10 md:px-10 md:pt-28 md:pb-14"
+      className="px-6 pt-16 pb-16 md:px-10 md:pt-28 md:pb-20"
     >
       <motion.h2
         initial={{ opacity: 0, y: 24 }}
@@ -341,25 +267,16 @@ function Footer() {
         className="font-display font-black leading-[0.85] tracking-[-0.04em] text-[clamp(4rem,18vw,18rem)]"
       >
         Contact
-        <ArrowDown className="ml-3 inline-block size-[0.7em] align-baseline stroke-[0.5]" />
+        <ArrowDownIcon className="ml-3 inline-block size-[0.7em] align-baseline stroke-[0.5]" />
       </motion.h2>
 
       <div className="mt-16 grid grid-cols-1 gap-10 border-t border-foreground/10 pt-12 md:mt-24 md:grid-cols-3 md:gap-0 md:pt-16">
         <div className="md:border-r md:border-foreground/10 md:pr-10">
           <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
-            // Status
-          </p>
-          <p className="mt-5 font-heading text-2xl leading-snug font-light md:text-3xl">
-            Uitsluitend op afspraak.
-          </p>
-        </div>
-
-        <div className="md:border-r md:border-foreground/10 md:px-10">
-          <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
             // Instagram
           </p>
           <a
-            href="https://ig.me/m/b._you_tattoo"
+            href={INSTAGRAM_DM_URL}
             target="_blank"
             rel="noreferrer noopener"
             className="group mt-5 flex items-baseline justify-between gap-4 border-b border-foreground/20 pb-3 transition-colors hover:border-foreground"
@@ -367,29 +284,32 @@ function Footer() {
             <span className="font-heading text-2xl leading-tight font-light md:text-3xl">
               <span className="italic">Stuur</span> een DM
             </span>
-            <ArrowUpRight className="size-6 shrink-0 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
+            <ArrowUpRightIcon className="size-6 shrink-0 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
           </a>
           <p className="mt-3 text-[11px] uppercase tracking-[0.25em] opacity-50">
             @b._you_tattoo
           </p>
         </div>
 
-        <div className="md:pl-10">
+        <div className="md:border-r md:border-foreground/10 md:px-10">
           <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
-            // Copyright
+            // Studio
           </p>
           <p className="mt-5 font-heading text-2xl leading-snug font-light md:text-3xl">
-            © 2026 B. You Tattoo
-          </p>
-          <p className="mt-3 text-[11px] uppercase tracking-[0.25em] opacity-50">
-            Alle rechten voorbehouden
+            Studio adres komt hier
+            <br />
+            <span className="italic">— Regio [Stad], België</span>
           </p>
         </div>
-      </div>
 
-      <div className="mt-16 flex items-center justify-between border-t border-foreground/10 pt-6 text-[10px] uppercase tracking-[0.3em] opacity-50 md:mt-20">
-        <span>Met zorg ontworpen</span>
-        <span>V1 — 2026</span>
+        <div className="md:pl-10">
+          <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
+            // Status
+          </p>
+          <p className="mt-5 font-heading text-2xl leading-snug font-light md:text-3xl">
+            Uitsluitend op afspraak.
+          </p>
+        </div>
       </div>
     </footer>
   );

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { Tray, Plus, MagnifyingGlass } from "@phosphor-icons/react";
+import { TrayIcon, PlusIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
 
 import { Button } from "./button";
 import {
@@ -24,7 +24,7 @@ export const Default: Story = {
     <Empty className="max-w-md border">
       <EmptyHeader>
         <EmptyMedia variant="icon">
-          <Tray />
+          <TrayIcon />
         </EmptyMedia>
         <EmptyTitle>No orders yet</EmptyTitle>
         <EmptyDescription>
@@ -34,7 +34,7 @@ export const Default: Story = {
       </EmptyHeader>
       <EmptyContent>
         <Button>
-          <Plus />
+          <PlusIcon />
           Create order
         </Button>
       </EmptyContent>
@@ -47,7 +47,7 @@ export const Compact: Story = {
     <Empty className="max-w-sm border p-4">
       <EmptyHeader>
         <EmptyMedia variant="icon">
-          <MagnifyingGlass />
+          <MagnifyingGlassIcon />
         </EmptyMedia>
         <EmptyTitle>No matches</EmptyTitle>
         <EmptyDescription>
@@ -63,7 +63,7 @@ export const WithLink: Story = {
     <Empty className="max-w-md border">
       <EmptyHeader>
         <EmptyMedia variant="icon">
-          <Tray />
+          <TrayIcon />
         </EmptyMedia>
         <EmptyTitle>Inbox is clear</EmptyTitle>
         <EmptyDescription>

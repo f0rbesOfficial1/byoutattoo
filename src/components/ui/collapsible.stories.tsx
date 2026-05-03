@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { CaretDown } from "@phosphor-icons/react";
+import { CaretDownIcon } from "@phosphor-icons/react";
 
 import { Button } from "./button";
 import {
@@ -25,7 +25,7 @@ export const Default: Story = {
           render={
             <Button variant="ghost" size="sm">
               Show more
-              <CaretDown className="size-4" />
+              <CaretDownIcon className="size-4" />
             </Button>
           }
         />
@@ -52,7 +52,7 @@ export const WithLongContent: Story = {
         render={
           <Button variant="outline" size="sm" className="w-full justify-between">
             Read our sourcing story
-            <CaretDown className="size-4" />
+            <CaretDownIcon className="size-4" />
           </Button>
         }
       />
