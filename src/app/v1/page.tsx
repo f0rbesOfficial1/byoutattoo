@@ -317,9 +317,8 @@ function Footer() {
               className="group inline-flex items-start gap-4 border-b border-foreground/20 pb-3 transition-colors hover:border-foreground"
             >
               <span className="font-heading text-2xl leading-tight font-light md:text-3xl">
-                Steenstraat 3A
-                <br />
-                <span className="italic">9340 Lede, België</span>
+                Steenstraat 3A,{" "}
+                <span className="italic">9340 Lede</span>
               </span>
               <ArrowUpRightIcon className="mt-1 size-6 shrink-0 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
             </a>
