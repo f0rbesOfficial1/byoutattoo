@@ -100,7 +100,7 @@ function Hero() {
         >
           B. You
           <br />
-          Tattoo.
+          Tattoo
         </motion.h1>
       </div>
 
