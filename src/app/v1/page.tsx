@@ -96,7 +96,7 @@ function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: easeOut }}
-          className="col-span-12 font-display font-black uppercase leading-[0.82] tracking-[0.05em] text-[clamp(2.75rem,9.5vw,10rem)] md:col-span-9"
+          className="col-span-12 font-display font-black uppercase leading-[1.2] tracking-[0.05em] text-[clamp(2.75rem,9.5vw,10rem)] md:col-span-9"
         >
           B. You
           <br />
@@ -262,7 +262,7 @@ function Footer() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.9, ease: easeOut }}
-        className="font-display font-black uppercase leading-[0.82] tracking-[0.05em] text-[clamp(2.75rem,9.5vw,10rem)]"
+        className="font-display font-black uppercase leading-[1.2] tracking-[0.05em] text-[clamp(2.75rem,9.5vw,10rem)]"
       >
         Contact
       </motion.h2>
