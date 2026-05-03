@@ -288,7 +288,7 @@ function Footer() {
       <div className="mt-16 grid grid-cols-1 gap-10 md:mt-24 md:grid-cols-3 md:gap-0">
         <div className="flex flex-col md:border-r md:border-foreground/10 md:pr-10">
           <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
-            // Instagram
+            // @b._you_tattoo
           </p>
           <div className="mt-5 md:mt-auto">
             <a
@@ -302,9 +302,6 @@ function Footer() {
               </span>
               <ArrowUpRightIcon className="size-6 shrink-0 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
             </a>
-            <p className="mt-3 text-[11px] uppercase tracking-[0.25em] opacity-50">
-              @b._you_tattoo
-            </p>
           </div>
         </div>
 
