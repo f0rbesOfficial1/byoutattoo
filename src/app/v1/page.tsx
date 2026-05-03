@@ -307,7 +307,7 @@ function Footer() {
         </div>
 
         <div className="flex flex-col md:min-h-[92px] md:pl-10">
-          <p className="mt-5 font-heading text-lg leading-snug font-light md:mt-auto md:text-xl">
+          <p className="mt-5 font-heading text-2xl leading-tight font-light md:mt-auto">
             Uitsluitend op afspraak.
           </p>
         </div>
