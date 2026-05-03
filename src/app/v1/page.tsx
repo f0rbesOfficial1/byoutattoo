@@ -270,7 +270,7 @@ function Footer() {
       <div className="mt-8 grid grid-cols-1 gap-10 md:mt-[92px] md:grid-cols-3 md:gap-0">
         <div className="flex flex-col md:min-h-48 md:border-r md:border-foreground/10 md:pr-10">
           <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
-            // @b._you_tattoo
+            @b._you_tattoo
           </p>
           <div className="mt-5 md:mt-auto">
             <a
