@@ -311,10 +311,21 @@ function Footer() {
           <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
             // Studio
           </p>
-          <p className="mt-5 font-heading text-2xl leading-snug font-light md:text-3xl">
-            Steenstraat 3A
-            <br />
-            <span className="italic">9340 Lede, België</span>
+          <a
+            href="https://maps.app.goo.gl/zUR6iJKpnHLFi1uZ9"
+            target="_blank"
+            rel="noreferrer noopener"
+            className="group mt-5 flex items-start justify-between gap-4 border-b border-foreground/20 pb-3 transition-colors hover:border-foreground"
+          >
+            <span className="font-heading text-2xl leading-tight font-light md:text-3xl">
+              Steenstraat 3A
+              <br />
+              <span className="italic">9340 Lede, België</span>
+            </span>
+            <ArrowUpRightIcon className="mt-1 size-6 shrink-0 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
+          </a>
+          <p className="mt-3 text-[11px] uppercase tracking-[0.25em] opacity-50">
+            Open in Google Maps
           </p>
         </div>
 
