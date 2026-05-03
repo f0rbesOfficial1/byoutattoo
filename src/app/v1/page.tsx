@@ -312,9 +312,9 @@ function Footer() {
             // Studio
           </p>
           <p className="mt-5 font-heading text-2xl leading-snug font-light md:text-3xl">
-            Studio adres komt hier
+            Steenstraat 3A
             <br />
-            <span className="italic">— Regio [Stad], België</span>
+            <span className="italic">9340 Lede, België</span>
           </p>
         </div>
 
