@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  ArrowDownIcon,
-  ArrowUpRightIcon,
-  IconContext,
-} from "@phosphor-icons/react";
+import { ArrowUpRightIcon, IconContext } from "@phosphor-icons/react";
 import { motion } from "motion/react";
 import Image from "next/image";
 
@@ -79,7 +75,7 @@ function Header() {
             render={<a href="#contact" />}
             className="rounded-full text-[11px] uppercase tracking-[0.25em]"
           >
-            Contact
+            Contacteer me
           </Button>
         </nav>
       </div>
@@ -229,12 +225,9 @@ function HouseRules() {
                 value={rule.title}
                 className="not-last:border-b border-foreground/10 data-open:bg-transparent"
               >
-                <AccordionTrigger className="group items-center border-0 px-0 py-6 text-left hover:no-underline focus-visible:ring-0 [&>svg]:hidden">
-                  <span className="flex w-full items-center gap-6">
-                    <span className="font-heading text-2xl font-light tracking-tight md:text-3xl">
-                      {rule.title}
-                    </span>
-                    <ArrowDownIcon className="ml-auto size-4 shrink-0 opacity-50 transition-transform duration-300 group-data-[panel-open]:rotate-180" />
+                <AccordionTrigger className="items-center border-0 px-0 py-6 text-left hover:no-underline focus-visible:ring-0">
+                  <span className="font-heading text-2xl font-light tracking-tight md:text-3xl">
+                    {rule.title}
                   </span>
                 </AccordionTrigger>
                 <AccordionContent className="pb-6">
@@ -264,7 +257,7 @@ function Footer() {
         transition={{ duration: 0.9, ease: easeOut }}
         className="font-display font-black uppercase leading-[1.05] tracking-[0.05em] text-[clamp(2.75rem,9.5vw,10rem)]"
       >
-        Contact
+        Contacteer me
       </motion.h2>
 
       <div className="mt-8 grid grid-cols-1 gap-10 md:mt-[92px] md:grid-cols-3 md:gap-0">
