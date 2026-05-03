@@ -143,9 +143,8 @@ function Hero() {
       >
         <blockquote className="col-span-12 md:col-span-6">
           <p className="font-heading text-3xl leading-snug font-light md:text-4xl">
-            Gespecialiseerd in ultra fine-line en botanische kunst, uitsluitend
-            uitgevoerd in black &amp; grey. Tijdloze verhalen vertaald naar de
-            huid.
+            Gespecialiseerd in ultra fine-line, botanische kunst, uitsluitend
+            blackwork. Tijdloze verhalen vertaald naar de huid.
           </p>
         </blockquote>
       </motion.div>
