@@ -86,7 +86,7 @@ function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: easeOut }}
-          className="col-span-12 font-display font-black uppercase leading-[0.82] tracking-[0.02em] text-[clamp(2.75rem,9.5vw,10rem)] md:col-span-9"
+          className="col-span-12 font-display font-black uppercase leading-[0.82] tracking-[0.05em] text-[clamp(2.75rem,9.5vw,10rem)] md:col-span-9"
         >
           B. You
           <br />
@@ -224,7 +224,7 @@ function HouseRules() {
         transition={{ duration: 0.8, ease: easeOut }}
         className="grid grid-cols-1 gap-12 md:grid-cols-12"
       >
-        <div className="md:col-span-4 md:border-r md:border-foreground/10 md:pr-10">
+        <div className="md:col-span-4 md:pr-10">
           <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
             // Huisregels
           </p>
@@ -239,24 +239,21 @@ function HouseRules() {
             className="w-full rounded-none border-0"
             defaultValue={[houseRules[0].title]}
           >
-            {houseRules.map((rule, i) => (
+            {houseRules.map((rule) => (
               <AccordionItem
                 key={rule.title}
                 value={rule.title}
                 className="border-b border-foreground/10 first:border-t data-open:bg-transparent"
               >
                 <AccordionTrigger className="group items-center border-0 px-0 py-6 text-left hover:no-underline focus-visible:ring-0 [&>svg]:hidden">
-                  <span className="flex w-full items-center gap-6 md:gap-10">
-                    <span className="text-[11px] tabular-nums opacity-50">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
+                  <span className="flex w-full items-center gap-6">
                     <span className="font-heading text-2xl font-light tracking-tight md:text-3xl">
                       {rule.title}
                     </span>
                     <ArrowDownIcon className="ml-auto size-4 shrink-0 opacity-50 transition-transform duration-300 group-data-[panel-open]:rotate-180" />
                   </span>
                 </AccordionTrigger>
-                <AccordionContent className="pb-6 pl-[calc(2rem+1.5rem)] md:pl-[calc(2.5rem+2.5rem)]">
+                <AccordionContent className="pb-6">
                   <p className="max-w-md text-base leading-relaxed opacity-75">
                     {rule.body}
                   </p>
@@ -281,7 +278,7 @@ function Footer() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.9, ease: easeOut }}
-        className="font-display font-black uppercase leading-[0.82] tracking-[0.02em] text-[clamp(2.75rem,9.5vw,10rem)]"
+        className="font-display font-black uppercase leading-[0.82] tracking-[0.05em] text-[clamp(2.75rem,9.5vw,10rem)]"
       >
         Contact
       </motion.h2>
@@ -315,7 +312,7 @@ function Footer() {
             href="https://maps.app.goo.gl/zUR6iJKpnHLFi1uZ9"
             target="_blank"
             rel="noreferrer noopener"
-            className="group mt-5 flex items-start justify-between gap-4 border-b border-foreground/20 pb-3 transition-colors hover:border-foreground"
+            className="group mt-5 inline-flex items-start gap-4 border-b border-foreground/20 pb-3 transition-colors hover:border-foreground"
           >
             <span className="font-heading text-2xl leading-tight font-light md:text-3xl">
               Steenstraat 3A
