@@ -281,7 +281,7 @@ function Footer() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.9, ease: easeOut }}
-        className="font-display font-black uppercase leading-[0.85] tracking-[-0.03em] text-[clamp(4rem,18vw,18rem)]"
+        className="font-display font-black uppercase leading-[0.82] tracking-[-0.04em] text-[clamp(2.75rem,9.5vw,10rem)]"
       >
         Contact
         <ArrowDownIcon className="ml-3 inline-block size-[0.7em] align-baseline stroke-[0.5]" />
