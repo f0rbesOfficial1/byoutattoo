@@ -26,25 +26,25 @@ import {
 
 const portfolio = [
   { src: "/Tattoo1.png", caption: "Fine-line" },
-  { src: "/Tattoo2.png", caption: "Botanical" },
-  { src: "/Tattoo3.png", caption: "Floral" },
-  { src: "/Tattoo4.png", caption: "Wildflower" },
-  { src: "/Tattoo5.png", caption: "Linework" },
-  { src: "/Tattoo6.png", caption: "Stem & Bud" },
-  { src: "/Tattoo7.png", caption: "Leaf" },
-  { src: "/Tattoo8.png", caption: "Branch" },
-  { src: "/Tattoo9.png", caption: "Petal" },
-  { src: "/Tattoo10.png", caption: "Sprig" },
-  { src: "/Tattoo11.png", caption: "Minimal" },
-  { src: "/Tattoo12.png", caption: "Bloom" },
-  { src: "/Tattoo13.png", caption: "Foliage" },
-  { src: "/Tattoo14.png", caption: "Whisper" },
-  { src: "/Tattoo15.png", caption: "Sigil" },
+  { src: "/Tattoo2.png", caption: "Botanisch" },
+  { src: "/Tattoo3.png", caption: "Bloemen" },
+  { src: "/Tattoo4.png", caption: "Veldbloem" },
+  { src: "/Tattoo5.png", caption: "Lijnwerk" },
+  { src: "/Tattoo6.png", caption: "Stengel & Knop" },
+  { src: "/Tattoo7.png", caption: "Blad" },
+  { src: "/Tattoo8.png", caption: "Tak" },
+  { src: "/Tattoo9.png", caption: "Bloemblad" },
+  { src: "/Tattoo10.png", caption: "Twijg" },
+  { src: "/Tattoo11.png", caption: "Minimaal" },
+  { src: "/Tattoo12.png", caption: "Bloesem" },
+  { src: "/Tattoo13.png", caption: "Loof" },
+  { src: "/Tattoo14.png", caption: "Fluistering" },
+  { src: "/Tattoo15.png", caption: "Symbool" },
   { src: "/Tattoo16.png", caption: "Ornament" },
-  { src: "/Tattoo17.png", caption: "Lettering" },
-  { src: "/Tattoo18.png", caption: "Outline" },
-  { src: "/Tattoo19.png", caption: "Sketch" },
-  { src: "/Tattoo20.png", caption: "Botanical II" },
+  { src: "/Tattoo17.png", caption: "Belettering" },
+  { src: "/Tattoo18.png", caption: "Contour" },
+  { src: "/Tattoo19.png", caption: "Schets" },
+  { src: "/Tattoo20.png", caption: "Botanisch II" },
 ];
 
 const houseRules = [
@@ -98,7 +98,7 @@ function Header() {
           <ArrowDown className="size-3.5 transition-transform group-hover:translate-y-0.5" />
         </a>
         <div className="justify-self-end tabular-nums opacity-70">
-          <span className="hidden md:inline">Local time → </span>
+          <span className="hidden md:inline">Lokale tijd → </span>
           <span>{time ?? "--:--"}</span>
         </div>
       </div>
@@ -128,7 +128,7 @@ function Hero() {
       >
         <div className="md:col-span-3">
           <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
-            // The Artist
+            // De Artieste
           </p>
         </div>
         <div className="md:col-span-7 md:col-start-6">
@@ -142,7 +142,7 @@ function Hero() {
 
       <div className="mt-24 flex flex-col items-center gap-4 md:mt-32">
         <span className="text-[10px] uppercase tracking-[0.35em] opacity-50">
-          Scroll to explore
+          Scroll om te ontdekken
         </span>
         <span className="relative h-16 w-px overflow-hidden bg-foreground/15">
           <motion.span
@@ -173,7 +173,7 @@ function Portfolio() {
             // Portfolio
           </p>
           <h2 className="mt-4 font-heading text-4xl leading-tight font-light md:text-6xl">
-            Selected work
+            Geselecteerd werk
             <span className="italic"> 2024 — 2026</span>
           </h2>
         </div>
@@ -230,7 +230,7 @@ function ExploreAllDialog() {
             variant="outline"
             className="rounded-full border-foreground/30 bg-transparent text-[11px] uppercase tracking-[0.25em] hover:bg-foreground hover:text-background"
           >
-            Explore all
+            Bekijk alles
             <ArrowUpRight className="size-3.5" />
           </Button>
         }
@@ -238,10 +238,10 @@ function ExploreAllDialog() {
       <DialogContent className="max-h-[92vh] max-w-6xl overflow-y-auto border-foreground/15 bg-background p-0">
         <div className="sticky top-0 z-10 flex items-center justify-between border-b border-foreground/10 bg-background/90 px-6 py-4 backdrop-blur md:px-8">
           <DialogTitle className="font-heading text-2xl font-light tracking-tight md:text-3xl">
-            All work <span className="italic">— 20 pieces</span>
+            Al het werk <span className="italic">— 20 stuks</span>
           </DialogTitle>
           <span className="text-[11px] uppercase tracking-[0.3em] opacity-60">
-            // Archive
+            // Archief
           </span>
         </div>
         <div className="grid grid-cols-2 gap-px bg-foreground/10 md:grid-cols-3 lg:grid-cols-4">
@@ -283,7 +283,7 @@ function HouseRules() {
       >
         <div className="md:col-span-4 md:border-r md:border-foreground/10 md:pr-10">
           <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
-            // House Rules
+            // Huisregels
           </p>
           <h2 className="mt-6 font-heading text-4xl leading-tight font-light md:text-5xl">
             Rust, focus en
@@ -350,7 +350,7 @@ function Footer() {
             // Status
           </p>
           <p className="mt-5 font-heading text-2xl leading-snug font-light md:text-3xl">
-            Strictly by appointment only.
+            Uitsluitend op afspraak.
           </p>
         </div>
 
@@ -382,13 +382,13 @@ function Footer() {
             © 2026 B. You Tattoo
           </p>
           <p className="mt-3 text-[11px] uppercase tracking-[0.25em] opacity-50">
-            All rights reserved
+            Alle rechten voorbehouden
           </p>
         </div>
       </div>
 
       <div className="mt-16 flex items-center justify-between border-t border-foreground/10 pt-6 text-[10px] uppercase tracking-[0.3em] opacity-50 md:mt-20">
-        <span>Designed with care</span>
+        <span>Met zorg ontworpen</span>
         <span>V1 — 2026</span>
       </div>
     </footer>
