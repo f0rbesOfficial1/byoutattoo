@@ -221,10 +221,7 @@ function HouseRules() {
         className="grid grid-cols-1 gap-12 md:grid-cols-12"
       >
         <div className="md:col-span-4 md:pr-10">
-          <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
-            // Huisregels
-          </p>
-          <h2 className="mt-6 font-heading text-4xl leading-tight font-light md:text-5xl">
+          <h2 className="font-heading text-4xl leading-tight font-light md:text-5xl">
             Duidelijke
             <br />
             <span className="italic">afspraken.</span>
