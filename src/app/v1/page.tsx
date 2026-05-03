@@ -152,15 +152,9 @@ function Portfolio() {
       className="border-b border-foreground/10 py-16 md:py-24"
     >
       <div className="mb-10 flex flex-wrap items-end justify-between gap-6 px-6 md:mb-16 md:px-10">
-        <div>
-          <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
-            // Portfolio
-          </p>
-          <h2 className="mt-4 font-heading text-4xl leading-tight font-light md:text-6xl">
-            Geselecteerd werk
-            <span className="italic"> 2024 — 2026</span>
-          </h2>
-        </div>
+        <h2 className="font-heading text-4xl leading-tight font-light md:text-6xl">
+          Portfolio
+        </h2>
         <Button
           variant="outline"
           render={
