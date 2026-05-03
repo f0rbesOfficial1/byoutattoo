@@ -220,14 +220,12 @@ function HouseRules() {
         transition={{ duration: 0.8, ease: easeOut }}
         className="grid grid-cols-1 gap-12 md:grid-cols-12"
       >
-        <div className="md:col-span-4 md:pr-10">
-          <h2 className="font-heading text-4xl leading-tight font-light md:text-5xl">
-            Duidelijke
-            <br />
-            <span className="italic">afspraken.</span>
+        <div className="md:col-span-5 md:pr-10">
+          <h2 className="font-heading text-4xl leading-tight font-light md:whitespace-nowrap md:text-5xl">
+            Duidelijke <span className="italic">afspraken.</span>
           </h2>
         </div>
-        <div className="md:col-span-8 md:pl-2">
+        <div className="md:col-span-7 md:pl-2">
           <Accordion
             className="w-full rounded-none border-0"
             defaultValue={[houseRules[0].title]}
@@ -276,7 +274,7 @@ function Footer() {
         Contact
       </motion.h2>
 
-      <div className="mt-16 grid grid-cols-1 gap-10 md:mt-24 md:grid-cols-2 md:gap-0">
+      <div className="mt-16 grid grid-cols-1 gap-10 md:mt-24 md:grid-cols-3 md:gap-0">
         <div className="flex flex-col md:border-r md:border-foreground/10 md:pr-10">
           <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
             // @b._you_tattoo
@@ -296,7 +294,7 @@ function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col md:pl-10">
+        <div className="flex flex-col md:border-r md:border-foreground/10 md:px-10">
           <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
             // Studio
           </p>
@@ -314,6 +312,12 @@ function Footer() {
               <ArrowUpRightIcon className="mt-1 size-4 shrink-0 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
             </a>
           </div>
+        </div>
+
+        <div className="flex flex-col md:pl-10">
+          <p className="mt-5 font-heading text-lg leading-snug font-light md:mt-auto md:text-xl">
+            Uitsluitend op afspraak.
+          </p>
         </div>
       </div>
     </footer>
