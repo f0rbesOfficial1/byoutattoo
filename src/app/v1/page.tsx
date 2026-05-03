@@ -65,13 +65,15 @@ function Header() {
     <header className="sticky top-0 z-30 border-b border-foreground/10 bg-background/80 backdrop-blur">
       <div className="flex items-center justify-between px-6 py-5 text-[11px] uppercase tracking-[0.25em] md:px-10">
         <div className="font-medium">B. YOU TATTOO</div>
-        <a
-          href="#contact"
-          className="group inline-flex items-center gap-2 transition-opacity hover:opacity-60"
+        <Button
+          variant="secondary"
+          size="sm"
+          render={<a href="#contact" />}
+          className="rounded-full text-[11px] uppercase tracking-[0.25em]"
         >
           Contact
-          <ArrowDownIcon className="size-3.5 transition-transform group-hover:translate-y-0.5" />
-        </a>
+          <ArrowDownIcon className="size-3.5" />
+        </Button>
       </div>
     </header>
   );
