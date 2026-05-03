@@ -135,9 +135,8 @@ function Hero() {
       >
         <blockquote className="col-span-12 md:col-span-6">
           <p className="font-heading text-3xl leading-snug font-light md:text-4xl">
-            Gespecialiseerd in ultra fine-line en botanische kunst.
-            <span className="italic"> Tijdloze verhalen</span> vertaald naar
-            de huid.
+            Gespecialiseerd in ultra fine-line en botanische kunst. Tijdloze
+            verhalen vertaald naar de huid.
           </p>
         </blockquote>
       </motion.div>
@@ -215,7 +214,7 @@ function HouseRules() {
       >
         <div className="md:col-span-5 md:pr-10">
           <h2 className="font-heading text-4xl leading-tight font-light md:whitespace-nowrap md:text-5xl">
-            Duidelijke <span className="italic">afspraken.</span>
+            Duidelijke afspraken.
           </h2>
         </div>
         <div className="md:col-span-7 md:pl-2">
@@ -237,7 +236,7 @@ function HouseRules() {
                     <ArrowDownIcon className="ml-auto size-4 shrink-0 opacity-50 transition-transform duration-300 group-data-[panel-open]/trigger:rotate-180" />
                   </span>
                 </AccordionTrigger>
-                <AccordionContent className="pb-6">
+                <AccordionContent className="px-0! pb-6">
                   <p className="max-w-md text-base leading-relaxed opacity-75">
                     {rule.body}
                   </p>
