@@ -1,6 +1,10 @@
 "use client";
 
-import { ArrowUpRightIcon, IconContext } from "@phosphor-icons/react";
+import {
+  ArrowDownIcon,
+  ArrowUpRightIcon,
+  IconContext,
+} from "@phosphor-icons/react";
 import { motion } from "motion/react";
 import Image from "next/image";
 
@@ -225,9 +229,12 @@ function HouseRules() {
                 value={rule.title}
                 className="not-last:border-b border-foreground/10 data-open:bg-transparent"
               >
-                <AccordionTrigger className="items-center border-0 px-0 py-6 text-left hover:no-underline focus-visible:ring-0">
-                  <span className="font-heading text-2xl font-light tracking-tight md:text-3xl">
-                    {rule.title}
+                <AccordionTrigger className="group/trigger items-center border-0 px-0 py-6 text-left hover:no-underline focus-visible:ring-0 [&_[data-slot=accordion-trigger-icon]]:hidden!">
+                  <span className="flex w-full items-center gap-6">
+                    <span className="font-heading text-2xl font-light tracking-tight md:text-3xl">
+                      {rule.title}
+                    </span>
+                    <ArrowDownIcon className="ml-auto size-4 shrink-0 opacity-50 transition-transform duration-300 group-data-[panel-open]/trigger:rotate-180" />
                   </span>
                 </AccordionTrigger>
                 <AccordionContent className="pb-6">
