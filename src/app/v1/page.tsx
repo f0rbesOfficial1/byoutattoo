@@ -64,7 +64,7 @@ function Header() {
   return (
     <header className="sticky top-0 z-30 border-b border-foreground/10 bg-background/80 backdrop-blur">
       <div className="flex items-center justify-between px-6 py-5 text-[11px] uppercase tracking-[0.25em] md:px-10">
-        <div className="font-medium">B. You Tattoo</div>
+        <div className="font-medium">B. YOU TATTOO</div>
         <a
           href="#contact"
           className="group inline-flex items-center gap-2 transition-opacity hover:opacity-60"
@@ -79,25 +79,29 @@ function Header() {
 
 function Hero() {
   return (
-    <section className="border-b border-foreground/10 px-6 pt-16 pb-16 md:px-10 md:pt-24 md:pb-28">
-      <motion.h1
+    <section className="border-b border-foreground/10 px-6 pt-16 pb-20 md:px-10 md:pt-24 md:pb-32">
+      {/* Z — top-left: title */}
+      <div className="grid grid-cols-12">
+        <motion.h1
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: easeOut }}
+          className="col-span-12 font-display font-black uppercase leading-[0.82] tracking-[-0.04em] text-[clamp(2.75rem,9.5vw,10rem)] md:col-span-9"
+        >
+          B. You
+          <br />
+          Tattoo.
+        </motion.h1>
+      </div>
+
+      {/* Z — middle-right: image */}
+      <motion.figure
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: easeOut }}
-        className="font-display font-black leading-[0.82] tracking-[-0.05em] text-[clamp(3.75rem,16.5vw,18rem)]"
+        transition={{ duration: 0.9, delay: 0.35, ease: easeOut }}
+        className="mt-16 grid grid-cols-12 md:mt-24"
       >
-        B. You
-        <br />
-        Tattoo.
-      </motion.h1>
-
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.4, ease: easeOut }}
-        className="mt-14 grid grid-cols-1 items-stretch gap-8 md:mt-24 md:grid-cols-12 md:gap-12"
-      >
-        <figure className="md:col-span-5">
+        <div className="col-span-12 md:col-span-5 md:col-start-8">
           <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
             // De Artieste
           </p>
@@ -111,14 +115,27 @@ function Hero() {
               className="object-cover grayscale transition-all duration-500 ease-out group-hover:grayscale-0"
             />
           </div>
-        </figure>
-        <div className="flex flex-col justify-end md:col-span-6 md:col-start-7">
-          <p className="font-heading text-2xl leading-snug font-light md:text-4xl">
+        </div>
+      </motion.figure>
+
+      {/* Z — bottom-left: quote */}
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.9, ease: easeOut }}
+        className="mt-16 grid grid-cols-12 md:mt-24"
+      >
+        <blockquote className="col-span-12 md:col-span-6">
+          <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
+            // Het verhaal
+          </p>
+          <p className="mt-5 font-heading text-3xl leading-snug font-light md:text-4xl">
             <span className="italic">By Brenda</span> — Gespecialiseerd in
             ultra fine-line en botanische kunst. Tijdloze verhalen vertaald
             naar de huid.
           </p>
-        </div>
+        </blockquote>
       </motion.div>
     </section>
   );
@@ -264,7 +281,7 @@ function Footer() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.9, ease: easeOut }}
-        className="font-display font-black leading-[0.85] tracking-[-0.04em] text-[clamp(4rem,18vw,18rem)]"
+        className="font-display font-black uppercase leading-[0.85] tracking-[-0.03em] text-[clamp(4rem,18vw,18rem)]"
       >
         Contact
         <ArrowDownIcon className="ml-3 inline-block size-[0.7em] align-baseline stroke-[0.5]" />
