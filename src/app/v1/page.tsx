@@ -227,7 +227,7 @@ function HouseRules() {
               <AccordionItem
                 key={rule.title}
                 value={rule.title}
-                className="border-b border-foreground/10 first:border-t data-open:bg-transparent"
+                className="not-last:border-b border-foreground/10 data-open:bg-transparent"
               >
                 <AccordionTrigger className="group items-center border-0 px-0 py-6 text-left hover:no-underline focus-visible:ring-0 [&>svg]:hidden">
                   <span className="flex w-full items-center gap-6">
