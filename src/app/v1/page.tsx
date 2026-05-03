@@ -104,10 +104,7 @@ function Hero() {
         className="relative mt-12 grid grid-cols-12 md:-mt-12"
       >
         <div className="col-span-12 md:col-span-5 md:col-start-8">
-          <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
-            // De Artieste
-          </p>
-          <div className="group relative mt-5 aspect-[4/5] w-full overflow-hidden">
+          <div className="group relative aspect-[4/5] w-full overflow-hidden">
             <Image
               src="/Brenda.png"
               alt="Brenda — B. You Tattoo"
@@ -129,10 +126,7 @@ function Hero() {
         className="relative mt-12 grid grid-cols-12 md:-mt-20"
       >
         <blockquote className="col-span-12 md:col-span-6">
-          <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
-            // Het verhaal
-          </p>
-          <p className="mt-5 font-heading text-3xl leading-snug font-light md:text-4xl">
+          <p className="font-heading text-3xl leading-snug font-light md:text-4xl">
             Gespecialiseerd in ultra fine-line en botanische kunst.
             <span className="italic"> Tijdloze verhalen</span> vertaald naar
             de huid.
