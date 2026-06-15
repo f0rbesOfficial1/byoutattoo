@@ -5,6 +5,7 @@ import {
   Inter,
   Playfair_Display,
 } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 import { Cursor } from "@/components/cursor";
@@ -52,6 +53,7 @@ export default function RootLayout({
           <main className="flex-1">{children}</main>
         </IconProvider>
         <Cursor />
+        <Analytics />
       </body>
     </html>
   );
