@@ -1,2 +1,2 @@
 # byoutattoo
-A we
+A website about an incredible tattoo artist.
