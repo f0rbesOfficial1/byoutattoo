@@ -5,6 +5,7 @@ import {
   ArrowUpRightIcon,
   IconContext,
 } from "@phosphor-icons/react";
+import useEmblaCarousel from "embla-carousel-react";
 import { motion } from "motion/react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
@@ -15,7 +16,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { HoverRipple } from "@/components/hover-ripple";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 const portfolio = [
   { src: "/Tattoo1.png", caption: "Fine-line" },
@@ -130,7 +133,7 @@ function Hero() {
       </div>
 
       {/* Z — image right + quote bottom-left, bottom-aligned */}
-      <div className="relative mt-2 grid grid-cols-12 md:-mt-48">
+      <div className="relative mt-16 grid grid-cols-12 md:-mt-48">
         <motion.figure
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -176,7 +179,7 @@ function Hero() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.9, ease: easeOut }}
-          className="col-span-12 mt-2 md:col-span-6 md:row-start-1 md:mt-0 md:self-end"
+          className="col-span-12 mt-16 md:col-span-6 md:row-start-1 md:mt-0 md:self-end"
         >
           <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
             // Mijn expertise
@@ -190,7 +193,147 @@ function Hero() {
   );
 }
 
-function Portfolio() {
+function PortfolioSlide({
+  item,
+  className,
+  interactive = true,
+}: {
+  item: (typeof portfolio)[number];
+  className?: string;
+  interactive?: boolean;
+}) {
+  const image = (
+    <Image
+      src={item.src}
+      alt={item.caption}
+      fill
+      loading="eager"
+      sizes="(min-width: 1024px) 32vw, (min-width: 768px) 42vw, 78vw"
+      className={cn(
+        "object-cover grayscale",
+        interactive &&
+          "scale-100 transition-transform duration-700 ease-out group-hover:scale-105",
+      )}
+    />
+  );
+
+  return (
+    <div className={className}>
+      {interactive ? (
+        <HoverRipple className="group relative h-full w-full overflow-hidden">
+          {image}
+        </HoverRipple>
+      ) : (
+        <div className="relative h-full w-full overflow-hidden">{image}</div>
+      )}
+    </div>
+  );
+}
+
+const MOBILE_CAROUSEL_MIN_SCALE = 0.9;
+const MOBILE_CAROUSEL_MAX_SCALE = 1.05;
+const MOBILE_CAROUSEL_TWEEN_FACTOR = 0.16;
+
+function clamp(value: number, min: number, max: number) {
+  return Math.min(Math.max(value, min), max);
+}
+
+function setMobileCarouselTweenScale(
+  emblaApi: NonNullable<ReturnType<typeof useEmblaCarousel>[1]>,
+) {
+  const engine = emblaApi.internalEngine();
+  const scrollProgress = emblaApi.scrollProgress();
+  const slideNodes = emblaApi.slideNodes();
+
+  emblaApi.scrollSnapList().forEach((scrollSnap, snapIndex) => {
+    engine.slideRegistry[snapIndex]?.forEach((slideIndex) => {
+      let diffToTarget = scrollSnap - scrollProgress;
+
+      if (engine.options.loop) {
+        engine.slideLooper.loopPoints.forEach((loopItem) => {
+          const target = loopItem.target();
+
+          if (slideIndex === loopItem.index && target !== 0) {
+            const sign = Math.sign(target);
+
+            if (sign === -1) {
+              diffToTarget = scrollSnap - (1 + scrollProgress);
+            }
+            if (sign === 1) {
+              diffToTarget = scrollSnap + (1 - scrollProgress);
+            }
+          }
+        });
+      }
+
+      const scale = clamp(
+        MOBILE_CAROUSEL_MAX_SCALE -
+          Math.abs(diffToTarget) * MOBILE_CAROUSEL_TWEEN_FACTOR,
+        MOBILE_CAROUSEL_MIN_SCALE,
+        MOBILE_CAROUSEL_MAX_SCALE,
+      );
+
+      slideNodes[slideIndex].style.transform = `scale(${scale})`;
+    });
+  });
+}
+
+function PortfolioMobileCarousel() {
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: true,
+    align: "center",
+    duration: 28,
+  });
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    const onSelect = () => {
+      setSelectedIndex(emblaApi.selectedScrollSnap());
+      setMobileCarouselTweenScale(emblaApi);
+    };
+
+    const onScroll = () => {
+      setMobileCarouselTweenScale(emblaApi);
+    };
+
+    onSelect();
+    emblaApi.on("scroll", onScroll);
+    emblaApi.on("reInit", onSelect);
+    emblaApi.on("select", onSelect);
+
+    return () => {
+      emblaApi.off("scroll", onScroll);
+      emblaApi.off("reInit", onSelect);
+      emblaApi.off("select", onSelect);
+    };
+  }, [emblaApi]);
+
+  return (
+    <div className="py-3 pb-6">
+      <div ref={emblaRef} className="overflow-hidden">
+        <ul className="flex items-center touch-pan-y">
+          {portfolio.map((item, index) => (
+            <li
+              key={item.src}
+              aria-current={index === selectedIndex ? "true" : undefined}
+              className="min-w-0 shrink-0 grow-0 basis-[72vw] origin-center pr-4 will-change-transform"
+            >
+              <PortfolioSlide
+                item={item}
+                interactive={false}
+                className="relative aspect-[3/4]"
+              />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+function PortfolioDesktopTrack() {
   const items = [...portfolio, ...portfolio];
   const trackRef = useRef<HTMLUListElement>(null);
 
@@ -244,10 +387,60 @@ function Portfolio() {
   }, []);
 
   return (
-    <section
-      id="portfolio"
-      className="scroll-mt-20 pt-10 pb-2 md:pt-16 md:pb-4"
-    >
+    <>
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-y-0 left-0 z-20 w-24 backdrop-blur-md md:w-40"
+        style={{
+          maskImage: "linear-gradient(to right, black, transparent)",
+          WebkitMaskImage: "linear-gradient(to right, black, transparent)",
+        }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-y-0 right-0 z-20 w-24 backdrop-blur-md md:w-40"
+        style={{
+          maskImage: "linear-gradient(to left, black, transparent)",
+          WebkitMaskImage: "linear-gradient(to left, black, transparent)",
+        }}
+      />
+      <div
+        className="group/track overflow-hidden pb-6"
+        style={{
+          maskImage:
+            "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
+        }}
+      >
+        <ul ref={trackRef} className="flex w-max will-change-transform">
+          {items.map((item, i) => (
+            <li
+              key={`${item.src}-${i}`}
+              className="mr-6 aspect-[3/4] w-[42vw] shrink-0 lg:w-[32vw]"
+            >
+              <PortfolioSlide item={item} className="relative h-full w-full" />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
+  );
+}
+
+function Portfolio() {
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const update = () => setIsDesktop(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  return (
+    <section className="pt-10 pb-2 md:pt-16 md:pb-4">
       <div className="mb-10 flex flex-wrap items-end justify-between gap-6 px-6 md:mb-16 md:px-10">
         <h2 className="font-heading text-4xl leading-tight font-light md:text-6xl">
           Portfolio
@@ -269,53 +462,12 @@ function Portfolio() {
         </Button>
       </div>
 
-      <div className="relative">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-y-0 left-0 z-20 w-24 backdrop-blur-md md:w-40"
-          style={{
-            maskImage: "linear-gradient(to right, black, transparent)",
-            WebkitMaskImage: "linear-gradient(to right, black, transparent)",
-          }}
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-y-0 right-0 z-20 w-24 backdrop-blur-md md:w-40"
-          style={{
-            maskImage: "linear-gradient(to left, black, transparent)",
-            WebkitMaskImage: "linear-gradient(to left, black, transparent)",
-          }}
-        />
-        <div
-          className="group/track overflow-hidden pb-6"
-          style={{
-            maskImage:
-              "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
-            WebkitMaskImage:
-              "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
-          }}
-        >
-          <ul
-            ref={trackRef}
-            className="flex w-max will-change-transform"
-          >
-            {items.map((item, i) => (
-              <li
-                key={`${item.src}-${i}`}
-                className="group relative mr-4 aspect-[3/4] w-[78vw] shrink-0 overflow-hidden md:mr-6 md:w-[42vw] lg:w-[32vw]"
-              >
-                <Image
-                  src={item.src}
-                  alt={item.caption}
-                  fill
-                  loading="eager"
-                  sizes="(min-width: 1024px) 32vw, (min-width: 768px) 42vw, 78vw"
-                  className="scale-100 object-cover grayscale transition-transform duration-700 ease-out group-hover:scale-105"
-                />
-              </li>
-            ))}
-          </ul>
-        </div>
+      <div id="portfolio" className="relative scroll-mt-20">
+        {isDesktop ? (
+          <PortfolioDesktopTrack />
+        ) : (
+          <PortfolioMobileCarousel />
+        )}
       </div>
     </section>
   );
