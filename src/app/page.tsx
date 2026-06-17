@@ -251,11 +251,17 @@ function About() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.8, ease: easeOut }}
-        className="mx-auto grid max-w-6xl grid-cols-1 items-start gap-14 md:grid-cols-12 md:gap-16"
+        className="mx-auto grid max-w-6xl grid-cols-1 items-start gap-12 md:grid-cols-12 md:gap-10"
       >
         {/* Portrait */}
-        <figure className="md:col-span-5 md:row-start-1">
-          <div className="group relative mx-auto aspect-[4/5] w-2/3 max-w-sm md:w-full md:max-w-none">
+        <figure className="md:col-span-6 md:row-start-1">
+          <a
+            href={INSTAGRAM_URL}
+            target="_blank"
+            rel="noreferrer noopener"
+            aria-label="Bekijk B. You Tattoo op Instagram"
+            className="group relative mx-auto block aspect-[4/5] w-3/4 max-w-sm md:w-full md:max-w-none"
+          >
             <div
               className="pointer-events-none absolute -inset-[11px] bg-foreground/20 transition-colors duration-500 ease-out group-hover:bg-foreground/80"
               style={{
@@ -281,11 +287,11 @@ function About() {
                 src="/Brenda.png"
                 alt="Brenda — B. You Tattoo"
                 fill
-                sizes="(min-width: 768px) 38vw, 66vw"
+                sizes="(min-width: 768px) 50vw, 75vw"
                 className="scale-100 object-cover grayscale transition-transform duration-700 ease-out group-hover:scale-105"
               />
             </div>
-          </div>
+          </a>
         </figure>
 
         {/* Bio */}
@@ -295,7 +301,7 @@ function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.6 }}
             transition={{ duration: 1, delay: 0.15, ease: easeOut }}
-            className="font-display font-semibold leading-[1.1] tracking-[0.02em] text-[clamp(2.5rem,6vw,5rem)]"
+            className="font-display font-normal leading-[1.1] text-[clamp(2.5rem,6vw,5rem)]"
           >
             B. You Tattoo
           </motion.h2>
@@ -579,7 +585,7 @@ function Portfolio() {
   return (
     <section className="pt-10 pb-2 md:pt-16 md:pb-4">
       <div className="mb-10 flex flex-wrap items-end justify-between gap-6 px-8 md:mb-16 md:px-12">
-        <h2 className="font-display text-3xl leading-tight font-medium md:text-5xl">
+        <h2 className="font-display text-3xl leading-tight font-normal md:text-5xl">
           Portfolio
         </h2>
         <Button
@@ -715,7 +721,7 @@ function HouseRules() {
         className="mx-auto grid max-w-6xl grid-cols-1 items-start gap-12 md:grid-cols-12"
       >
         <div className="md:col-span-5 md:pr-10">
-          <h2 className="font-display text-3xl leading-tight font-medium md:text-4xl">
+          <h2 className="font-display text-3xl leading-tight font-normal md:text-4xl">
             Duidelijke afspraken.
           </h2>
         </div>
@@ -775,7 +781,7 @@ function Footer() {
           <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
             @b._you_tattoo
           </p>
-          <h2 className="mt-4 font-display font-black uppercase leading-[1.05] tracking-[0.05em] text-[clamp(2.75rem,9.5vw,10rem)] md:mt-6">
+          <h2 className="mt-4 font-display font-normal uppercase leading-[1.05] tracking-[0.05em] text-[clamp(2.75rem,9.5vw,10rem)] md:mt-6">
             <span className="transition-opacity duration-300 group-hover:opacity-80">
               Maak een afspraak
             </span>
@@ -789,7 +795,7 @@ function Footer() {
           <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
             {"// Adres"}
           </p>
-          <div className="mt-6">
+          <div className="mt-3">
             <a
               href="https://maps.app.goo.gl/zUR6iJKpnHLFi1uZ9"
               target="_blank"
@@ -805,7 +811,7 @@ function Footer() {
         </div>
 
         <div className="flex flex-col md:items-end md:pl-10 md:text-right">
-          <p className="mt-6 font-heading text-2xl leading-tight font-light md:mt-10">
+          <p className="mt-6 font-heading text-2xl leading-tight font-light md:mt-7">
             Uitsluitend op afspraak.
           </p>
         </div>

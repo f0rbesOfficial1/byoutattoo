@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import {
-  Cinzel,
   Cormorant_Garamond,
+  DM_Serif_Display,
   Geist_Mono,
   Inter,
 } from "next/font/google";
@@ -27,11 +27,10 @@ const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
 });
 
-// Engraved Roman capitals — a legible, tattoo-style display face that
-// echoes the "TATTOO" lettering in the logo. Used for all titles.
-const cinzel = Cinzel({
-  variable: "--font-cinzel",
-  weight: ["400", "500", "600", "700", "800", "900"],
+// High-contrast display serif used for all titles.
+const dmSerif = DM_Serif_Display({
+  variable: "--font-dm-serif",
+  weight: ["400"],
   subsets: ["latin"],
 });
 
@@ -53,7 +52,7 @@ export default function RootLayout({
   return (
     <html
       lang="nl"
-      className={`${inter.variable} ${geistMono.variable} ${cormorant.variable} ${cinzel.variable} h-full scroll-smooth antialiased`}
+      className={`${inter.variable} ${geistMono.variable} ${cormorant.variable} ${dmSerif.variable} h-full scroll-smooth antialiased`}
     >
       <body className="flex min-h-full flex-col">
         <IconProvider>
