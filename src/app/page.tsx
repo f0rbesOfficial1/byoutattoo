@@ -13,7 +13,13 @@ import {
   useReducedMotion,
 } from "motion/react";
 import Image from "next/image";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 
 import {
   Accordion,
@@ -124,15 +130,6 @@ function Header() {
             variant="ghost"
             size="sm"
             nativeButton={false}
-            render={<a href="#over-mij" />}
-            className="hidden rounded-full text-[11px] uppercase tracking-[0.25em] md:inline-flex"
-          >
-            Over mij
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            nativeButton={false}
             render={<a href="#portfolio" />}
             className="hidden rounded-full text-[11px] uppercase tracking-[0.25em] md:inline-flex"
           >
@@ -142,10 +139,10 @@ function Header() {
             variant="ghost"
             size="sm"
             nativeButton={false}
-            render={<a href="#afspraken" />}
+            render={<a href="#huisregels" />}
             className="hidden rounded-full text-[11px] uppercase tracking-[0.25em] md:inline-flex"
           >
-            Afspraken
+            Huisregels
           </Button>
           <Button
             variant="ghost"
@@ -163,9 +160,18 @@ function Header() {
   );
 }
 
-function IntroOverlay() {
+function IntroOverlay({ onComplete }: { onComplete: () => void }) {
   const [show, setShow] = useState(true);
   const reduceMotion = useReducedMotion();
+  const doneRef = useRef(false);
+
+  const finish = useCallback(() => {
+    if (doneRef.current) return;
+    doneRef.current = true;
+    setShow(false);
+    // Reveal the site only after the splash has faded to black.
+    window.setTimeout(onComplete, reduceMotion ? 0 : 520);
+  }, [reduceMotion, onComplete]);
 
   // Decide before first paint: skip (no flash) if already seen this session.
   useIsomorphicLayoutEffect(() => {
@@ -178,27 +184,30 @@ function IntroOverlay() {
     } catch {
       // sessionStorage blocked (private mode, etc.) — just play the intro.
     }
-    if (seen && !REPLAY_INTRO_EVERY_LOAD) setShow(false);
-  }, []);
+    if (seen && !REPLAY_INTRO_EVERY_LOAD) {
+      doneRef.current = true;
+      setShow(false);
+      onComplete();
+    }
+  }, [onComplete]);
 
   useEffect(() => {
     if (!show) return;
     document.body.style.overflow = "hidden";
 
-    const dismiss = () => setShow(false);
-    const timer = setTimeout(dismiss, reduceMotion ? 1400 : 2600);
-    window.addEventListener("wheel", dismiss, { passive: true, once: true });
-    window.addEventListener("touchmove", dismiss, { passive: true, once: true });
-    window.addEventListener("keydown", dismiss, { once: true });
+    const timer = setTimeout(finish, reduceMotion ? 1400 : 2600);
+    window.addEventListener("wheel", finish, { passive: true, once: true });
+    window.addEventListener("touchmove", finish, { passive: true, once: true });
+    window.addEventListener("keydown", finish, { once: true });
 
     return () => {
       clearTimeout(timer);
-      window.removeEventListener("wheel", dismiss);
-      window.removeEventListener("touchmove", dismiss);
-      window.removeEventListener("keydown", dismiss);
+      window.removeEventListener("wheel", finish);
+      window.removeEventListener("touchmove", finish);
+      window.removeEventListener("keydown", finish);
       document.body.style.overflow = "";
     };
-  }, [show, reduceMotion]);
+  }, [show, reduceMotion, finish]);
 
   return (
     <AnimatePresence
@@ -210,9 +219,11 @@ function IntroOverlay() {
         <motion.div
           key="intro"
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.9, ease: easeOut }}
-          onClick={() => setShow(false)}
+          exit={{
+            opacity: 0,
+            transition: { duration: 0.8, delay: 0.5, ease: easeOut },
+          }}
+          onClick={finish}
           role="button"
           aria-label="Intro overslaan"
           className="fixed inset-0 z-[60] flex cursor-pointer flex-col items-center justify-center bg-background px-8 text-center"
@@ -220,7 +231,7 @@ function IntroOverlay() {
           <motion.div
             initial={{ opacity: 0, scale: 0.94 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.04, y: -16 }}
+            exit={{ opacity: 0, transition: { duration: 0.5, ease: easeOut } }}
             transition={{ duration: 1, ease: easeOut }}
             className="relative aspect-square w-[78%] max-w-[34rem] bg-background md:w-[40%]"
           >
@@ -237,7 +248,7 @@ function IntroOverlay() {
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
+            exit={{ opacity: 0, transition: { duration: 0.5, ease: easeOut } }}
             transition={{ duration: 0.9, delay: 0.4, ease: easeOut }}
             className="mt-8 text-[11px] uppercase tracking-[0.4em] opacity-60 md:mt-10"
           >
@@ -299,17 +310,14 @@ function About() {
 
         {/* Bio */}
         <div className="md:col-span-6 md:col-start-7 md:row-start-1">
-          <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
-            {"// Over mij"}
-          </p>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.6 }}
             transition={{ duration: 1, delay: 0.15, ease: easeOut }}
-            className="mt-3 font-display font-semibold leading-[0.9] tracking-tight text-[clamp(3.25rem,8vw,6.5rem)]"
+            className="font-script font-normal leading-[1.05] tracking-normal text-[clamp(3.25rem,9vw,7rem)]"
           >
-            Brenda
+            B. You Tattoo
           </motion.h2>
           <div className="mt-8 max-w-xl space-y-5 text-base leading-relaxed opacity-75 md:mt-10">
             <p>
@@ -622,27 +630,103 @@ function Portfolio() {
   );
 }
 
+const CRAFT_PHRASES = ["B. Inspired", "B. Unique", "B. You"];
+
 function Craft() {
+  const reduceMotion = useReducedMotion();
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  // Repeat the triad so one block is wider than the viewport, then double it
+  // for a seamless loop.
+  const block = Array.from({ length: 6 }, () => CRAFT_PHRASES).flat();
+  const items = [...block, ...block];
+
+  useEffect(() => {
+    if (reduceMotion) return;
+    const track = trackRef.current;
+    if (!track) return;
+
+    let cancelled = false;
+    let animation: Animation | null = null;
+
+    const start = () => {
+      if (cancelled) return;
+      animation?.cancel();
+      const first = track.children[0] as HTMLElement | undefined;
+      const loopPoint = track.children[block.length] as HTMLElement | undefined;
+      if (!first || !loopPoint) return;
+
+      const distance = loopPoint.offsetLeft - first.offsetLeft;
+      if (distance <= 0) return;
+
+      // Reverse of the portfolio strip: the content travels to the right.
+      animation = track.animate(
+        [
+          { transform: `translate3d(-${distance}px, 0, 0)` },
+          { transform: "translate3d(0, 0, 0)" },
+        ],
+        { duration: (distance / 45) * 1000, iterations: Infinity, easing: "linear" },
+      );
+    };
+
+    start();
+    // Re-measure once webfonts have loaded so the loop stays seamless.
+    document.fonts?.ready.then(start);
+
+    const onResize = () => start();
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      cancelled = true;
+      animation?.cancel();
+      window.removeEventListener("resize", onResize);
+    };
+  }, [reduceMotion, block.length]);
+
+  if (reduceMotion) {
+    return (
+      <section className="px-8 py-16 md:px-12 md:py-24">
+        <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-3 font-heading text-xl font-light md:text-3xl lg:text-4xl">
+          {CRAFT_PHRASES.map((phrase) => (
+            <span key={phrase}>{phrase}</span>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
   return (
-    <section className="px-8 pt-0 pb-20 md:px-12 md:pt-0 md:pb-32">
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.9, delay: 0.1, ease: easeOut }}
-        className="grid grid-cols-1 font-heading text-xl leading-[1.25] font-light md:grid-cols-3 md:text-3xl lg:text-4xl"
+    <section className="py-16 md:py-24">
+      <div
+        className="overflow-hidden"
+        style={{
+          maskImage:
+            "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
+        }}
       >
-        <p className="px-8 py-6 text-center md:py-2">B. Inspired</p>
-        <p className="px-8 py-6 text-center md:py-2">B. Unique</p>
-        <p className="px-8 py-6 text-center md:py-2">B. You</p>
-      </motion.div>
+        <div
+          ref={trackRef}
+          className="flex w-max items-center font-heading text-xl font-light whitespace-nowrap will-change-transform md:text-3xl lg:text-4xl"
+        >
+          {items.map((phrase, i) => (
+            <span key={`${phrase}-${i}`} className="flex items-center">
+              <span className="px-10 md:px-14">{phrase}</span>
+              <span aria-hidden className="text-base opacity-30 md:text-xl">
+                ·
+              </span>
+            </span>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }
 
 function HouseRules() {
   return (
-    <section id="afspraken" className="scroll-mt-20 px-8 py-20 md:px-12 md:py-32">
+    <section id="huisregels" className="scroll-mt-20 px-8 py-20 md:px-12 md:py-32">
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -751,6 +835,9 @@ function Footer() {
 }
 
 export default function V1Page() {
+  const [introDone, setIntroDone] = useState(false);
+  const handleIntroComplete = useCallback(() => setIntroDone(true), []);
+
   useEffect(() => {
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual";
@@ -761,15 +848,21 @@ export default function V1Page() {
   return (
     <IconContext.Provider value={{ weight: "thin" }}>
       <MotionConfig reducedMotion="user">
-        <div id="top" className="bg-background text-foreground min-h-screen">
-          <IntroOverlay />
+        <IntroOverlay onComplete={handleIntroComplete} />
+        <motion.div
+          id="top"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: introDone ? 1 : 0 }}
+          transition={{ duration: 1, ease: easeOut }}
+          className="bg-background text-foreground min-h-screen"
+        >
           <Header />
           <About />
           <Portfolio />
           <Craft />
           <HouseRules />
           <Footer />
-        </div>
+        </motion.div>
       </MotionConfig>
     </IconContext.Provider>
   );

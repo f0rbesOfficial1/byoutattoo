@@ -3,6 +3,7 @@ import {
   Cormorant_Garamond,
   Geist_Mono,
   Inter,
+  Pinyon_Script,
   Playfair_Display,
 } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
@@ -33,6 +34,13 @@ const playfair = Playfair_Display({
   subsets: ["latin"],
 });
 
+// Tattoo-style calligraphic script, echoing the logo lettering.
+const pinyon = Pinyon_Script({
+  variable: "--font-pinyon",
+  weight: ["400"],
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
   title: "B. You Tattoo — Fine-line & floral blackwork",
   description:
@@ -51,7 +59,7 @@ export default function RootLayout({
   return (
     <html
       lang="nl"
-      className={`${inter.variable} ${geistMono.variable} ${cormorant.variable} ${playfair.variable} h-full scroll-smooth antialiased`}
+      className={`${inter.variable} ${geistMono.variable} ${cormorant.variable} ${playfair.variable} ${pinyon.variable} h-full scroll-smooth antialiased`}
     >
       <body className="flex min-h-full flex-col">
         <IconProvider>
