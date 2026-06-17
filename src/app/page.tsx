@@ -721,7 +721,7 @@ function HouseRules() {
         </div>
         <div className="md:col-span-7 md:pl-2">
           <Accordion
-            multiple
+            multiple={false}
             className="w-full rounded-none border-0"
             defaultValue={[houseRules[0].title]}
           >
