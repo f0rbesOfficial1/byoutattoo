@@ -632,7 +632,7 @@ function Footer() {
         </a>
       </motion.div>
 
-      <div className="mt-8 grid grid-cols-1 gap-10 md:mt-[92px] md:grid-cols-2 md:gap-0">
+      <div className="mt-16 grid grid-cols-1 gap-4 md:mt-[92px] md:grid-cols-2 md:gap-0">
         <div className="flex flex-col md:pr-10">
           <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
             {"// Adres"}
