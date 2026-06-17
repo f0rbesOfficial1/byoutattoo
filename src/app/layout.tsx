@@ -38,8 +38,8 @@ export const metadata: Metadata = {
   description:
     "B. You Tattoo — fijne, elegante zwart-wit tattoos met oog voor detail door Brenda. Fineline, bloemenmotieven, mandala's en dotwork. Uitsluitend op afspraak in Lede.",
   icons: {
-    icon: "/Logo.jpg",
-    apple: "/Logo.jpg",
+    icon: "/Logo.png",
+    apple: "/Logo.png",
   },
 };
 

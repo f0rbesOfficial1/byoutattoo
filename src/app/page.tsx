@@ -21,7 +21,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { HoverRipple } from "@/components/hover-ripple";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -94,6 +93,9 @@ const useIsomorphicLayoutEffect =
 
 // Show the intro splash once per browser-tab session.
 const INTRO_SESSION_KEY = "byou-intro-shown";
+// TEMP: replay the splash on every load while tuning it. Set false to
+// restore the once-per-session behaviour.
+const REPLAY_INTRO_EVERY_LOAD = true;
 // Guards against React Strict Mode's double-mount re-deciding within one load.
 let introDecided = false;
 
@@ -113,7 +115,7 @@ function Header() {
         scrolled ? "border-foreground/10" : "border-transparent"
       }`}
     >
-      <div className="flex items-center justify-between px-6 py-4 text-[11px] uppercase tracking-[0.25em] md:px-10">
+      <div className="flex items-center justify-between px-8 py-4 text-[11px] uppercase tracking-[0.25em] md:px-12">
         <a href="#top" className="font-medium">
           B. YOU TATTOO
         </a>
@@ -123,7 +125,7 @@ function Header() {
             size="sm"
             nativeButton={false}
             render={<a href="#over-mij" />}
-            className="hidden rounded-full text-[11px] uppercase tracking-[0.25em] sm:inline-flex"
+            className="hidden rounded-full text-[11px] uppercase tracking-[0.25em] md:inline-flex"
           >
             Over mij
           </Button>
@@ -132,9 +134,18 @@ function Header() {
             size="sm"
             nativeButton={false}
             render={<a href="#portfolio" />}
-            className="hidden rounded-full text-[11px] uppercase tracking-[0.25em] sm:inline-flex"
+            className="hidden rounded-full text-[11px] uppercase tracking-[0.25em] md:inline-flex"
           >
             Portfolio
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            nativeButton={false}
+            render={<a href="#afspraken" />}
+            className="hidden rounded-full text-[11px] uppercase tracking-[0.25em] md:inline-flex"
+          >
+            Afspraken
           </Button>
           <Button
             variant="ghost"
@@ -167,7 +178,7 @@ function IntroOverlay() {
     } catch {
       // sessionStorage blocked (private mode, etc.) — just play the intro.
     }
-    if (seen) setShow(false);
+    if (seen && !REPLAY_INTRO_EVERY_LOAD) setShow(false);
   }, []);
 
   useEffect(() => {
@@ -204,17 +215,17 @@ function IntroOverlay() {
           onClick={() => setShow(false)}
           role="button"
           aria-label="Intro overslaan"
-          className="fixed inset-0 z-[60] flex cursor-pointer flex-col items-center justify-center bg-background px-6 text-center"
+          className="fixed inset-0 z-[60] flex cursor-pointer flex-col items-center justify-center bg-background px-8 text-center"
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.94 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.04, y: -16 }}
             transition={{ duration: 1, ease: easeOut }}
-            className="relative aspect-square w-[78%] max-w-[34rem] md:w-[40%]"
+            className="relative aspect-square w-[78%] max-w-[34rem] bg-background md:w-[40%]"
           >
             <Image
-              src="/Logo.jpg"
+              src="/Logo.png"
               alt="B. You Tattoo"
               fill
               priority
@@ -227,18 +238,8 @@ function IntroOverlay() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.9, delay: 0.3, ease: easeOut }}
-            className="mt-8 max-w-md font-heading text-2xl leading-snug font-light md:mt-10 md:text-3xl"
-          >
-            Elegante zwart-wit tattoos, met zorg en precisie gezet.
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.9, delay: 0.5, ease: easeOut }}
-            className="mt-6 text-[11px] uppercase tracking-[0.4em] opacity-60"
+            transition={{ duration: 0.9, delay: 0.4, ease: easeOut }}
+            className="mt-8 text-[11px] uppercase tracking-[0.4em] opacity-60 md:mt-10"
           >
             Fineline · floral · dotwork
           </motion.p>
@@ -252,14 +253,14 @@ function About() {
   return (
     <section
       id="over-mij"
-      className="scroll-mt-20 px-6 pt-24 pb-20 md:px-10 md:pt-32 md:pb-32"
+      className="scroll-mt-20 px-8 pt-24 pb-20 md:px-12 md:pt-32 md:pb-32"
     >
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.8, ease: easeOut }}
-        className="grid grid-cols-1 items-center gap-14 md:grid-cols-12 md:gap-12"
+        className="grid grid-cols-1 items-center gap-14 md:grid-cols-12 md:gap-16"
       >
         {/* Portrait */}
         <figure className="md:col-span-5 md:row-start-1">
@@ -301,9 +302,15 @@ function About() {
           <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
             {"// Over mij"}
           </p>
-          <h2 className="mt-4 font-heading text-4xl leading-tight font-light md:mt-6 md:text-5xl">
-            Zorg, precisie en jouw verhaal.
-          </h2>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.6 }}
+            transition={{ duration: 1, delay: 0.15, ease: easeOut }}
+            className="mt-3 font-display font-semibold leading-[0.9] tracking-tight text-[clamp(3.25rem,8vw,6.5rem)]"
+          >
+            Brenda
+          </motion.h2>
           <div className="mt-8 max-w-xl space-y-5 text-base leading-relaxed opacity-75 md:mt-10">
             <p>
               Mijn naam is Brenda en zorg dragen voor mensen staat centraal in
@@ -331,7 +338,7 @@ function About() {
               tijdens het hele proces.
             </p>
           </div>
-          <p className="mt-8 font-heading text-2xl leading-snug font-light text-foreground md:text-3xl">
+          <p className="mt-5 max-w-xl text-base leading-relaxed opacity-75">
             Ik kijk ernaar uit om samen jouw idee tot leven te brengen.
           </p>
         </div>
@@ -343,36 +350,22 @@ function About() {
 function PortfolioSlide({
   item,
   className,
-  interactive = true,
 }: {
   item: PortfolioItem;
   className?: string;
-  interactive?: boolean;
 }) {
-  const image = (
-    <Image
-      src={item.src}
-      alt={`Tattoo — ${item.caption}`}
-      fill
-      loading="lazy"
-      sizes="(min-width: 1024px) 32vw, (min-width: 768px) 42vw, 78vw"
-      className={cn(
-        "object-cover grayscale",
-        interactive &&
-          "scale-100 transition-transform duration-700 ease-out group-hover:scale-105",
-      )}
-    />
-  );
-
   return (
     <div className={className}>
-      {interactive ? (
-        <HoverRipple className="group relative h-full w-full overflow-hidden">
-          {image}
-        </HoverRipple>
-      ) : (
-        <div className="relative h-full w-full overflow-hidden">{image}</div>
-      )}
+      <div className="relative h-full w-full overflow-hidden">
+        <Image
+          src={item.src}
+          alt={`Tattoo — ${item.caption}`}
+          fill
+          loading="lazy"
+          sizes="(min-width: 1024px) 32vw, (min-width: 768px) 42vw, 78vw"
+          className="object-cover grayscale"
+        />
+      </div>
     </div>
   );
 }
@@ -474,7 +467,6 @@ function PortfolioMobileCarousel({ slides }: { slides: PortfolioItem[] }) {
             >
               <PortfolioSlide
                 item={item}
-                interactive={false}
                 className="relative aspect-[3/4]"
               />
             </li>
@@ -515,7 +507,7 @@ function PortfolioDesktopTrack({ slides }: { slides: PortfolioItem[] }) {
           { transform: "translate3d(0, 0, 0)" },
           { transform: `translate3d(-${distance}px, 0, 0)` },
         ],
-        { duration: 70000, iterations: Infinity, easing: "linear" },
+        { duration: 140000, iterations: Infinity, easing: "linear" },
       );
     };
 
@@ -524,21 +516,9 @@ function PortfolioDesktopTrack({ slides }: { slides: PortfolioItem[] }) {
     const onResize = () => start();
     window.addEventListener("resize", onResize);
 
-    const trackEl = track;
-    const onEnter = () => {
-      if (animation) animation.playbackRate = 0;
-    };
-    const onLeave = () => {
-      if (animation) animation.playbackRate = 1;
-    };
-    trackEl.addEventListener("pointerenter", onEnter);
-    trackEl.addEventListener("pointerleave", onLeave);
-
     return () => {
       animation?.cancel();
       window.removeEventListener("resize", onResize);
-      trackEl.removeEventListener("pointerenter", onEnter);
-      trackEl.removeEventListener("pointerleave", onLeave);
     };
   }, [slides, reduceMotion]);
 
@@ -562,7 +542,7 @@ function PortfolioDesktopTrack({ slides }: { slides: PortfolioItem[] }) {
       />
       <div
         className={cn(
-          "group/track pb-6",
+          "pb-6",
           reduceMotion ? "overflow-x-auto" : "overflow-hidden",
         )}
         style={{
@@ -610,7 +590,7 @@ function Portfolio() {
 
   return (
     <section className="pt-10 pb-2 md:pt-16 md:pb-4">
-      <div className="mb-10 flex flex-wrap items-end justify-between gap-6 px-6 md:mb-16 md:px-10">
+      <div className="mb-10 flex flex-wrap items-end justify-between gap-6 px-8 md:mb-16 md:px-12">
         <h2 className="font-heading text-4xl leading-tight font-light md:text-6xl">
           Portfolio
         </h2>
@@ -644,7 +624,7 @@ function Portfolio() {
 
 function Craft() {
   return (
-    <section className="px-6 pt-0 pb-20 md:px-10 md:pt-0 md:pb-32">
+    <section className="px-8 pt-0 pb-20 md:px-12 md:pt-0 md:pb-32">
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -652,9 +632,9 @@ function Craft() {
         transition={{ duration: 0.9, delay: 0.1, ease: easeOut }}
         className="grid grid-cols-1 font-heading text-xl leading-[1.25] font-light md:grid-cols-3 md:text-3xl lg:text-4xl"
       >
-        <p className="px-6 py-6 text-center md:py-2">B. Inspired</p>
-        <p className="px-6 py-6 text-center md:py-2">B. Unique</p>
-        <p className="px-6 py-6 text-center md:py-2">B. You</p>
+        <p className="px-8 py-6 text-center md:py-2">B. Inspired</p>
+        <p className="px-8 py-6 text-center md:py-2">B. Unique</p>
+        <p className="px-8 py-6 text-center md:py-2">B. You</p>
       </motion.div>
     </section>
   );
@@ -662,7 +642,7 @@ function Craft() {
 
 function HouseRules() {
   return (
-    <section className="border-t border-foreground/10 px-6 py-20 md:px-10 md:py-32">
+    <section id="afspraken" className="scroll-mt-20 px-8 py-20 md:px-12 md:py-32">
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -713,7 +693,7 @@ function Footer() {
   return (
     <footer
       id="contact"
-      className="scroll-mt-20 px-6 py-10 md:px-10 md:py-16"
+      className="scroll-mt-20 px-8 py-10 md:px-12 md:py-16"
     >
       <motion.div
         initial={{ opacity: 0, y: 24 }}
@@ -741,11 +721,11 @@ function Footer() {
       </motion.div>
 
       <div className="mt-8 grid grid-cols-1 gap-10 md:mt-[92px] md:grid-cols-2 md:gap-0">
-        <div className="flex flex-col md:min-h-[92px] md:pr-10">
+        <div className="flex flex-col md:pr-10">
           <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
             {"// Adres"}
           </p>
-          <div className="mt-5 md:mt-auto">
+          <div className="mt-6">
             <a
               href="https://maps.app.goo.gl/zUR6iJKpnHLFi1uZ9"
               target="_blank"
@@ -760,8 +740,8 @@ function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col md:min-h-[92px] md:items-end md:pl-10 md:text-right">
-          <p className="mt-5 font-heading text-2xl leading-tight font-light md:mt-auto">
+        <div className="flex flex-col md:items-end md:pl-10 md:text-right">
+          <p className="mt-6 font-heading text-2xl leading-tight font-light md:mt-10">
             Uitsluitend op afspraak.
           </p>
         </div>
