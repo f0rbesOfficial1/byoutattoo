@@ -220,6 +220,87 @@ function IntroOverlay() {
   );
 }
 
+function OrnatePortraitFrame() {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 400 500"
+      preserveAspectRatio="none"
+      fill="none"
+      className="pointer-events-none absolute inset-0 h-full w-full text-foreground opacity-90 transition-opacity duration-500 group-hover:opacity-100"
+      style={{ filter: "drop-shadow(0 1px 1.5px rgba(0,0,0,0.5))" }}
+    >
+      {/* Outer frame */}
+      <path
+        d="M18 18 H382 V482 H18 Z"
+        stroke="currentColor"
+        strokeWidth={1.5}
+        strokeOpacity={0.9}
+        vectorEffect="non-scaling-stroke"
+      />
+      {/* Nested corner brackets */}
+      <path
+        d="M32 56 V32 H56"
+        stroke="currentColor"
+        strokeWidth={1}
+        strokeOpacity={0.55}
+        vectorEffect="non-scaling-stroke"
+      />
+      <path
+        d="M368 56 V32 H344"
+        stroke="currentColor"
+        strokeWidth={1}
+        strokeOpacity={0.55}
+        vectorEffect="non-scaling-stroke"
+      />
+      <path
+        d="M368 444 V468 H344"
+        stroke="currentColor"
+        strokeWidth={1}
+        strokeOpacity={0.55}
+        vectorEffect="non-scaling-stroke"
+      />
+      <path
+        d="M32 444 V468 H56"
+        stroke="currentColor"
+        strokeWidth={1}
+        strokeOpacity={0.55}
+        vectorEffect="non-scaling-stroke"
+      />
+      {/* Corner diamonds on the frame corners */}
+      <path
+        d="M18 11 L25 18 L18 25 L11 18 Z"
+        stroke="currentColor"
+        strokeWidth={1}
+        vectorEffect="non-scaling-stroke"
+      />
+      <path
+        d="M382 11 L389 18 L382 25 L375 18 Z"
+        stroke="currentColor"
+        strokeWidth={1}
+        vectorEffect="non-scaling-stroke"
+      />
+      <path
+        d="M382 475 L389 482 L382 489 L375 482 Z"
+        stroke="currentColor"
+        strokeWidth={1}
+        vectorEffect="non-scaling-stroke"
+      />
+      <path
+        d="M18 475 L25 482 L18 489 L11 482 Z"
+        stroke="currentColor"
+        strokeWidth={1}
+        vectorEffect="non-scaling-stroke"
+      />
+      {/* Corner dots */}
+      <circle cx="18" cy="18" r="1.6" fill="currentColor" />
+      <circle cx="382" cy="18" r="1.6" fill="currentColor" />
+      <circle cx="382" cy="482" r="1.6" fill="currentColor" />
+      <circle cx="18" cy="482" r="1.6" fill="currentColor" />
+    </svg>
+  );
+}
+
 function About() {
   return (
     <section
@@ -242,35 +323,16 @@ function About() {
             aria-label="Bekijk B. You Tattoo op Instagram"
             className="group relative mx-auto block aspect-[4/5] w-full md:max-w-none"
           >
-            <div
-              className="pointer-events-none absolute -inset-[11px] bg-foreground/20 transition-colors duration-500 ease-out group-hover:bg-foreground/80"
-              style={{
-                clipPath:
-                  "polygon(46px 0, 100% 0, 100% calc(100% - 46px), calc(100% - 46px) 100%, 0 100%, 0 46px)",
-              }}
-            />
-            <div
-              className="pointer-events-none absolute -inset-[10px] bg-background"
-              style={{
-                clipPath:
-                  "polygon(46px 0, 100% 0, 100% calc(100% - 46px), calc(100% - 46px) 100%, 0 100%, 0 46px)",
-              }}
-            />
-            <div
-              className="relative h-full w-full overflow-hidden"
-              style={{
-                clipPath:
-                  "polygon(40px 0, 100% 0, 100% calc(100% - 40px), calc(100% - 40px) 100%, 0 100%, 0 40px)",
-              }}
-            >
+            <div className="absolute inset-0 overflow-hidden">
               <Image
                 src="/Brenda.png"
                 alt="Brenda — B. You Tattoo"
                 fill
                 sizes="(min-width: 768px) 50vw, 75vw"
-                className="scale-100 object-cover grayscale transition-transform duration-700 ease-out group-hover:scale-105"
+                className="object-cover grayscale transition-transform duration-700 ease-out group-hover:scale-105"
               />
             </div>
+            <OrnatePortraitFrame />
           </a>
         </figure>
 
