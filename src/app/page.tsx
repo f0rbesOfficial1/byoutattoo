@@ -13,7 +13,7 @@ import {
   useReducedMotion,
 } from "motion/react";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import {
   Accordion,
@@ -88,6 +88,15 @@ const easeOut = [0.16, 1, 0.3, 1] as const;
 const INSTAGRAM_URL = "https://www.instagram.com/b._you_tattoo/";
 const INSTAGRAM_DM_URL = "https://ig.me/m/b._you_tattoo";
 
+// Layout effect on the client (flash-free), plain effect on the server.
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
+// Show the intro splash once per browser-tab session.
+const INTRO_SESSION_KEY = "byou-intro-shown";
+// Guards against React Strict Mode's double-mount re-deciding within one load.
+let introDecided = false;
+
 function Header() {
   const [scrolled, setScrolled] = useState(false);
 
@@ -147,7 +156,22 @@ function IntroOverlay() {
   const [show, setShow] = useState(true);
   const reduceMotion = useReducedMotion();
 
+  // Decide before first paint: skip (no flash) if already seen this session.
+  useIsomorphicLayoutEffect(() => {
+    if (introDecided) return;
+    introDecided = true;
+    let seen = false;
+    try {
+      seen = sessionStorage.getItem(INTRO_SESSION_KEY) === "1";
+      sessionStorage.setItem(INTRO_SESSION_KEY, "1");
+    } catch {
+      // sessionStorage blocked (private mode, etc.) — just play the intro.
+    }
+    if (seen) setShow(false);
+  }, []);
+
   useEffect(() => {
+    if (!show) return;
     document.body.style.overflow = "hidden";
 
     const dismiss = () => setShow(false);
@@ -163,7 +187,7 @@ function IntroOverlay() {
       window.removeEventListener("keydown", dismiss);
       document.body.style.overflow = "";
     };
-  }, [reduceMotion]);
+  }, [show, reduceMotion]);
 
   return (
     <AnimatePresence
