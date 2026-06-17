@@ -452,7 +452,7 @@ function Portfolio() {
               rel="noreferrer noopener"
             />
           }
-          className="min-h-11 rounded-full text-[11px] uppercase tracking-[0.25em] sm:min-h-0"
+          className="min-h-11 px-6 rounded-full text-[11px] uppercase tracking-[0.25em] sm:min-h-0 sm:px-3"
         >
           Bekijk alles op Instagram
           <ArrowUpRightIcon className="size-3.5" />
