@@ -3,6 +3,7 @@
 import {
   ArrowDownIcon,
   ArrowUpRightIcon,
+  FlowerIcon,
   IconContext,
 } from "@phosphor-icons/react";
 import {
@@ -223,25 +224,9 @@ function IntroOverlay() {
 
 function FlowerCorner({ className }: { className?: string }) {
   return (
-    <svg
-      aria-hidden
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      className={cn("pointer-events-none absolute text-foreground", className)}
-    >
-      {[0, 60, 120, 180, 240, 300].map((angle) => (
-        <ellipse
-          key={angle}
-          cx="12"
-          cy="5.6"
-          rx="1.7"
-          ry="4"
-          opacity="0.85"
-          transform={`rotate(${angle} 12 12)`}
-        />
-      ))}
-      <circle cx="12" cy="12" r="1.7" style={{ fill: "var(--background)" }} />
-    </svg>
+    <span className={cn("pointer-events-none absolute text-foreground", className)}>
+      <FlowerIcon weight="thin" className="size-full" />
+    </span>
   );
 }
 
