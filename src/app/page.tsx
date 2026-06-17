@@ -125,7 +125,7 @@ function Header() {
           size="sm"
           nativeButton={false}
           render={<a href="#contact" />}
-          className="min-h-11 rounded-full px-5 text-[11px] uppercase tracking-[0.2em] sm:min-h-0 sm:px-4"
+          className="min-h-11 rounded-full border border-foreground/15 bg-background px-5 text-[11px] uppercase tracking-[0.2em] text-foreground hover:bg-foreground/10 sm:min-h-0 sm:px-4"
         >
           Maak een afspraak
         </Button>
