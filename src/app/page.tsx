@@ -5,7 +5,6 @@ import {
   ArrowUpRightIcon,
   IconContext,
 } from "@phosphor-icons/react";
-import useEmblaCarousel from "embla-carousel-react";
 import {
   AnimatePresence,
   MotionConfig,
@@ -364,114 +363,7 @@ function PortfolioSlide({
   );
 }
 
-const MOBILE_CAROUSEL_MIN_SCALE = 0.9;
-const MOBILE_CAROUSEL_MAX_SCALE = 1.05;
-const MOBILE_CAROUSEL_TWEEN_FACTOR = 0.16;
-
-function clamp(value: number, min: number, max: number) {
-  return Math.min(Math.max(value, min), max);
-}
-
-function setMobileCarouselTweenScale(
-  emblaApi: NonNullable<ReturnType<typeof useEmblaCarousel>[1]>,
-) {
-  const engine = emblaApi.internalEngine();
-  const scrollProgress = emblaApi.scrollProgress();
-  const slideNodes = emblaApi.slideNodes();
-
-  emblaApi.scrollSnapList().forEach((scrollSnap, snapIndex) => {
-    engine.slideRegistry[snapIndex]?.forEach((slideIndex) => {
-      let diffToTarget = scrollSnap - scrollProgress;
-
-      if (engine.options.loop) {
-        engine.slideLooper.loopPoints.forEach((loopItem) => {
-          const target = loopItem.target();
-
-          if (slideIndex === loopItem.index && target !== 0) {
-            const sign = Math.sign(target);
-
-            if (sign === -1) {
-              diffToTarget = scrollSnap - (1 + scrollProgress);
-            }
-            if (sign === 1) {
-              diffToTarget = scrollSnap + (1 - scrollProgress);
-            }
-          }
-        });
-      }
-
-      const scale = clamp(
-        MOBILE_CAROUSEL_MAX_SCALE -
-          Math.abs(diffToTarget) * MOBILE_CAROUSEL_TWEEN_FACTOR,
-        MOBILE_CAROUSEL_MIN_SCALE,
-        MOBILE_CAROUSEL_MAX_SCALE,
-      );
-
-      slideNodes[slideIndex].style.transform = `scale(${scale})`;
-    });
-  });
-}
-
-function PortfolioMobileCarousel({ slides }: { slides: PortfolioItem[] }) {
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    loop: true,
-    align: "center",
-    duration: 28,
-  });
-  const [selectedIndex, setSelectedIndex] = useState(0);
-
-  useEffect(() => {
-    if (!emblaApi) return;
-
-    const onSelect = () => {
-      setSelectedIndex(emblaApi.selectedScrollSnap());
-      setMobileCarouselTweenScale(emblaApi);
-    };
-
-    const onScroll = () => {
-      setMobileCarouselTweenScale(emblaApi);
-    };
-
-    onSelect();
-    emblaApi.on("scroll", onScroll);
-    emblaApi.on("reInit", onSelect);
-    emblaApi.on("select", onSelect);
-
-    return () => {
-      emblaApi.off("scroll", onScroll);
-      emblaApi.off("reInit", onSelect);
-      emblaApi.off("select", onSelect);
-    };
-  }, [emblaApi]);
-
-  // Recalculate when the (shuffled) slide order changes after mount.
-  useEffect(() => {
-    emblaApi?.reInit();
-  }, [emblaApi, slides]);
-
-  return (
-    <div className="py-3 pb-6">
-      <div ref={emblaRef} className="overflow-hidden">
-        <ul className="flex items-center touch-pan-y">
-          {slides.map((item, index) => (
-            <li
-              key={item.src}
-              aria-current={index === selectedIndex ? "true" : undefined}
-              className="min-w-0 shrink-0 grow-0 basis-[72vw] origin-center pr-4 will-change-transform"
-            >
-              <PortfolioSlide
-                item={item}
-                className="relative aspect-[3/4]"
-              />
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
-}
-
-function PortfolioDesktopTrack({ slides }: { slides: PortfolioItem[] }) {
+function PortfolioTrack({ slides }: { slides: PortfolioItem[] }) {
   const reduceMotion = useReducedMotion();
   // When motion is reduced we drop the seamless duplicate and let the user
   // scroll the strip themselves instead of auto-scrolling it forever.
@@ -550,7 +442,7 @@ function PortfolioDesktopTrack({ slides }: { slides: PortfolioItem[] }) {
           {items.map((item, i) => (
             <li
               key={`${item.src}-${i}`}
-              className="mr-6 aspect-[3/4] w-[42vw] shrink-0 lg:w-[32vw]"
+              className="mr-4 aspect-[3/4] w-[68vw] shrink-0 sm:mr-6 sm:w-[42vw] lg:w-[32vw]"
             >
               <PortfolioSlide item={item} className="relative h-full w-full" />
             </li>
@@ -562,7 +454,6 @@ function PortfolioDesktopTrack({ slides }: { slides: PortfolioItem[] }) {
 }
 
 function Portfolio() {
-  const [isDesktop, setIsDesktop] = useState(false);
   // Start from the source order (matches SSR to avoid a hydration mismatch),
   // then reshuffle on mount so every visit shows a fresh sequence.
   const [slides, setSlides] = useState<PortfolioItem[]>(portfolio);
@@ -572,14 +463,6 @@ function Portfolio() {
     // client render the same initial order (no hydration mismatch).
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setSlides(shuffle(portfolio));
-  }, []);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(min-width: 768px)");
-    const update = () => setIsDesktop(mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
   }, []);
 
   return (
@@ -606,11 +489,7 @@ function Portfolio() {
       </div>
 
       <div id="portfolio" className="relative scroll-mt-20">
-        {isDesktop ? (
-          <PortfolioDesktopTrack slides={slides} />
-        ) : (
-          <PortfolioMobileCarousel slides={slides} />
-        )}
+        <PortfolioTrack slides={slides} />
       </div>
     </section>
   );
