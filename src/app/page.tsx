@@ -13,13 +13,7 @@ import {
   useReducedMotion,
 } from "motion/react";
 import Image from "next/image";
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import {
   Accordion,
@@ -160,18 +154,9 @@ function Header() {
   );
 }
 
-function IntroOverlay({ onComplete }: { onComplete: () => void }) {
+function IntroOverlay() {
   const [show, setShow] = useState(true);
   const reduceMotion = useReducedMotion();
-  const doneRef = useRef(false);
-
-  const finish = useCallback(() => {
-    if (doneRef.current) return;
-    doneRef.current = true;
-    setShow(false);
-    // Reveal the site only after the splash has faded to black.
-    window.setTimeout(onComplete, reduceMotion ? 0 : 520);
-  }, [reduceMotion, onComplete]);
 
   // Decide before first paint: skip (no flash) if already seen this session.
   useIsomorphicLayoutEffect(() => {
@@ -184,30 +169,27 @@ function IntroOverlay({ onComplete }: { onComplete: () => void }) {
     } catch {
       // sessionStorage blocked (private mode, etc.) — just play the intro.
     }
-    if (seen && !REPLAY_INTRO_EVERY_LOAD) {
-      doneRef.current = true;
-      setShow(false);
-      onComplete();
-    }
-  }, [onComplete]);
+    if (seen && !REPLAY_INTRO_EVERY_LOAD) setShow(false);
+  }, []);
 
   useEffect(() => {
     if (!show) return;
     document.body.style.overflow = "hidden";
 
-    const timer = setTimeout(finish, reduceMotion ? 1400 : 2600);
-    window.addEventListener("wheel", finish, { passive: true, once: true });
-    window.addEventListener("touchmove", finish, { passive: true, once: true });
-    window.addEventListener("keydown", finish, { once: true });
+    const dismiss = () => setShow(false);
+    const timer = setTimeout(dismiss, reduceMotion ? 1400 : 2600);
+    window.addEventListener("wheel", dismiss, { passive: true, once: true });
+    window.addEventListener("touchmove", dismiss, { passive: true, once: true });
+    window.addEventListener("keydown", dismiss, { once: true });
 
     return () => {
       clearTimeout(timer);
-      window.removeEventListener("wheel", finish);
-      window.removeEventListener("touchmove", finish);
-      window.removeEventListener("keydown", finish);
+      window.removeEventListener("wheel", dismiss);
+      window.removeEventListener("touchmove", dismiss);
+      window.removeEventListener("keydown", dismiss);
       document.body.style.overflow = "";
     };
-  }, [show, reduceMotion, finish]);
+  }, [show, reduceMotion]);
 
   return (
     <AnimatePresence
@@ -219,11 +201,9 @@ function IntroOverlay({ onComplete }: { onComplete: () => void }) {
         <motion.div
           key="intro"
           initial={{ opacity: 1 }}
-          exit={{
-            opacity: 0,
-            transition: { duration: 0.8, delay: 0.5, ease: easeOut },
-          }}
-          onClick={finish}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.9, ease: easeOut }}
+          onClick={() => setShow(false)}
           role="button"
           aria-label="Intro overslaan"
           className="fixed inset-0 z-[60] flex cursor-pointer flex-col items-center justify-center bg-background px-8 text-center"
@@ -231,7 +211,7 @@ function IntroOverlay({ onComplete }: { onComplete: () => void }) {
           <motion.div
             initial={{ opacity: 0, scale: 0.94 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, transition: { duration: 0.5, ease: easeOut } }}
+            exit={{ opacity: 0, scale: 1.04, y: -16 }}
             transition={{ duration: 1, ease: easeOut }}
             className="relative aspect-square w-[78%] max-w-[34rem] bg-background md:w-[40%]"
           >
@@ -248,7 +228,7 @@ function IntroOverlay({ onComplete }: { onComplete: () => void }) {
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, transition: { duration: 0.5, ease: easeOut } }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.9, delay: 0.4, ease: easeOut }}
             className="mt-8 text-[11px] uppercase tracking-[0.4em] opacity-60 md:mt-10"
           >
@@ -685,7 +665,7 @@ function Craft() {
 
   if (reduceMotion) {
     return (
-      <section className="px-8 py-16 md:px-12 md:py-24">
+      <section className="px-8 pt-4 pb-16 md:px-12 md:pt-6 md:pb-24">
         <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-3 font-heading text-xl font-light md:text-3xl lg:text-4xl">
           {CRAFT_PHRASES.map((phrase) => (
             <span key={phrase}>{phrase}</span>
@@ -696,7 +676,7 @@ function Craft() {
   }
 
   return (
-    <section className="py-16 md:py-24">
+    <section className="pt-4 pb-16 md:pt-6 md:pb-24">
       <div
         className="overflow-hidden"
         style={{
@@ -835,9 +815,6 @@ function Footer() {
 }
 
 export default function V1Page() {
-  const [introDone, setIntroDone] = useState(false);
-  const handleIntroComplete = useCallback(() => setIntroDone(true), []);
-
   useEffect(() => {
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual";
@@ -848,21 +825,15 @@ export default function V1Page() {
   return (
     <IconContext.Provider value={{ weight: "thin" }}>
       <MotionConfig reducedMotion="user">
-        <IntroOverlay onComplete={handleIntroComplete} />
-        <motion.div
-          id="top"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: introDone ? 1 : 0 }}
-          transition={{ duration: 1, ease: easeOut }}
-          className="bg-background text-foreground min-h-screen"
-        >
+        <div id="top" className="bg-background text-foreground min-h-screen">
+          <IntroOverlay />
           <Header />
           <About />
           <Portfolio />
           <Craft />
           <HouseRules />
           <Footer />
-        </motion.div>
+        </div>
       </MotionConfig>
     </IconContext.Provider>
   );
