@@ -3,7 +3,6 @@
 import {
   ArrowDownIcon,
   ArrowUpRightIcon,
-  CalendarBlankIcon,
   IconContext,
 } from "@phosphor-icons/react";
 import {
@@ -103,22 +102,33 @@ function Header() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 0);
+    const onScroll = () => setScrolled(window.scrollY > 16);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
-    <header
-      className={`sticky top-0 z-30 border-b bg-background/80 backdrop-blur transition-colors duration-300 ${
-        scrolled ? "border-foreground/10" : "border-transparent"
-      }`}
-    >
-      <div className="flex items-center px-8 py-4 text-[11px] uppercase tracking-[0.25em] md:px-12">
+    <header className="sticky top-0 z-40 flex justify-center px-4 pt-3 md:pt-4">
+      <div
+        className={cn(
+          "flex items-center gap-3 rounded-full py-1.5 pr-1.5 pl-5 text-[11px] uppercase tracking-[0.25em] transition-all duration-500 ease-out",
+          scrolled
+            ? "border border-white/10 bg-white/[0.06] shadow-[0_8px_32px_rgba(0,0,0,0.35)] backdrop-blur-xl backdrop-saturate-150"
+            : "border border-transparent",
+        )}
+      >
         <a href="#top" className="font-medium">
-          B. YOU TATTOO
+          B. You Tattoo
         </a>
+        <Button
+          size="sm"
+          nativeButton={false}
+          render={<a href="#contact" />}
+          className="min-h-11 rounded-full px-5 text-[11px] uppercase tracking-[0.2em] sm:min-h-0 sm:px-4"
+        >
+          Maak een afspraak
+        </Button>
       </div>
     </header>
   );
@@ -183,7 +193,7 @@ function IntroOverlay() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.04, y: -16 }}
             transition={{ duration: 1, ease: easeOut }}
-            className="relative aspect-square w-[78%] max-w-[34rem] bg-background md:w-[40%]"
+            className="relative aspect-square w-[88%] max-w-[34rem] bg-background md:w-[40%]"
           >
             <Image
               src="/Logo.png"
@@ -663,38 +673,6 @@ function Footer() {
   );
 }
 
-function BookingFab() {
-  const [atFooter, setAtFooter] = useState(false);
-
-  useEffect(() => {
-    const footer = document.getElementById("contact");
-    if (!footer) return;
-    const io = new IntersectionObserver(
-      (entries) => setAtFooter(entries[0]?.isIntersecting ?? false),
-      { rootMargin: "0px 0px -25% 0px" },
-    );
-    io.observe(footer);
-    return () => io.disconnect();
-  }, []);
-
-  return (
-    <motion.a
-      href="#contact"
-      aria-label="Maak een afspraak"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: atFooter ? 0 : 1, y: atFooter ? 20 : 0 }}
-      transition={{ duration: 0.4, ease: easeOut }}
-      className={cn(
-        "fixed right-5 bottom-5 z-40 inline-flex items-center gap-2.5 rounded-full bg-foreground px-5 py-3.5 text-[11px] font-medium uppercase tracking-[0.2em] text-background shadow-lg shadow-black/40 transition-colors hover:bg-foreground/85 md:right-8 md:bottom-8",
-        atFooter && "pointer-events-none",
-      )}
-    >
-      Maak een afspraak
-      <CalendarBlankIcon className="size-4" />
-    </motion.a>
-  );
-}
-
 export default function V1Page() {
   useEffect(() => {
     if ("scrollRestoration" in window.history) {
@@ -714,7 +692,6 @@ export default function V1Page() {
           <Craft />
           <HouseRules />
           <Footer />
-          <BookingFab />
         </div>
       </MotionConfig>
     </IconContext.Provider>
