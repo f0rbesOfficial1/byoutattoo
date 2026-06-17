@@ -142,7 +142,7 @@ function Header() {
             size="sm"
             nativeButton={false}
             render={<a href="#contact" />}
-            className="rounded-full text-[11px] uppercase tracking-[0.25em]"
+            className="min-h-11 rounded-full text-[11px] uppercase tracking-[0.25em] sm:min-h-0"
           >
             <span className="sm:hidden">Afspraak</span>
             <span className="hidden sm:inline">Maak een afspraak</span>
@@ -259,7 +259,7 @@ function About() {
             target="_blank"
             rel="noreferrer noopener"
             aria-label="Bekijk B. You Tattoo op Instagram"
-            className="group relative mx-auto block aspect-[4/5] w-3/4 max-w-sm md:w-full md:max-w-none"
+            className="group relative mx-auto block aspect-[4/5] w-full md:max-w-none"
           >
             <div
               className="pointer-events-none absolute -inset-[11px] bg-foreground/20 transition-colors duration-500 ease-out group-hover:bg-foreground/80"
@@ -375,7 +375,12 @@ function PortfolioTrack({ slides }: { slides: PortfolioItem[] }) {
     const track = trackRef.current;
     if (!track) return;
 
+    const DURATION = 140000;
     let animation: Animation | null = null;
+    let distance = 0;
+    // Static centre x of each slide (at translateX = 0), cached so the
+    // per-frame gallery scaling needs no layout reads (avoids scroll jank).
+    let centers: number[] = [];
 
     const start = () => {
       animation?.cancel();
@@ -385,15 +390,20 @@ function PortfolioTrack({ slides }: { slides: PortfolioItem[] }) {
         | undefined;
       if (!setStart || !loopPoint) return;
 
-      const distance = loopPoint.offsetLeft - setStart.offsetLeft;
+      distance = loopPoint.offsetLeft - setStart.offsetLeft;
       if (distance <= 0) return;
+
+      centers = Array.from(track.children).map((node) => {
+        const li = node as HTMLElement;
+        return li.offsetLeft + li.offsetWidth / 2;
+      });
 
       animation = track.animate(
         [
           { transform: "translate3d(0, 0, 0)" },
           { transform: `translate3d(-${distance}px, 0, 0)` },
         ],
-        { duration: 140000, iterations: Infinity, easing: "linear" },
+        { duration: DURATION, iterations: Infinity, easing: "linear" },
       );
     };
 
@@ -404,18 +414,23 @@ function PortfolioTrack({ slides }: { slides: PortfolioItem[] }) {
 
     // Gallery effect: scale each slide by its distance from the viewport
     // centre, so the middle photos read larger than those at the edges.
+    // Position is derived from the animation clock — no getBoundingClientRect,
+    // so vertical scrolling stays smooth.
     let rafId = 0;
     const tick = () => {
-      const center = window.innerWidth / 2;
-      const kids = track.children;
-      const dist = new Array(kids.length);
-      for (let i = 0; i < kids.length; i++) {
-        const r = (kids[i] as HTMLElement).getBoundingClientRect();
-        dist[i] = Math.min(Math.abs(r.left + r.width / 2 - center) / center, 1);
-      }
-      for (let i = 0; i < kids.length; i++) {
-        const scale = (1 - dist[i] * 0.22).toFixed(3);
-        (kids[i] as HTMLElement).style.transform = `scale(${scale})`;
+      if (animation && distance > 0) {
+        const half = window.innerWidth / 2;
+        const ct = Number(animation.currentTime) || 0;
+        const translateX = -distance * ((ct % DURATION) / DURATION);
+        const kids = track.children;
+        for (let i = 0; i < kids.length; i++) {
+          const d = Math.min(
+            Math.abs(translateX + centers[i] - half) / half,
+            1,
+          );
+          (kids[i] as HTMLElement).style.transform =
+            `scale(${(1 - d * 0.22).toFixed(3)})`;
+        }
       }
       rafId = requestAnimationFrame(tick);
     };
@@ -501,7 +516,7 @@ function Portfolio() {
               rel="noreferrer noopener"
             />
           }
-          className="rounded-full text-[11px] uppercase tracking-[0.25em]"
+          className="min-h-11 rounded-full text-[11px] uppercase tracking-[0.25em] sm:min-h-0"
         >
           Bekijk alles op Instagram
           <ArrowUpRightIcon className="size-3.5" />
