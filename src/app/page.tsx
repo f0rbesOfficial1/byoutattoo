@@ -251,7 +251,7 @@ function About() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.8, ease: easeOut }}
-        className="grid grid-cols-1 items-center gap-14 md:grid-cols-12 md:gap-16"
+        className="mx-auto grid max-w-6xl grid-cols-1 items-start gap-14 md:grid-cols-12 md:gap-16"
       >
         {/* Portrait */}
         <figure className="md:col-span-5 md:row-start-1">
@@ -295,7 +295,7 @@ function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.6 }}
             transition={{ duration: 1, delay: 0.15, ease: easeOut }}
-            className="font-script font-normal leading-[1.05] tracking-normal text-[clamp(3.25rem,9vw,7rem)]"
+            className="font-display font-semibold leading-[1.1] tracking-[0.02em] text-[clamp(2.5rem,6vw,5rem)]"
           >
             B. You Tattoo
           </motion.h2>
@@ -579,7 +579,7 @@ function Portfolio() {
   return (
     <section className="pt-10 pb-2 md:pt-16 md:pb-4">
       <div className="mb-10 flex flex-wrap items-end justify-between gap-6 px-8 md:mb-16 md:px-12">
-        <h2 className="font-heading text-4xl leading-tight font-light md:text-6xl">
+        <h2 className="font-display text-3xl leading-tight font-medium md:text-5xl">
           Portfolio
         </h2>
         <Button
@@ -712,10 +712,10 @@ function HouseRules() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.8, ease: easeOut }}
-        className="grid grid-cols-1 gap-12 md:grid-cols-12"
+        className="mx-auto grid max-w-6xl grid-cols-1 items-start gap-12 md:grid-cols-12"
       >
         <div className="md:col-span-5 md:pr-10">
-          <h2 className="font-heading text-4xl leading-tight font-light md:whitespace-nowrap md:text-5xl">
+          <h2 className="font-display text-3xl leading-tight font-medium md:text-4xl">
             Duidelijke afspraken.
           </h2>
         </div>
