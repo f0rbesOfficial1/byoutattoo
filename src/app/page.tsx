@@ -112,7 +112,7 @@ function Header() {
     <header className="sticky top-0 z-40 flex justify-center px-4 pt-3 md:pt-4">
       <div
         className={cn(
-          "flex items-center gap-3 rounded-full py-1.5 pr-1.5 pl-5 text-[11px] uppercase tracking-[0.25em] transition-all duration-500 ease-out",
+          "flex items-center gap-5 rounded-full py-1.5 pr-1.5 pl-5 text-[11px] uppercase tracking-[0.25em] transition-all duration-500 ease-out",
           scrolled
             ? "border border-white/10 bg-white/[0.06] shadow-[0_8px_32px_rgba(0,0,0,0.35)] backdrop-blur-xl backdrop-saturate-150"
             : "border border-transparent",
