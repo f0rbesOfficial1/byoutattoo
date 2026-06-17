@@ -345,12 +345,7 @@ function PortfolioTrack({ slides }: { slides: PortfolioItem[] }) {
     const track = trackRef.current;
     if (!track) return;
 
-    const DURATION = 140000;
     let animation: Animation | null = null;
-    let distance = 0;
-    // Static centre x of each slide (at translateX = 0), cached so the
-    // per-frame gallery scaling needs no layout reads (avoids scroll jank).
-    let centers: number[] = [];
 
     const start = () => {
       animation?.cancel();
@@ -360,20 +355,15 @@ function PortfolioTrack({ slides }: { slides: PortfolioItem[] }) {
         | undefined;
       if (!setStart || !loopPoint) return;
 
-      distance = loopPoint.offsetLeft - setStart.offsetLeft;
+      const distance = loopPoint.offsetLeft - setStart.offsetLeft;
       if (distance <= 0) return;
-
-      centers = Array.from(track.children).map((node) => {
-        const li = node as HTMLElement;
-        return li.offsetLeft + li.offsetWidth / 2;
-      });
 
       animation = track.animate(
         [
           { transform: "translate3d(0, 0, 0)" },
           { transform: `translate3d(-${distance}px, 0, 0)` },
         ],
-        { duration: DURATION, iterations: Infinity, easing: "linear" },
+        { duration: 140000, iterations: Infinity, easing: "linear" },
       );
     };
 
@@ -382,34 +372,9 @@ function PortfolioTrack({ slides }: { slides: PortfolioItem[] }) {
     const onResize = () => start();
     window.addEventListener("resize", onResize);
 
-    // Gallery effect: scale each slide by its distance from the viewport
-    // centre, so the middle photos read larger than those at the edges.
-    // Position is derived from the animation clock — no getBoundingClientRect,
-    // so vertical scrolling stays smooth.
-    let rafId = 0;
-    const tick = () => {
-      if (animation && distance > 0) {
-        const half = window.innerWidth / 2;
-        const ct = Number(animation.currentTime) || 0;
-        const translateX = -distance * ((ct % DURATION) / DURATION);
-        const kids = track.children;
-        for (let i = 0; i < kids.length; i++) {
-          const d = Math.min(
-            Math.abs(translateX + centers[i] - half) / half,
-            1,
-          );
-          (kids[i] as HTMLElement).style.transform =
-            `scale(${(1 - d * 0.22).toFixed(3)})`;
-        }
-      }
-      rafId = requestAnimationFrame(tick);
-    };
-    rafId = requestAnimationFrame(tick);
-
     return () => {
       animation?.cancel();
       window.removeEventListener("resize", onResize);
-      cancelAnimationFrame(rafId);
     };
   }, [slides, reduceMotion]);
 
@@ -447,7 +412,7 @@ function PortfolioTrack({ slides }: { slides: PortfolioItem[] }) {
           {items.map((item, i) => (
             <li
               key={`${item.src}-${i}`}
-              className="mr-4 aspect-[3/4] w-[68vw] shrink-0 origin-center sm:mr-6 sm:w-[42vw] lg:w-[32vw]"
+              className="mr-4 aspect-[3/4] w-[68vw] shrink-0 sm:mr-6 sm:w-[42vw] lg:w-[32vw]"
             >
               <PortfolioSlide item={item} className="relative h-full w-full" />
             </li>
