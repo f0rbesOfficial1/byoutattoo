@@ -402,9 +402,29 @@ function PortfolioTrack({ slides }: { slides: PortfolioItem[] }) {
     const onResize = () => start();
     window.addEventListener("resize", onResize);
 
+    // Gallery effect: scale each slide by its distance from the viewport
+    // centre, so the middle photos read larger than those at the edges.
+    let rafId = 0;
+    const tick = () => {
+      const center = window.innerWidth / 2;
+      const kids = track.children;
+      const dist = new Array(kids.length);
+      for (let i = 0; i < kids.length; i++) {
+        const r = (kids[i] as HTMLElement).getBoundingClientRect();
+        dist[i] = Math.min(Math.abs(r.left + r.width / 2 - center) / center, 1);
+      }
+      for (let i = 0; i < kids.length; i++) {
+        const scale = (1 - dist[i] * 0.22).toFixed(3);
+        (kids[i] as HTMLElement).style.transform = `scale(${scale})`;
+      }
+      rafId = requestAnimationFrame(tick);
+    };
+    rafId = requestAnimationFrame(tick);
+
     return () => {
       animation?.cancel();
       window.removeEventListener("resize", onResize);
+      cancelAnimationFrame(rafId);
     };
   }, [slides, reduceMotion]);
 
@@ -442,7 +462,7 @@ function PortfolioTrack({ slides }: { slides: PortfolioItem[] }) {
           {items.map((item, i) => (
             <li
               key={`${item.src}-${i}`}
-              className="mr-4 aspect-[3/4] w-[68vw] shrink-0 sm:mr-6 sm:w-[42vw] lg:w-[32vw]"
+              className="mr-4 aspect-[3/4] w-[68vw] shrink-0 origin-center sm:mr-6 sm:w-[42vw] lg:w-[32vw]"
             >
               <PortfolioSlide item={item} className="relative h-full w-full" />
             </li>
