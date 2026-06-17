@@ -34,8 +34,13 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Tattoo",
-  description: "Tattoo studio.",
+  title: "B. You Tattoo — Fine-line & botanisch blackwork",
+  description:
+    "B. You Tattoo — fijne, elegante zwart-wit tattoos met oog voor detail door Brenda. Fineline, bloemenmotieven, mandala's en dotwork. Uitsluitend op afspraak in Lede.",
+  icons: {
+    icon: "/Logo.jpg",
+    apple: "/Logo.jpg",
+  },
 };
 
 export default function RootLayout({

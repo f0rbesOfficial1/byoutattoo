@@ -66,6 +66,18 @@ const houseRules = [
   },
 ];
 
+type PortfolioItem = (typeof portfolio)[number];
+
+// Fisher–Yates shuffle on a copy, so the source array stays intact.
+function shuffle<T>(items: readonly T[]): T[] {
+  const result = [...items];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
 const easeOut = [0.16, 1, 0.3, 1] as const;
 
 const INSTAGRAM_URL = "https://www.instagram.com/b._you_tattoo/";
@@ -87,10 +99,21 @@ function Header() {
         scrolled ? "border-foreground/10" : "border-transparent"
       }`}
     >
-      <div className="flex items-center justify-between px-6 py-5 text-[11px] uppercase tracking-[0.25em] md:px-10">
+      <div className="flex items-center justify-between px-6 py-4 text-[11px] uppercase tracking-[0.25em] md:px-10">
 
-        <div className="font-medium">B. YOU TATTOO</div>
+        <a href="#top" className="font-medium">
+          B. YOU TATTOO
+        </a>
         <nav className="flex items-center gap-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            nativeButton={false}
+            render={<a href="#over-mij" />}
+            className="hidden rounded-full text-[11px] uppercase tracking-[0.25em] sm:inline-flex"
+          >
+            Over mij
+          </Button>
           <Button
             variant="ghost"
             size="sm"
@@ -117,8 +140,11 @@ function Header() {
 
 function Hero() {
   return (
-    <section className="px-6 pt-8 pb-16 md:px-10 md:pt-12 md:pb-24">
-      {/* Z — top-left: title */}
+    <section
+      id="top"
+      className="scroll-mt-20 px-6 pt-8 pb-20 md:px-10 md:pt-12 md:pb-32"
+    >
+      {/* Title */}
       <div className="grid grid-cols-12">
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
@@ -132,13 +158,16 @@ function Hero() {
         </motion.h1>
       </div>
 
-      {/* Z — image right + quote bottom-left, bottom-aligned */}
-      <div className="relative mt-16 grid grid-cols-12 md:-mt-48">
+      {/* Portrait + about, intro composition */}
+      <div
+        id="over-mij"
+        className="mt-12 grid grid-cols-12 items-center gap-12 scroll-mt-24 md:mt-6 md:gap-10"
+      >
         <motion.figure
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.35, ease: easeOut }}
-          className="col-span-12 md:col-span-5 md:col-start-8 md:row-start-1 md:mt-[72px] md:pl-10"
+          transition={{ duration: 0.9, delay: 0.3, ease: easeOut }}
+          className="col-span-12 md:col-span-5 md:col-start-8 md:row-start-1 md:-mt-24 md:pl-6"
         >
           <div className="group relative aspect-[4/5] w-full">
             <div
@@ -174,21 +203,70 @@ function Hero() {
           </div>
         </motion.figure>
 
-        <motion.blockquote
+        <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.9, ease: easeOut }}
-          className="col-span-12 mt-16 md:col-span-6 md:row-start-1 md:mt-0 md:self-end"
+          className="col-span-12 md:col-span-6 md:row-start-1"
         >
           <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
-            // Mijn expertise
+            // Over mij
           </p>
-          <p className="mt-4 font-heading text-3xl leading-snug font-light md:mt-6 md:text-4xl">
-            Ultra fine-line en botanisch blackwork.
+          <h2 className="mt-4 font-heading text-3xl leading-tight font-light md:mt-5 md:text-4xl">
+            Zorg, precisie en jouw verhaal.
+          </h2>
+          <div className="mt-6 max-w-xl space-y-4 text-base leading-relaxed opacity-75 md:mt-8">
+            <p>
+              Mijn naam is Brenda en zorg dragen voor mensen staat centraal in
+              alles wat ik doe. Als zorgkundige en kinderbegeleidster in
+              hoofdberoep ben ik dagelijks bezig met aandacht, vertrouwen en het
+              creëren van een veilige omgeving voor anderen.
+            </p>
+            <p>
+              Sinds 2024 volg ik daarnaast mijn passie voor tattoo-art en ben ik
+              actief als tattoo-artiest in bijberoep. Ik specialiseer me in
+              fijne, elegante zwart-wit tattoos met oog voor detail. Je kan bij
+              mij terecht voor fineline tattoos, bloemenmotieven, mandala&apos;s
+              en dotwork designs.
+            </p>
+            <p>
+              Elke tattoo wordt met zorg en precisie gezet, volledig afgestemd
+              op jouw wensen en persoonlijke verhaal. Ik geloof dat een tattoo
+              meer is dan een tekening op de huid; het is een blijvende
+              herinnering, een betekenisvol symbool of een stukje van jezelf dat
+              je wilt uitdragen.
+            </p>
+            <p>
+              Met een rustige aanpak, een luisterend oor en veel aandacht voor
+              hygiëne en kwaliteit zorg ik ervoor dat jij je op je gemak voelt
+              tijdens het hele proces.
+            </p>
+          </div>
+          <p className="mt-6 font-heading text-2xl leading-snug font-light text-foreground md:mt-8 md:text-3xl">
+            Ik kijk ernaar uit om samen jouw idee tot leven te brengen.
           </p>
-        </motion.blockquote>
+        </motion.div>
       </div>
+
+      {/* Brand emblem sign-off */}
+      <motion.figure
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.9, ease: easeOut }}
+        className="mt-20 flex justify-center md:mt-28"
+      >
+        <div className="relative aspect-square w-1/2 max-w-[18rem] md:w-1/3">
+          <Image
+            src="/Logo.jpg"
+            alt="B. You Tattoo — embleem"
+            fill
+            sizes="(min-width: 768px) 33vw, 50vw"
+            className="object-contain mix-blend-screen"
+          />
+        </div>
+      </motion.figure>
     </section>
   );
 }
@@ -198,7 +276,7 @@ function PortfolioSlide({
   className,
   interactive = true,
 }: {
-  item: (typeof portfolio)[number];
+  item: PortfolioItem;
   className?: string;
   interactive?: boolean;
 }) {
@@ -278,7 +356,7 @@ function setMobileCarouselTweenScale(
   });
 }
 
-function PortfolioMobileCarousel() {
+function PortfolioMobileCarousel({ slides }: { slides: PortfolioItem[] }) {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     align: "center",
@@ -310,11 +388,16 @@ function PortfolioMobileCarousel() {
     };
   }, [emblaApi]);
 
+  // Recalculate when the (shuffled) slide order changes after mount.
+  useEffect(() => {
+    emblaApi?.reInit();
+  }, [emblaApi, slides]);
+
   return (
     <div className="py-3 pb-6">
       <div ref={emblaRef} className="overflow-hidden">
         <ul className="flex items-center touch-pan-y">
-          {portfolio.map((item, index) => (
+          {slides.map((item, index) => (
             <li
               key={item.src}
               aria-current={index === selectedIndex ? "true" : undefined}
@@ -333,8 +416,8 @@ function PortfolioMobileCarousel() {
   );
 }
 
-function PortfolioDesktopTrack() {
-  const items = [...portfolio, ...portfolio];
+function PortfolioDesktopTrack({ slides }: { slides: PortfolioItem[] }) {
+  const items = [...slides, ...slides];
   const trackRef = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
@@ -346,7 +429,7 @@ function PortfolioDesktopTrack() {
     const start = () => {
       animation?.cancel();
       const setStart = track.children[0] as HTMLElement | undefined;
-      const loopPoint = track.children[portfolio.length] as
+      const loopPoint = track.children[slides.length] as
         | HTMLElement
         | undefined;
       if (!setStart || !loopPoint) return;
@@ -384,7 +467,7 @@ function PortfolioDesktopTrack() {
       trackEl.removeEventListener("pointerenter", onEnter);
       trackEl.removeEventListener("pointerleave", onLeave);
     };
-  }, []);
+  }, [slides]);
 
   return (
     <>
@@ -430,6 +513,13 @@ function PortfolioDesktopTrack() {
 
 function Portfolio() {
   const [isDesktop, setIsDesktop] = useState(false);
+  // Start from the source order (matches SSR to avoid a hydration mismatch),
+  // then reshuffle on mount so every visit shows a fresh sequence.
+  const [slides, setSlides] = useState<PortfolioItem[]>(portfolio);
+
+  useEffect(() => {
+    setSlides(shuffle(portfolio));
+  }, []);
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 768px)");
@@ -464,9 +554,9 @@ function Portfolio() {
 
       <div id="portfolio" className="relative scroll-mt-20">
         {isDesktop ? (
-          <PortfolioDesktopTrack />
+          <PortfolioDesktopTrack slides={slides} />
         ) : (
-          <PortfolioMobileCarousel />
+          <PortfolioMobileCarousel slides={slides} />
         )}
       </div>
     </section>
