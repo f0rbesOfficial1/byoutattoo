@@ -602,15 +602,9 @@ function HouseRules() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.8, ease: easeOut }}
-        className="mx-auto grid max-w-6xl grid-cols-1 items-start gap-12 md:grid-cols-12"
+        className="mx-auto max-w-2xl"
       >
-        <div className="md:col-span-5 md:pr-10">
-          <h2 className="font-display text-3xl leading-tight font-normal md:text-4xl">
-            Duidelijke afspraken.
-          </h2>
-        </div>
-        <div className="md:col-span-7 md:pl-2">
-          <Accordion
+        <Accordion
             multiple={false}
             className="w-full rounded-none border-0"
             defaultValue={[houseRules[0].title]}
@@ -637,7 +631,6 @@ function HouseRules() {
               </AccordionItem>
             ))}
           </Accordion>
-        </div>
       </motion.div>
     </section>
   );
