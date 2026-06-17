@@ -1,12 +1,5 @@
 import type { NextConfig } from "next";
-import { fileURLToPath } from "node:url";
 
-const nextConfig: NextConfig = {
-  // Pin the workspace root to this repo so Turbopack doesn't pick up a
-  // stray lockfile higher up the filesystem.
-  turbopack: {
-    root: fileURLToPath(new URL(".", import.meta.url)),
-  },
-};
+const nextConfig: NextConfig = {};
 
 export default nextConfig;

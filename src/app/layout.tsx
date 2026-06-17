@@ -34,7 +34,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "B. You Tattoo — Fine-line & botanisch blackwork",
+  title: "B. You Tattoo — Fine-line & floral blackwork",
   description:
     "B. You Tattoo — fijne, elegante zwart-wit tattoos met oog voor detail door Brenda. Fineline, bloemenmotieven, mandala's en dotwork. Uitsluitend op afspraak in Lede.",
   icons: {

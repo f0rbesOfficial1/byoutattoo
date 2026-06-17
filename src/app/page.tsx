@@ -6,7 +6,12 @@ import {
   IconContext,
 } from "@phosphor-icons/react";
 import useEmblaCarousel from "embla-carousel-react";
-import { motion } from "motion/react";
+import {
+  AnimatePresence,
+  MotionConfig,
+  motion,
+  useReducedMotion,
+} from "motion/react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
@@ -22,7 +27,7 @@ import { cn } from "@/lib/utils";
 
 const portfolio = [
   { src: "/716429932_1399299572033038_5817521590648724993_n.jpg", caption: "Fine-line" },
-  { src: "/716829155_4485343235033910_3736542905288716270_n.jpg", caption: "Botanisch" },
+  { src: "/716829155_4485343235033910_3736542905288716270_n.jpg", caption: "Floral" },
   { src: "/717993246_1554463659377763_3569136088631973217_n.jpg", caption: "Bloemen" },
   { src: "/718051323_3650598065089006_1788345148410000851_n.jpg", caption: "Veldbloem" },
   { src: "/718188610_2251545052264117_8760032857395554032_n.jpg", caption: "Lijnwerk" },
@@ -40,7 +45,7 @@ const portfolio = [
   { src: "/721296877_2425208554671943_4670773400449216152_n.jpg", caption: "Belettering" },
   { src: "/721465330_2045107149764043_3904433134034476357_n.jpg", caption: "Contour" },
   { src: "/723240140_1300331825598173_4317328249936227287_n.jpg", caption: "Schets" },
-  { src: "/723406310_864875329997957_4812793325309155006_n.jpg", caption: "Botanisch II" },
+  { src: "/723406310_864875329997957_4812793325309155006_n.jpg", caption: "Floral II" },
 ];
 
 const houseRules = [
@@ -100,7 +105,6 @@ function Header() {
       }`}
     >
       <div className="flex items-center justify-between px-6 py-4 text-[11px] uppercase tracking-[0.25em] md:px-10">
-
         <a href="#top" className="font-medium">
           B. YOU TATTOO
         </a>
@@ -119,7 +123,7 @@ function Header() {
             size="sm"
             nativeButton={false}
             render={<a href="#portfolio" />}
-            className="rounded-full text-[11px] uppercase tracking-[0.25em]"
+            className="hidden rounded-full text-[11px] uppercase tracking-[0.25em] sm:inline-flex"
           >
             Portfolio
           </Button>
@@ -130,7 +134,8 @@ function Header() {
             render={<a href="#contact" />}
             className="rounded-full text-[11px] uppercase tracking-[0.25em]"
           >
-            Maak een afspraak
+            <span className="sm:hidden">Afspraak</span>
+            <span className="hidden sm:inline">Maak een afspraak</span>
           </Button>
         </nav>
       </div>
@@ -138,38 +143,103 @@ function Header() {
   );
 }
 
-function Hero() {
+function IntroOverlay() {
+  const [show, setShow] = useState(true);
+  const reduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+
+    const dismiss = () => setShow(false);
+    const timer = setTimeout(dismiss, reduceMotion ? 1400 : 2600);
+    window.addEventListener("wheel", dismiss, { passive: true, once: true });
+    window.addEventListener("touchmove", dismiss, { passive: true, once: true });
+    window.addEventListener("keydown", dismiss, { once: true });
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("wheel", dismiss);
+      window.removeEventListener("touchmove", dismiss);
+      window.removeEventListener("keydown", dismiss);
+      document.body.style.overflow = "";
+    };
+  }, [reduceMotion]);
+
+  return (
+    <AnimatePresence
+      onExitComplete={() => {
+        document.body.style.overflow = "";
+      }}
+    >
+      {show && (
+        <motion.div
+          key="intro"
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.9, ease: easeOut }}
+          onClick={() => setShow(false)}
+          role="button"
+          aria-label="Intro overslaan"
+          className="fixed inset-0 z-[60] flex cursor-pointer flex-col items-center justify-center bg-background px-6 text-center"
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.94 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.04, y: -16 }}
+            transition={{ duration: 1, ease: easeOut }}
+            className="relative aspect-square w-[78%] max-w-[34rem] md:w-[40%]"
+          >
+            <Image
+              src="/Logo.jpg"
+              alt="B. You Tattoo"
+              fill
+              priority
+              sizes="(min-width: 768px) 40vw, 78vw"
+              className="object-contain mix-blend-screen"
+            />
+          </motion.div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.9, delay: 0.3, ease: easeOut }}
+            className="mt-8 max-w-md font-heading text-2xl leading-snug font-light md:mt-10 md:text-3xl"
+          >
+            Elegante zwart-wit tattoos, met zorg en precisie gezet.
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.9, delay: 0.5, ease: easeOut }}
+            className="mt-6 text-[11px] uppercase tracking-[0.4em] opacity-60"
+          >
+            Fineline · floral · dotwork
+          </motion.p>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+function About() {
   return (
     <section
-      id="top"
-      className="scroll-mt-20 px-6 pt-8 pb-20 md:px-10 md:pt-12 md:pb-32"
+      id="over-mij"
+      className="scroll-mt-20 px-6 pt-24 pb-20 md:px-10 md:pt-32 md:pb-32"
     >
-      {/* Title */}
-      <div className="grid grid-cols-12">
-        <motion.h1
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: easeOut }}
-          className="col-span-12 font-display font-black uppercase leading-[1.05] tracking-[0.05em] text-[clamp(2.75rem,9.5vw,10rem)] md:col-span-9"
-        >
-          B. You
-          <br />
-          Tattoo
-        </motion.h1>
-      </div>
-
-      {/* Portrait + about, intro composition */}
-      <div
-        id="over-mij"
-        className="mt-12 grid grid-cols-12 items-center gap-12 scroll-mt-24 md:mt-6 md:gap-10"
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.8, ease: easeOut }}
+        className="grid grid-cols-1 items-center gap-14 md:grid-cols-12 md:gap-12"
       >
-        <motion.figure
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.3, ease: easeOut }}
-          className="col-span-12 md:col-span-5 md:col-start-8 md:row-start-1 md:-mt-24 md:pl-6"
-        >
-          <div className="group relative aspect-[4/5] w-full">
+        {/* Portrait */}
+        <figure className="md:col-span-5 md:row-start-1">
+          <div className="group relative mx-auto aspect-[4/5] w-2/3 max-w-sm md:w-full md:max-w-none">
             <div
               className="pointer-events-none absolute -inset-[11px] bg-foreground/20 transition-colors duration-500 ease-out group-hover:bg-foreground/80"
               style={{
@@ -185,7 +255,7 @@ function Hero() {
               }}
             />
             <div
-              className="group relative h-full w-full overflow-hidden"
+              className="relative h-full w-full overflow-hidden"
               style={{
                 clipPath:
                   "polygon(40px 0, 100% 0, 100% calc(100% - 40px), calc(100% - 40px) 100%, 0 100%, 0 40px)",
@@ -195,28 +265,22 @@ function Hero() {
                 src="/Brenda.png"
                 alt="Brenda — B. You Tattoo"
                 fill
-                priority
-                sizes="(min-width: 768px) 38vw, 100vw"
+                sizes="(min-width: 768px) 38vw, 66vw"
                 className="scale-100 object-cover grayscale transition-transform duration-700 ease-out group-hover:scale-105"
               />
             </div>
           </div>
-        </motion.figure>
+        </figure>
 
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.9, ease: easeOut }}
-          className="col-span-12 md:col-span-6 md:row-start-1"
-        >
+        {/* Bio */}
+        <div className="md:col-span-6 md:col-start-7 md:row-start-1">
           <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
-            // Over mij
+            {"// Over mij"}
           </p>
-          <h2 className="mt-4 font-heading text-3xl leading-tight font-light md:mt-5 md:text-4xl">
+          <h2 className="mt-4 font-heading text-4xl leading-tight font-light md:mt-6 md:text-5xl">
             Zorg, precisie en jouw verhaal.
           </h2>
-          <div className="mt-6 max-w-xl space-y-4 text-base leading-relaxed opacity-75 md:mt-8">
+          <div className="mt-8 max-w-xl space-y-5 text-base leading-relaxed opacity-75 md:mt-10">
             <p>
               Mijn naam is Brenda en zorg dragen voor mensen staat centraal in
               alles wat ik doe. Als zorgkundige en kinderbegeleidster in
@@ -243,30 +307,11 @@ function Hero() {
               tijdens het hele proces.
             </p>
           </div>
-          <p className="mt-6 font-heading text-2xl leading-snug font-light text-foreground md:mt-8 md:text-3xl">
+          <p className="mt-8 font-heading text-2xl leading-snug font-light text-foreground md:text-3xl">
             Ik kijk ernaar uit om samen jouw idee tot leven te brengen.
           </p>
-        </motion.div>
-      </div>
-
-      {/* Brand emblem sign-off */}
-      <motion.figure
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.9, ease: easeOut }}
-        className="mt-20 flex justify-center md:mt-28"
-      >
-        <div className="relative aspect-square w-1/2 max-w-[18rem] md:w-1/3">
-          <Image
-            src="/Logo.jpg"
-            alt="B. You Tattoo — embleem"
-            fill
-            sizes="(min-width: 768px) 33vw, 50vw"
-            className="object-contain mix-blend-screen"
-          />
         </div>
-      </motion.figure>
+      </motion.div>
     </section>
   );
 }
@@ -283,9 +328,9 @@ function PortfolioSlide({
   const image = (
     <Image
       src={item.src}
-      alt={item.caption}
+      alt={`Tattoo — ${item.caption}`}
       fill
-      loading="eager"
+      loading="lazy"
       sizes="(min-width: 1024px) 32vw, (min-width: 768px) 42vw, 78vw"
       className={cn(
         "object-cover grayscale",
@@ -417,10 +462,14 @@ function PortfolioMobileCarousel({ slides }: { slides: PortfolioItem[] }) {
 }
 
 function PortfolioDesktopTrack({ slides }: { slides: PortfolioItem[] }) {
-  const items = [...slides, ...slides];
+  const reduceMotion = useReducedMotion();
+  // When motion is reduced we drop the seamless duplicate and let the user
+  // scroll the strip themselves instead of auto-scrolling it forever.
+  const items = reduceMotion ? slides : [...slides, ...slides];
   const trackRef = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
+    if (reduceMotion) return;
     const track = trackRef.current;
     if (!track) return;
 
@@ -467,7 +516,7 @@ function PortfolioDesktopTrack({ slides }: { slides: PortfolioItem[] }) {
       trackEl.removeEventListener("pointerenter", onEnter);
       trackEl.removeEventListener("pointerleave", onLeave);
     };
-  }, [slides]);
+  }, [slides, reduceMotion]);
 
   return (
     <>
@@ -488,7 +537,10 @@ function PortfolioDesktopTrack({ slides }: { slides: PortfolioItem[] }) {
         }}
       />
       <div
-        className="group/track overflow-hidden pb-6"
+        className={cn(
+          "group/track pb-6",
+          reduceMotion ? "overflow-x-auto" : "overflow-hidden",
+        )}
         style={{
           maskImage:
             "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
@@ -518,6 +570,9 @@ function Portfolio() {
   const [slides, setSlides] = useState<PortfolioItem[]>(portfolio);
 
   useEffect(() => {
+    // Intentional: the reshuffle must happen after hydration so server and
+    // client render the same initial order (no hydration mismatch).
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSlides(shuffle(portfolio));
   }, []);
 
@@ -664,7 +719,7 @@ function Footer() {
       <div className="mt-8 grid grid-cols-1 gap-10 md:mt-[92px] md:grid-cols-2 md:gap-0">
         <div className="flex flex-col md:min-h-[92px] md:pr-10">
           <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
-            // Adres
+            {"// Adres"}
           </p>
           <div className="mt-5 md:mt-auto">
             <a
@@ -673,7 +728,7 @@ function Footer() {
               rel="noreferrer noopener"
               className="group inline-flex items-baseline gap-4"
             >
-              <span className="font-heading text-2xl leading-tight font-light md:text-2xl">
+              <span className="font-heading text-xl leading-tight font-light md:text-2xl">
                 Steenstraat 3A, 9340 Lede
               </span>
               <ArrowUpRightIcon className="relative top-[0.1em] size-6 shrink-0 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
@@ -701,14 +756,17 @@ export default function V1Page() {
 
   return (
     <IconContext.Provider value={{ weight: "thin" }}>
-      <div className="bg-background text-foreground min-h-screen">
-        <Header />
-        <Hero />
-        <Portfolio />
-        <Craft />
-        <HouseRules />
-        <Footer />
-      </div>
+      <MotionConfig reducedMotion="user">
+        <div id="top" className="bg-background text-foreground min-h-screen">
+          <IntroOverlay />
+          <Header />
+          <About />
+          <Portfolio />
+          <Craft />
+          <HouseRules />
+          <Footer />
+        </div>
+      </MotionConfig>
     </IconContext.Provider>
   );
 }
