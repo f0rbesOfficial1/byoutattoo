@@ -112,22 +112,23 @@ function Header() {
     <header className="sticky top-0 z-40 flex justify-center px-4 pt-3 md:pt-4">
       <div
         className={cn(
-          "flex items-center gap-5 rounded-full py-1.5 pr-1.5 pl-5 text-[11px] uppercase tracking-[0.25em] transition-all duration-500 ease-out",
+          "flex items-center gap-3 rounded-full py-1.5 pr-1.5 pl-5 text-[11px] uppercase tracking-[0.25em] transition-all duration-500 ease-out sm:gap-5",
           scrolled
             ? "border border-white/10 bg-white/[0.06] shadow-[0_8px_32px_rgba(0,0,0,0.35)] backdrop-blur-xl backdrop-saturate-150"
             : "border border-transparent",
         )}
       >
-        <a href="#top" className="font-medium">
+        <a href="#top" className="font-medium whitespace-nowrap">
           B. You Tattoo
         </a>
         <Button
           size="sm"
           nativeButton={false}
           render={<a href="#contact" />}
-          className="min-h-11 rounded-full border border-foreground/15 bg-background px-5 text-[11px] uppercase tracking-[0.2em] text-foreground hover:bg-foreground/10 sm:min-h-0 sm:px-4"
+          className="min-h-11 rounded-full border border-foreground/15 bg-background px-4 text-[11px] whitespace-nowrap uppercase tracking-[0.2em] text-foreground hover:bg-foreground/10 sm:min-h-0"
         >
-          Maak een afspraak
+          <span className="sm:hidden">Afspraak</span>
+          <span className="hidden sm:inline">Maak een afspraak</span>
         </Button>
       </div>
     </header>
@@ -220,83 +221,26 @@ function IntroOverlay() {
   );
 }
 
-function OrnatePortraitFrame() {
+function FlowerCorner({ className }: { className?: string }) {
   return (
     <svg
       aria-hidden
-      viewBox="0 0 400 500"
-      preserveAspectRatio="none"
-      fill="none"
-      className="pointer-events-none absolute inset-0 h-full w-full text-foreground opacity-90 transition-opacity duration-500 group-hover:opacity-100"
-      style={{ filter: "drop-shadow(0 1px 1.5px rgba(0,0,0,0.5))" }}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={cn("pointer-events-none absolute text-foreground", className)}
     >
-      {/* Outer frame */}
-      <path
-        d="M18 18 H382 V482 H18 Z"
-        stroke="currentColor"
-        strokeWidth={1.5}
-        strokeOpacity={0.9}
-        vectorEffect="non-scaling-stroke"
-      />
-      {/* Nested corner brackets */}
-      <path
-        d="M32 56 V32 H56"
-        stroke="currentColor"
-        strokeWidth={1}
-        strokeOpacity={0.55}
-        vectorEffect="non-scaling-stroke"
-      />
-      <path
-        d="M368 56 V32 H344"
-        stroke="currentColor"
-        strokeWidth={1}
-        strokeOpacity={0.55}
-        vectorEffect="non-scaling-stroke"
-      />
-      <path
-        d="M368 444 V468 H344"
-        stroke="currentColor"
-        strokeWidth={1}
-        strokeOpacity={0.55}
-        vectorEffect="non-scaling-stroke"
-      />
-      <path
-        d="M32 444 V468 H56"
-        stroke="currentColor"
-        strokeWidth={1}
-        strokeOpacity={0.55}
-        vectorEffect="non-scaling-stroke"
-      />
-      {/* Corner diamonds on the frame corners */}
-      <path
-        d="M18 11 L25 18 L18 25 L11 18 Z"
-        stroke="currentColor"
-        strokeWidth={1}
-        vectorEffect="non-scaling-stroke"
-      />
-      <path
-        d="M382 11 L389 18 L382 25 L375 18 Z"
-        stroke="currentColor"
-        strokeWidth={1}
-        vectorEffect="non-scaling-stroke"
-      />
-      <path
-        d="M382 475 L389 482 L382 489 L375 482 Z"
-        stroke="currentColor"
-        strokeWidth={1}
-        vectorEffect="non-scaling-stroke"
-      />
-      <path
-        d="M18 475 L25 482 L18 489 L11 482 Z"
-        stroke="currentColor"
-        strokeWidth={1}
-        vectorEffect="non-scaling-stroke"
-      />
-      {/* Corner dots */}
-      <circle cx="18" cy="18" r="1.6" fill="currentColor" />
-      <circle cx="382" cy="18" r="1.6" fill="currentColor" />
-      <circle cx="382" cy="482" r="1.6" fill="currentColor" />
-      <circle cx="18" cy="482" r="1.6" fill="currentColor" />
+      {[0, 60, 120, 180, 240, 300].map((angle) => (
+        <ellipse
+          key={angle}
+          cx="12"
+          cy="5.6"
+          rx="1.7"
+          ry="4"
+          opacity="0.85"
+          transform={`rotate(${angle} 12 12)`}
+        />
+      ))}
+      <circle cx="12" cy="12" r="1.7" style={{ fill: "var(--background)" }} />
     </svg>
   );
 }
@@ -323,7 +267,7 @@ function About() {
             aria-label="Bekijk B. You Tattoo op Instagram"
             className="group relative mx-auto block aspect-[4/5] w-full md:max-w-none"
           >
-            <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute inset-5 overflow-hidden">
               <Image
                 src="/Brenda.png"
                 alt="Brenda — B. You Tattoo"
@@ -332,7 +276,18 @@ function About() {
                 className="object-cover grayscale transition-transform duration-700 ease-out group-hover:scale-105"
               />
             </div>
-            <OrnatePortraitFrame />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-[10px] border border-foreground/30"
+            />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-[13px] border border-foreground/12"
+            />
+            <FlowerCorner className="top-0 left-0 size-5" />
+            <FlowerCorner className="top-0 right-0 size-5" />
+            <FlowerCorner className="bottom-0 left-0 size-5" />
+            <FlowerCorner className="right-0 bottom-0 size-5" />
           </a>
         </figure>
 
