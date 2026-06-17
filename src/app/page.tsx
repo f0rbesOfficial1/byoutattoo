@@ -114,40 +114,10 @@ function Header() {
         scrolled ? "border-foreground/10" : "border-transparent"
       }`}
     >
-      <div className="flex items-center justify-between px-8 py-4 text-[11px] uppercase tracking-[0.25em] md:px-12">
+      <div className="flex items-center px-8 py-4 text-[11px] uppercase tracking-[0.25em] md:px-12">
         <a href="#top" className="font-medium">
           B. YOU TATTOO
         </a>
-        <nav className="flex items-center gap-2">
-          <Button
-            variant="ghost"
-            size="sm"
-            nativeButton={false}
-            render={<a href="#portfolio" />}
-            className="hidden rounded-full text-[11px] uppercase tracking-[0.25em] md:inline-flex"
-          >
-            Portfolio
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            nativeButton={false}
-            render={<a href="#huisregels" />}
-            className="hidden rounded-full text-[11px] uppercase tracking-[0.25em] md:inline-flex"
-          >
-            Huisregels
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            nativeButton={false}
-            render={<a href="#contact" />}
-            className="min-h-11 rounded-full text-[11px] uppercase tracking-[0.25em] sm:min-h-0"
-          >
-            <span className="sm:hidden">Afspraak</span>
-            <span className="hidden sm:inline">Maak een afspraak</span>
-          </Button>
-        </nav>
       </div>
     </header>
   );
@@ -250,7 +220,7 @@ function About() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.8, ease: easeOut }}
-        className="mx-auto grid max-w-6xl grid-cols-1 items-start gap-12 md:grid-cols-12 md:gap-10"
+        className="mx-auto grid max-w-6xl grid-cols-1 items-start gap-12 md:grid-cols-12 md:gap-14"
       >
         {/* Portrait */}
         <figure className="md:col-span-6 md:row-start-1">
@@ -725,7 +695,7 @@ function Footer() {
         </div>
 
         <div className="flex flex-col md:items-end md:pl-10 md:text-right">
-          <p className="mt-6 font-heading text-2xl leading-tight font-light md:mt-7">
+          <p className="font-heading text-xl leading-tight font-light md:mt-7 md:text-2xl">
             Uitsluitend op afspraak.
           </p>
         </div>
