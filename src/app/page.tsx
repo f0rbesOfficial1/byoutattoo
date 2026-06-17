@@ -3,6 +3,7 @@
 import {
   ArrowDownIcon,
   ArrowUpRightIcon,
+  CalendarBlankIcon,
   IconContext,
 } from "@phosphor-icons/react";
 import {
@@ -213,7 +214,7 @@ function About() {
   return (
     <section
       id="over-mij"
-      className="scroll-mt-20 px-8 pt-24 pb-20 md:px-12 md:pt-32 md:pb-32"
+      className="scroll-mt-20 px-8 pt-10 pb-20 md:px-12 md:pt-32 md:pb-32"
     >
       <motion.div
         initial={{ opacity: 0, y: 24 }}
@@ -662,6 +663,38 @@ function Footer() {
   );
 }
 
+function BookingFab() {
+  const [atFooter, setAtFooter] = useState(false);
+
+  useEffect(() => {
+    const footer = document.getElementById("contact");
+    if (!footer) return;
+    const io = new IntersectionObserver(
+      (entries) => setAtFooter(entries[0]?.isIntersecting ?? false),
+      { rootMargin: "0px 0px -25% 0px" },
+    );
+    io.observe(footer);
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <motion.a
+      href="#contact"
+      aria-label="Maak een afspraak"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: atFooter ? 0 : 1, y: atFooter ? 20 : 0 }}
+      transition={{ duration: 0.4, ease: easeOut }}
+      className={cn(
+        "fixed right-5 bottom-5 z-40 inline-flex items-center gap-2.5 rounded-full bg-foreground px-5 py-3.5 text-[11px] font-medium uppercase tracking-[0.2em] text-background shadow-lg shadow-black/40 transition-colors hover:bg-foreground/85 md:right-8 md:bottom-8",
+        atFooter && "pointer-events-none",
+      )}
+    >
+      Maak een afspraak
+      <CalendarBlankIcon className="size-4" />
+    </motion.a>
+  );
+}
+
 export default function V1Page() {
   useEffect(() => {
     if ("scrollRestoration" in window.history) {
@@ -681,6 +714,7 @@ export default function V1Page() {
           <Craft />
           <HouseRules />
           <Footer />
+          <BookingFab />
         </div>
       </MotionConfig>
     </IconContext.Provider>
