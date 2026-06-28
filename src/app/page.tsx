@@ -51,6 +51,7 @@ const houseRules = [
   {
     title: "Werken op afspraak",
     body: "Ik neem graag de tijd voor elke klant. Daarom werk ik uitsluitend op afspraak in een rustige privé-setting. Zo kan ik me volledig focussen op de details van jouw tattoo zonder afleidingen van buitenaf.",
+    appointments: true,
   },
   {
     title: "Boeking & voorschot",
@@ -602,9 +603,30 @@ function HouseRules() {
                   </span>
                 </AccordionTrigger>
                 <AccordionContent className="px-0 pb-6">
-                  <p className="max-w-md text-base leading-relaxed whitespace-pre-line opacity-75">
+                  <p className="text-base leading-relaxed whitespace-pre-line opacity-75">
                     {rule.body}
                   </p>
+                  {rule.appointments && (
+                    <p className="mt-4 text-base leading-relaxed opacity-75">
+                      Een afspraak maken kan via{" "}
+                      <a
+                        href={INSTAGRAM_DM_URL}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        className="underline underline-offset-4 transition-opacity duration-300 hover:opacity-60"
+                      >
+                        Instagram DM
+                      </a>{" "}
+                      of via e-mail op{" "}
+                      <a
+                        href="mailto:brendavanschuerbeek@outlook.com?subject=Afspraak%20bij%20B.%20You%20Tattoo"
+                        className="underline underline-offset-4 transition-opacity duration-300 hover:opacity-60"
+                      >
+                        brendavanschuerbeek@outlook.com
+                      </a>
+                      .
+                    </p>
+                  )}
                 </AccordionContent>
               </AccordionItem>
             ))}
@@ -645,31 +667,22 @@ function Footer() {
         </a>
       </motion.div>
 
-      <div className="mt-16 grid grid-cols-1 gap-4 md:mt-[92px] md:grid-cols-2 md:gap-0">
-        <div className="flex flex-col md:pr-10">
-          <p className="text-[11px] uppercase tracking-[0.3em] opacity-60">
-            {"// Adres"}
-          </p>
-          <div className="mt-3">
-            <a
-              href="https://maps.app.goo.gl/zUR6iJKpnHLFi1uZ9"
-              target="_blank"
-              rel="noreferrer noopener"
-              className="group inline-flex items-baseline gap-4"
-            >
-              <span className="font-heading text-xl leading-tight font-light md:text-2xl">
-                Steenstraat 3A, 9340 Lede
-              </span>
-              <ArrowUpRightIcon className="relative top-[0.1em] size-6 shrink-0 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
-            </a>
-          </div>
-        </div>
+      <div className="mt-16 flex flex-col gap-4 md:mt-[92px] md:flex-row md:items-baseline md:justify-between md:gap-8">
+        <a
+          href="mailto:brendavanschuerbeek@outlook.com?subject=Afspraak%20bij%20B.%20You%20Tattoo"
+          className="font-heading text-xl leading-tight font-light transition-opacity duration-300 hover:opacity-70 md:text-2xl"
+        >
+          brendavanschuerbeek@outlook.com
+        </a>
 
-        <div className="flex flex-col md:items-end md:pl-10 md:text-right">
-          <p className="font-heading text-xl leading-tight font-light md:mt-7 md:text-2xl">
-            Uitsluitend op afspraak.
-          </p>
-        </div>
+        <a
+          href="https://maps.app.goo.gl/zUR6iJKpnHLFi1uZ9"
+          target="_blank"
+          rel="noreferrer noopener"
+          className="font-heading text-xl leading-tight font-light transition-opacity duration-300 hover:opacity-70 md:text-right md:text-2xl"
+        >
+          Steenstraat 3A, 9340 Lede
+        </a>
       </div>
     </footer>
   );
