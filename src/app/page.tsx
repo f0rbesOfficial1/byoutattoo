@@ -14,7 +14,7 @@ import {
 } from "motion/react";
 import Image from "next/image";
 import {
-  type RefObject,
+  Fragment,
   useEffect,
   useLayoutEffect,
   useRef,
@@ -90,21 +90,29 @@ const PIERCING_TYPES = [
 ];
 
 // TODO(Brenda): confirm the keyword on each photo.
-// Order and `span` shape the bento grid: on mobile one tall tile beside two
-// small ones, a wide tile, then two small ones; from md up the same six
-// interlock over two rows of four columns.
-const piercingPhotos: {
+// Two blocks of three photos around the strip of piercing types. `tile`
+// places a photo inside its block: on mobile (2 columns) a tall tile beside
+// two small ones, and a wide tile over two small ones. On tablet (3 columns)
+// a big 2x2 tile beside two small ones, mirrored in the second block. From lg
+// up the blocks merge into one 4x2 grid.
+type PiercingPhotoItem = {
   src: string;
   type: string;
   alt: string;
-  span?: "tall" | "wide";
-}[] = [
-  { src: "/piercings/piercing-01.jpg", type: "Rook", alt: "Oor met rook-, helix- en oorlelpiercings", span: "tall" },
-  { src: "/piercings/piercing-05.jpg", type: "Daith", alt: "Daith-piercing" },
-  { src: "/piercings/piercing-07.jpg", type: "Oorlel", alt: "Tragus- en oorlelpiercings met vierkante steentjes" },
-  { src: "/piercings/piercing-02.jpg", type: "Neus", alt: "Neuspiercing", span: "wide" },
-  { src: "/piercings/piercing-06.jpg", type: "Tong", alt: "Tongpiercing" },
-  { src: "/piercings/piercing-03.jpg", type: "Tragus", alt: "Helix-, tragus- en oorlelpiercing" },
+  tile?: string;
+};
+
+const piercingBlocks: PiercingPhotoItem[][] = [
+  [
+    { src: "/piercings/piercing-01.jpg", type: "Rook", alt: "Oor met rook-, helix- en oorlelpiercings", tile: "row-span-2 md:col-span-2 lg:col-span-1" },
+    { src: "/piercings/piercing-05.jpg", type: "Daith", alt: "Daith-piercing" },
+    { src: "/piercings/piercing-12.jpg", type: "Oorlel", alt: "Tragus- en oorlelpiercings met vierkante steentjes" },
+  ],
+  [
+    { src: "/piercings/piercing-02.jpg", type: "Neus", alt: "Neuspiercing", tile: "col-span-2 md:col-start-2 md:row-span-2 lg:col-start-auto lg:row-span-1" },
+    { src: "/piercings/piercing-06.jpg", type: "Tong", alt: "Tongpiercing" },
+    { src: "/piercings/piercing-03.jpg", type: "Tragus", alt: "Helix-, tragus- en oorlelpiercing" },
+  ],
 ];
 
 type PortfolioItem = (typeof portfolio)[number];
@@ -675,123 +683,28 @@ function Craft() {
   );
 }
 
-// Overlay timing for the piercing photos: how long a keyword stays up, and
-// the random pause before the next photo lights up. The pause is shorter
-// than the hold, so a few overlays overlap.
-const SPOTLIGHT_HOLD_MS = 2200;
-const SPOTLIGHT_STAGGER_MS = [900, 1600] as const;
+function PiercingPhoto({ photo }: { photo: PiercingPhotoItem }) {
+  const tile = photo.tile ?? "";
+  // Wide on mobile and desktop; big (two columns) on tablet.
+  const wide = /(^| )col-span-2/.test(tile);
+  const big = tile.includes("md:col-span-2") || tile.includes("md:col-start-2");
 
-// Lights up visible photos in shuffled order, so the keyword overlay plays
-// by itself on touch screens as well as on desktop.
-function useSpotlight(containerRef: RefObject<HTMLElement | null>) {
-  const [active, setActive] = useState<number[]>([]);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const items = [...container.querySelectorAll("li")];
-    const visible = new Set<number>();
-    const lit = new Set<number>();
-    const timers = new Set<ReturnType<typeof setTimeout>>();
-    let queue: number[] = [];
-    let last = -1;
-
-    const later = (callback: () => void, ms: number) => {
-      const timer = setTimeout(() => {
-        timers.delete(timer);
-        callback();
-      }, ms);
-      timers.add(timer);
-    };
-
-    // Only photos that are mostly on screen qualify, which matters for the
-    // swipeable strip on mobile.
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          const index = items.indexOf(entry.target as HTMLLIElement);
-          if (entry.isIntersecting) visible.add(index);
-          else visible.delete(index);
-        }
-      },
-      { threshold: 0.6 },
-    );
-    items.forEach((item) => observer.observe(item));
-
-    const findPick = () =>
-      queue.find((i) => visible.has(i) && !lit.has(i) && i !== last);
-
-    const next = () => {
-      // Never darken more than half of what is on screen at once.
-      const room = lit.size < Math.max(1, Math.floor(visible.size / 2));
-      let pick = room ? findPick() : undefined;
-      if (room && pick === undefined) {
-        queue = shuffle(items.map((_, i) => i));
-        pick = findPick();
-      }
-
-      if (pick !== undefined) {
-        const index = pick;
-        queue.splice(queue.indexOf(index), 1);
-        last = index;
-        lit.add(index);
-        setActive([...lit]);
-        later(() => {
-          lit.delete(index);
-          setActive([...lit]);
-        }, SPOTLIGHT_HOLD_MS);
-      }
-
-      const [min, max] = SPOTLIGHT_STAGGER_MS;
-      later(next, min + Math.random() * (max - min));
-    };
-
-    later(next, SPOTLIGHT_STAGGER_MS[0]);
-
-    return () => {
-      timers.forEach(clearTimeout);
-      observer.disconnect();
-    };
-  }, [containerRef]);
-
-  return active;
-}
-
-function PiercingPhoto({
-  photo,
-  active,
-}: {
-  photo: (typeof piercingPhotos)[number];
-  active: boolean;
-}) {
   return (
-    <li
-      className={cn(
-        photo.span === "tall" && "row-span-2",
-        photo.span === "wide" && "col-span-2",
-      )}
-    >
-      {/* The spotlight blurs the photo and fades in the keyword. The photo
-          itself is blurred, scaled up inside its frame, so no seam shows at
-          the edges. */}
-      <figure
-        data-active={active}
-        className="group relative h-full overflow-hidden"
-      >
+    <li className={tile}>
+      {/* Desktop hover softly blurs the photo and fades in the keyword just
+          after. The photo sits slightly enlarged in its frame, so the
+          blurred edges stay out of view. Smaller screens name the piercings
+          in the strip instead. */}
+      <figure className="group relative h-full overflow-hidden">
         <Image
           src={photo.src}
           alt={photo.alt}
           fill
           loading="lazy"
-          sizes={
-            photo.span === "wide"
-              ? "(min-width: 768px) 50vw, 100vw"
-              : "(min-width: 768px) 25vw, 50vw"
-          }
-          className="object-cover grayscale transition-[filter,scale] duration-700 group-data-[active=true]:scale-[1.06] group-data-[active=true]:blur-sm"
+          sizes={`(min-width: 1024px) ${wide ? 50 : 25}vw, (min-width: 768px) ${big ? 66 : 33}vw, ${wide ? 100 : 50}vw`}
+          className="scale-[1.04] object-cover grayscale transition-[filter] duration-500 ease-[cubic-bezier(0.7,0,0.3,1)] lg:group-hover:blur-[3px]"
         />
-        <figcaption className="absolute inset-0 flex items-center justify-center bg-background/50 p-4 text-center text-[11px] uppercase tracking-[0.25em] opacity-0 transition-opacity duration-700 group-data-[active=true]:opacity-100">
+        <figcaption className="absolute inset-0 flex items-center justify-center bg-background/50 p-4 text-center text-[11px] uppercase tracking-[0.25em] opacity-0 transition-opacity duration-400 ease-[cubic-bezier(0.7,0,0.3,1)] lg:group-hover:opacity-100 lg:group-hover:delay-100">
           {photo.type}
         </figcaption>
       </figure>
@@ -800,9 +713,6 @@ function PiercingPhoto({
 }
 
 function Piercings() {
-  const gridRef = useRef<HTMLDivElement>(null);
-  const spotlight = useSpotlight(gridRef);
-
   return (
     <section id="piercings" className="scroll-mt-20 pt-4 pb-16 md:pt-8 md:pb-24">
       <motion.div
@@ -844,40 +754,27 @@ function Piercings() {
         </div>
 
         {/* Thin 4px seams; the aspect ratios keep every tile slightly
-            portrait. On mobile the six photos split into two blocks of three
-            with the full list of piercings running between them. From md up
-            the lists dissolve (display: contents) into one 4x2 grid. */}
+            portrait (2 rows of 2 columns on mobile, of 3 on tablet). From lg
+            up the lists dissolve (display: contents) into one 4x2 grid. */}
         <div className="mx-auto mt-12 max-w-6xl px-8 md:mt-20 md:px-12">
-          <div
-            ref={gridRef}
-            className="md:grid md:aspect-[25/14] md:grid-flow-dense md:grid-cols-4 md:grid-rows-2 md:gap-1"
-          >
-            <ul className="grid aspect-[25/28] grid-cols-2 grid-rows-2 gap-1 md:contents">
-              {piercingPhotos.slice(0, 3).map((photo, i) => (
-                <PiercingPhoto
-                  key={photo.src}
-                  photo={photo}
-                  active={spotlight.includes(i)}
-                />
-              ))}
-            </ul>
-
-            <Marquee
-              phrases={PIERCING_TYPES}
-              direction="left"
-              tight
-              className="my-6 md:hidden"
-            />
-
-            <ul className="grid aspect-[25/28] grid-cols-2 grid-rows-2 gap-1 md:contents">
-              {piercingPhotos.slice(3).map((photo, i) => (
-                <PiercingPhoto
-                  key={photo.src}
-                  photo={photo}
-                  active={spotlight.includes(i + 3)}
-                />
-              ))}
-            </ul>
+          <div className="lg:grid lg:aspect-[25/14] lg:grid-flow-dense lg:grid-cols-4 lg:grid-rows-2 lg:gap-1">
+            {piercingBlocks.map((block, i) => (
+              <Fragment key={block[0].src}>
+                {i > 0 && (
+                  <Marquee
+                    phrases={PIERCING_TYPES}
+                    direction="left"
+                    tight
+                    className="my-6 lg:hidden"
+                  />
+                )}
+                <ul className="grid aspect-[25/28] grid-flow-dense grid-cols-2 grid-rows-2 gap-1 md:aspect-[75/56] md:grid-cols-3 lg:contents">
+                  {block.map((photo) => (
+                    <PiercingPhoto key={photo.src} photo={photo} />
+                  ))}
+                </ul>
+              </Fragment>
+            ))}
           </div>
         </div>
 
