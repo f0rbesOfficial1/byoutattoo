@@ -13,7 +13,13 @@ import {
   useReducedMotion,
 } from "motion/react";
 import Image from "next/image";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  type RefObject,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 
 import {
   Accordion,
@@ -50,7 +56,7 @@ const portfolio = [
 const houseRules = [
   {
     title: "Werken op afspraak",
-    body: "Ik neem graag de tijd voor elke klant. Daarom werk ik uitsluitend op afspraak in een rustige privé-setting. Zo kan ik me volledig focussen op de details van jouw tattoo zonder afleidingen van buitenaf.",
+    body: "Ik neem graag de tijd voor elke klant. Daarom werk ik uitsluitend op afspraak in een rustige privé-setting. Zo kan ik me volledig focussen op de details van jouw tattoo of piercing zonder afleidingen van buitenaf.",
     appointments: true,
   },
   {
@@ -63,12 +69,42 @@ const houseRules = [
   },
   {
     title: "Voorbereiding op je sessie",
-    body: "Voor het beste resultaat vraag ik je om goed gehydrateerd en uitgerust te komen. Drink 24 uur van tevoren geen alcohol en zorg dat de huid rond de plek van de tattoo niet verbrand is door de zon of beschadigd is.",
+    body: "Voor het beste resultaat vraag ik je om goed gehydrateerd en uitgerust te komen. Drink 24 uur van tevoren geen alcohol en zorg dat de huid rond de plek van je tattoo of piercing niet verbrand is door de zon of beschadigd is.",
   },
   {
     title: "Maatwerk",
     body: "Of je nu kiest voor een van mijn eigen ontwerpen, een gepersonaliseerd design op maat, of een meegebracht voorbeeld: ik voer elk werk met uiterste precisie uit. Het belangrijkste is dat het ontwerp goed voelt voor jou.\n\n#B. you",
   },
+];
+
+// TODO(Brenda): confirm which piercings she offers.
+const PIERCING_TYPES = [
+  "Oorlel",
+  "Helix",
+  "Tragus",
+  "Rook",
+  "Daith",
+  "Neus",
+  "Navel",
+  "Tong",
+];
+
+// TODO(Brenda): confirm the keyword on each photo.
+// Order and `span` shape the bento grid: on mobile one tall tile beside two
+// small ones, a wide tile, then two small ones; from md up the same six
+// interlock over two rows of four columns.
+const piercingPhotos: {
+  src: string;
+  type: string;
+  alt: string;
+  span?: "tall" | "wide";
+}[] = [
+  { src: "/piercings/piercing-01.jpg", type: "Rook", alt: "Oor met rook-, helix- en oorlelpiercings", span: "tall" },
+  { src: "/piercings/piercing-05.jpg", type: "Daith", alt: "Daith-piercing" },
+  { src: "/piercings/piercing-07.jpg", type: "Oorlel", alt: "Tragus- en oorlelpiercings met vierkante steentjes" },
+  { src: "/piercings/piercing-02.jpg", type: "Neus", alt: "Neuspiercing", span: "wide" },
+  { src: "/piercings/piercing-06.jpg", type: "Tong", alt: "Tongpiercing" },
+  { src: "/piercings/piercing-03.jpg", type: "Tragus", alt: "Helix-, tragus- en oorlelpiercing" },
 ];
 
 type PortfolioItem = (typeof portfolio)[number];
@@ -215,7 +251,7 @@ function IntroOverlay() {
             transition={{ duration: 0.9, delay: 0.4, ease: easeOut }}
             className="mt-8 text-[11px] uppercase tracking-[0.4em] opacity-60 md:mt-10"
           >
-            Fineline · floral · dotwork
+            Tattoo&apos;s &amp; piercings
           </motion.p>
         </motion.div>
       )}
@@ -326,9 +362,11 @@ function About() {
 
 function PortfolioSlide({
   item,
+  eager,
   className,
 }: {
   item: PortfolioItem;
+  eager: boolean;
   className?: string;
 }) {
   return (
@@ -338,7 +376,7 @@ function PortfolioSlide({
           src={item.src}
           alt={`Tattoo — ${item.caption}`}
           fill
-          loading="lazy"
+          loading={eager ? "eager" : "lazy"}
           sizes="(min-width: 1024px) 32vw, (min-width: 768px) 42vw, 78vw"
           className="object-cover grayscale"
         />
@@ -347,7 +385,13 @@ function PortfolioSlide({
   );
 }
 
-function PortfolioTrack({ slides }: { slides: PortfolioItem[] }) {
+function PortfolioTrack({
+  slides,
+  eager,
+}: {
+  slides: PortfolioItem[];
+  eager: boolean;
+}) {
   const reduceMotion = useReducedMotion();
   // When motion is reduced we drop the seamless duplicate and let the user
   // scroll the strip themselves instead of auto-scrolling it forever.
@@ -428,7 +472,11 @@ function PortfolioTrack({ slides }: { slides: PortfolioItem[] }) {
               key={`${item.src}-${i}`}
               className="mr-4 aspect-[3/4] w-[68vw] shrink-0 sm:mr-6 sm:w-[42vw] lg:w-[32vw]"
             >
-              <PortfolioSlide item={item} className="relative h-full w-full" />
+              <PortfolioSlide
+                item={item}
+                eager={eager}
+                className="relative h-full w-full"
+              />
             </li>
           ))}
         </ul>
@@ -441,6 +489,26 @@ function Portfolio() {
   // Start from the source order (matches SSR to avoid a hydration mismatch),
   // then reshuffle on mount so every visit shows a fresh sequence.
   const [slides, setSlides] = useState<PortfolioItem[]>(portfolio);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [nearView, setNearView] = useState(false);
+
+  // The strip is clipped by an overflow-hidden wrapper, so native lazy
+  // loading only starts once a slide is already sliding into view, and it
+  // shows up blank. Load every slide as soon as the section gets close.
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setNearView(true);
+        observer.disconnect();
+      },
+      { rootMargin: "800px 0px" },
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     // Intentional: the reshuffle must happen after hydration so server and
@@ -450,7 +518,7 @@ function Portfolio() {
   }, []);
 
   return (
-    <section className="pt-10 pb-2 md:pt-16 md:pb-4">
+    <section ref={sectionRef} className="pt-10 pb-2 md:pt-16 md:pb-4">
       <div className="mb-10 flex flex-wrap items-end justify-between gap-6 px-8 md:mb-16 md:px-12">
         <h2 className="font-display text-3xl leading-tight font-normal md:text-5xl">
           Portfolio
@@ -473,7 +541,7 @@ function Portfolio() {
       </div>
 
       <div id="portfolio" className="relative scroll-mt-20">
-        <PortfolioTrack slides={slides} />
+        <PortfolioTrack slides={slides} eager={nearView} />
       </div>
     </section>
   );
@@ -481,13 +549,28 @@ function Portfolio() {
 
 const CRAFT_PHRASES = ["B. Inspired", "B. Unique", "B. You"];
 
-function Craft() {
+// Endless strip of phrases. `direction` is the way the content travels;
+// `tight` halves the space around the separators.
+function Marquee({
+  phrases,
+  direction,
+  tight = false,
+  className,
+}: {
+  phrases: readonly string[];
+  direction: "left" | "right";
+  tight?: boolean;
+  className?: string;
+}) {
   const reduceMotion = useReducedMotion();
   const trackRef = useRef<HTMLDivElement>(null);
 
-  // Repeat the triad so one block is wider than the viewport, then double it
-  // for a seamless loop.
-  const block = Array.from({ length: 6 }, () => CRAFT_PHRASES).flat();
+  // Repeat the phrases so one block is wider than the viewport, then double
+  // it for a seamless loop.
+  const block = Array.from(
+    { length: Math.ceil(18 / phrases.length) },
+    () => phrases,
+  ).flat();
   const items = [...block, ...block];
 
   useEffect(() => {
@@ -508,12 +591,12 @@ function Craft() {
       const distance = loopPoint.offsetLeft - first.offsetLeft;
       if (distance <= 0) return;
 
-      // Reverse of the portfolio strip: the content travels to the right.
+      const from = "translate3d(0, 0, 0)";
+      const to = `translate3d(-${distance}px, 0, 0)`;
       animation = track.animate(
-        [
-          { transform: `translate3d(-${distance}px, 0, 0)` },
-          { transform: "translate3d(0, 0, 0)" },
-        ],
+        direction === "left"
+          ? [{ transform: from }, { transform: to }]
+          : [{ transform: to }, { transform: from }],
         { duration: (distance / 45) * 1000, iterations: Infinity, easing: "linear" },
       );
     };
@@ -530,45 +613,293 @@ function Craft() {
       animation?.cancel();
       window.removeEventListener("resize", onResize);
     };
-  }, [reduceMotion, block.length]);
+  }, [reduceMotion, block.length, direction]);
+
+  const textClassName =
+    "font-heading text-xl font-light md:text-3xl lg:text-4xl";
 
   if (reduceMotion) {
     return (
-      <section className="px-8 pt-4 pb-16 md:px-12 md:pt-6 md:pb-24">
-        <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-3 font-heading text-xl font-light md:text-3xl lg:text-4xl">
-          {CRAFT_PHRASES.map((phrase) => (
-            <span key={phrase}>{phrase}</span>
-          ))}
-        </div>
-      </section>
+      <div
+        className={cn(
+          "flex flex-wrap items-center justify-center gap-x-12 gap-y-3 px-8 md:px-12",
+          textClassName,
+          className,
+        )}
+      >
+        {phrases.map((phrase) => (
+          <span key={phrase}>{phrase}</span>
+        ))}
+      </div>
     );
   }
 
   return (
-    <section className="pt-4 pb-16 md:pt-6 md:pb-24">
+    <div
+      className={cn("overflow-hidden", className)}
+      style={{
+        maskImage:
+          "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
+        WebkitMaskImage:
+          "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
+      }}
+    >
       <div
-        className="overflow-hidden"
-        style={{
-          maskImage:
-            "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
-          WebkitMaskImage:
-            "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
-        }}
+        ref={trackRef}
+        className={cn(
+          "flex w-max items-center whitespace-nowrap will-change-transform",
+          textClassName,
+        )}
       >
-        <div
-          ref={trackRef}
-          className="flex w-max items-center font-heading text-xl font-light whitespace-nowrap will-change-transform md:text-3xl lg:text-4xl"
-        >
-          {items.map((phrase, i) => (
-            <span key={`${phrase}-${i}`} className="flex items-center">
-              <span className="px-10 md:px-14">{phrase}</span>
-              <span aria-hidden className="text-base opacity-30 md:text-xl">
-                ·
-              </span>
+        {items.map((phrase, i) => (
+          <span key={`${phrase}-${i}`} className="flex items-center">
+            <span className={tight ? "px-5 md:px-7" : "px-10 md:px-14"}>
+              {phrase}
             </span>
-          ))}
-        </div>
+            <span aria-hidden className="text-base opacity-30 md:text-xl">
+              ·
+            </span>
+          </span>
+        ))}
       </div>
+    </div>
+  );
+}
+
+function Craft() {
+  // Reverse of the portfolio strip: the content travels to the right.
+  return (
+    <section className="pt-4 pb-16 md:pt-6 md:pb-24">
+      <Marquee phrases={CRAFT_PHRASES} direction="right" />
+    </section>
+  );
+}
+
+// Overlay timing for the piercing photos: how long a keyword stays up, and
+// the random pause before the next photo lights up. The pause is shorter
+// than the hold, so a few overlays overlap.
+const SPOTLIGHT_HOLD_MS = 2200;
+const SPOTLIGHT_STAGGER_MS = [900, 1600] as const;
+
+// Lights up visible photos in shuffled order, so the keyword overlay plays
+// by itself on touch screens as well as on desktop.
+function useSpotlight(containerRef: RefObject<HTMLElement | null>) {
+  const [active, setActive] = useState<number[]>([]);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const items = [...container.querySelectorAll("li")];
+    const visible = new Set<number>();
+    const lit = new Set<number>();
+    const timers = new Set<ReturnType<typeof setTimeout>>();
+    let queue: number[] = [];
+    let last = -1;
+
+    const later = (callback: () => void, ms: number) => {
+      const timer = setTimeout(() => {
+        timers.delete(timer);
+        callback();
+      }, ms);
+      timers.add(timer);
+    };
+
+    // Only photos that are mostly on screen qualify, which matters for the
+    // swipeable strip on mobile.
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const index = items.indexOf(entry.target as HTMLLIElement);
+          if (entry.isIntersecting) visible.add(index);
+          else visible.delete(index);
+        }
+      },
+      { threshold: 0.6 },
+    );
+    items.forEach((item) => observer.observe(item));
+
+    const findPick = () =>
+      queue.find((i) => visible.has(i) && !lit.has(i) && i !== last);
+
+    const next = () => {
+      // Never darken more than half of what is on screen at once.
+      const room = lit.size < Math.max(1, Math.floor(visible.size / 2));
+      let pick = room ? findPick() : undefined;
+      if (room && pick === undefined) {
+        queue = shuffle(items.map((_, i) => i));
+        pick = findPick();
+      }
+
+      if (pick !== undefined) {
+        const index = pick;
+        queue.splice(queue.indexOf(index), 1);
+        last = index;
+        lit.add(index);
+        setActive([...lit]);
+        later(() => {
+          lit.delete(index);
+          setActive([...lit]);
+        }, SPOTLIGHT_HOLD_MS);
+      }
+
+      const [min, max] = SPOTLIGHT_STAGGER_MS;
+      later(next, min + Math.random() * (max - min));
+    };
+
+    later(next, SPOTLIGHT_STAGGER_MS[0]);
+
+    return () => {
+      timers.forEach(clearTimeout);
+      observer.disconnect();
+    };
+  }, [containerRef]);
+
+  return active;
+}
+
+function PiercingPhoto({
+  photo,
+  active,
+}: {
+  photo: (typeof piercingPhotos)[number];
+  active: boolean;
+}) {
+  return (
+    <li
+      className={cn(
+        photo.span === "tall" && "row-span-2",
+        photo.span === "wide" && "col-span-2",
+      )}
+    >
+      {/* The spotlight blurs the photo and fades in the keyword. The photo
+          itself is blurred, scaled up inside its frame, so no seam shows at
+          the edges. */}
+      <figure
+        data-active={active}
+        className="group relative h-full overflow-hidden"
+      >
+        <Image
+          src={photo.src}
+          alt={photo.alt}
+          fill
+          loading="lazy"
+          sizes={
+            photo.span === "wide"
+              ? "(min-width: 768px) 50vw, 100vw"
+              : "(min-width: 768px) 25vw, 50vw"
+          }
+          className="object-cover grayscale transition-[filter,scale] duration-700 group-data-[active=true]:scale-[1.06] group-data-[active=true]:blur-sm"
+        />
+        <figcaption className="absolute inset-0 flex items-center justify-center bg-background/50 p-4 text-center text-[11px] uppercase tracking-[0.25em] opacity-0 transition-opacity duration-700 group-data-[active=true]:opacity-100">
+          {photo.type}
+        </figcaption>
+      </figure>
+    </li>
+  );
+}
+
+function Piercings() {
+  const gridRef = useRef<HTMLDivElement>(null);
+  const spotlight = useSpotlight(gridRef);
+
+  return (
+    <section id="piercings" className="scroll-mt-20 pt-4 pb-16 md:pt-8 md:pb-24">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.8, ease: easeOut }}
+      >
+        {/* Mirrors the bio: the story sits left, the closing note drops in
+            on the right. */}
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 px-8 md:grid-cols-12 md:gap-14 md:px-12">
+          <div className="md:col-span-6">
+            <h2 className="font-display text-3xl leading-tight font-normal md:text-5xl">
+              Piercings
+            </h2>
+            <div className="mt-8 max-w-xl space-y-5 text-base leading-relaxed opacity-75 md:mt-10">
+              <p>
+                Naast tattoos kan je bij mij nu ook terecht voor piercings. In
+                oktober 2026 behaalde ik mijn certificaat als piercer, een mooie
+                nieuwe stap naast mijn werk als tattoo-artiest.
+              </p>
+              <p>
+                Of je nu twijfelt over je allereerste piercing of je oor verder
+                wilt aanvullen: samen bekijken we welke plek past bij jouw
+                anatomie en stijl, en welk juweel het mooiste resultaat geeft. Zo
+                wordt elke piercing een subtiel accent dat helemaal bij jou
+                hoort.
+              </p>
+            </div>
+          </div>
+
+          <div className="md:col-span-5 md:col-start-8 md:self-end">
+            <p className="max-w-xl text-base leading-relaxed opacity-75">
+              Ook hier neem ik rustig de tijd. Ik leg je vooraf uit wat je kan
+              verwachten, zodat je met een gerust gevoel in de stoel zit, en na
+              afloop weet je precies hoe je je nieuwe piercing verzorgt.
+            </p>
+          </div>
+        </div>
+
+        {/* Thin 4px seams; the aspect ratios keep every tile slightly
+            portrait. On mobile the six photos split into two blocks of three
+            with the full list of piercings running between them. From md up
+            the lists dissolve (display: contents) into one 4x2 grid. */}
+        <div className="mx-auto mt-12 max-w-6xl px-8 md:mt-20 md:px-12">
+          <div
+            ref={gridRef}
+            className="md:grid md:aspect-[25/14] md:grid-flow-dense md:grid-cols-4 md:grid-rows-2 md:gap-1"
+          >
+            <ul className="grid aspect-[25/28] grid-cols-2 grid-rows-2 gap-1 md:contents">
+              {piercingPhotos.slice(0, 3).map((photo, i) => (
+                <PiercingPhoto
+                  key={photo.src}
+                  photo={photo}
+                  active={spotlight.includes(i)}
+                />
+              ))}
+            </ul>
+
+            <Marquee
+              phrases={PIERCING_TYPES}
+              direction="left"
+              tight
+              className="my-6 md:hidden"
+            />
+
+            <ul className="grid aspect-[25/28] grid-cols-2 grid-rows-2 gap-1 md:contents">
+              {piercingPhotos.slice(3).map((photo, i) => (
+                <PiercingPhoto
+                  key={photo.src}
+                  photo={photo}
+                  active={spotlight.includes(i + 3)}
+                />
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="mx-auto mt-10 max-w-6xl px-8 md:mt-12 md:px-12">
+          <Button
+            variant="secondary"
+            nativeButton={false}
+            render={
+              <a
+                href={INSTAGRAM_URL}
+                target="_blank"
+                rel="noreferrer noopener"
+              />
+            }
+            className="min-h-11 px-6 rounded-full text-[11px] uppercase tracking-[0.25em] sm:min-h-0 sm:px-3"
+          >
+            <span className="sm:hidden">Bekijk ze allemaal</span>
+            <span className="hidden sm:inline">Bekijk ze allemaal op Instagram</span>
+            <ArrowUpRightIcon className="size-3.5" />
+          </Button>
+        </div>
+      </motion.div>
     </section>
   );
 }
@@ -705,6 +1036,7 @@ export default function V1Page() {
           <About />
           <Portfolio />
           <Craft />
+          <Piercings />
           <HouseRules />
           <Footer />
         </div>

@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "B. You Tattoo",
     short_name: "B. You Tattoo",
     description:
-      "Fijne, elegante zwart-wit tattoos met oog voor detail door Brenda. Uitsluitend op afspraak in Lede.",
+      "Fijne, elegante zwart-wit tattoos met oog voor detail, en piercings, door Brenda. Uitsluitend op afspraak in Lede.",
     start_url: "/",
     display: "standalone",
     background_color: "#171717",

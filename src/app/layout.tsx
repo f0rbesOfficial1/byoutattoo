@@ -35,9 +35,9 @@ const dmSerif = DM_Serif_Display({
 });
 
 export const metadata: Metadata = {
-  title: "B. You Tattoo — Fine-line & floral blackwork",
+  title: "B. You Tattoo — Fine-line tattoos & piercings",
   description:
-    "B. You Tattoo — fijne, elegante zwart-wit tattoos met oog voor detail door Brenda. Fineline, bloemenmotieven, mandala's en dotwork. Uitsluitend op afspraak in Lede.",
+    "B. You Tattoo — fijne, elegante zwart-wit tattoos met oog voor detail door Brenda. Fineline, bloemenmotieven, mandala's en dotwork, en ook piercings door een gecertificeerd piercer. Uitsluitend op afspraak in Lede.",
   icons: {
     icon: [
       { url: "/favicon/favicon.ico", sizes: "any" },
